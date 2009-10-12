@@ -1,9 +1,9 @@
 <html>
 <head>
 	<title><?=$this->title(); ?></title>
-	<?=$this->html->script('http://thechaw.com/js/jquery-1.3.1.min.js'); ?>
-	<?=$this->html->script('http://thechaw.com/js/gshowdown.min.js'); ?>
-	<?=$this->scripts(); ?>
+	<?=@$this->html->script('http://thechaw.com/js/jquery-1.3.1.min.js'); ?>
+	<?=@$this->html->script('http://thechaw.com/js/gshowdown.min.js'); ?>
+	<?=@$this->scripts(); ?>
 	<script type="text/javascript">
 		var converter = new Showdown.converter("/");
 

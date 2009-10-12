@@ -3,13 +3,13 @@
 namespace lithium_docs\controllers;
 
 use \DirectoryIterator;
-use \cake\core\Libraries;
-use \cake\util\reflection\Inspector;
+use \lithium\core\Libraries;
+use \lithium\util\reflection\Inspector;
 
-class BrowserController extends \cake\action\Controller {
+class BrowserController extends \lithium\action\Controller {
 
 	public function index() {
-		$pluginsDir = new DirectoryIterator(CAKE_APP_PATH . '/libraries/plugins');
+		$pluginsDir = new DirectoryIterator(LITHIUM_APP_PATH . '/libraries/plugins');
 		$plugins = array();
 
 		foreach ($pluginsDir as $plugin) {
@@ -27,6 +27,7 @@ class BrowserController extends \cake\action\Controller {
 		$name = $library['prefix'] . join('\\', func_get_args());
 
 		$object = array(
+			'name' => null,
 			'identifier' => $name,
 			'type'       => null,
 			'info'       => null,
@@ -47,6 +48,7 @@ class BrowserController extends \cake\action\Controller {
 				));
 			break;
 			case 'class':
+				$object['name'] = null;
 				$object['parent'] = get_parent_class($name);
 				$object['methods'] = Inspector::methods($name, null, array('public' => false));
 

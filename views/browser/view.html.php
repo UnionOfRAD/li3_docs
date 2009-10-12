@@ -3,13 +3,13 @@
 <h3>
 <?php
 	$path = array_filter(array_merge(
-		array($library['name']), explode('\\', $object['identifier'])
+		array($object['name']), explode('\\', $object['identifier'])
 	));
 	$url = '';
 
 	foreach (array_slice($path, 0, -1) as $part) {
 		$url .= '/' . $part;
-		echo $this->html->link($part, 'docs' . $url) . ' \ ';
+		echo @$this->html->link($part, 'docs' . $url) . ' \ ';
 	}
 	echo end($path);
 	$curPath = str_replace('\\', '/', $name);
@@ -20,8 +20,8 @@
 	<h4>Package contents</h4>
 	<ul class="children">
 		<?php foreach ($object['children'] as $class) { ?>
-			<?php $className = end(explode('\\', $class)); ?>
-			<li><?=$this->html->link($className, 'docs/' . $class); ?></li>
+			<?php $parts = explode('\\', $class);?>
+			<li><?=@$this->html->link(end($parts), 'docs/' . $class); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -30,7 +30,7 @@
 	<?php $parent = $object['parent']; ?>
 	<h4>Parent class</h4>
 	<span class="parent">
-		<?=$this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
+		<?=@$this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
 	</span>
 <?php } ?>
 
@@ -39,7 +39,7 @@
 	<ul class="subclasses">
 		<?php foreach ($object['subClasses'] as $class) { ?>
 			<?php $url = 'docs/' . str_replace('\\', '/', $class); ?>
-			<li><?=$this->html->link($class, $url); ?></li>
+			<li><?=@$this->html->link($class, $url); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -57,7 +57,7 @@
 	<h4>Methods</h4>
 	<ul class="methods">
 		<?php foreach ($object['methods'] as $method) { ?>
-			<li><?=$this->html->link($method->name, "docs/{$curPath}::{$method->name}()"); ?></li>
+			<li><?=@$this->html->link($method->name, "docs/{$curPath}::{$method->name}()"); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
