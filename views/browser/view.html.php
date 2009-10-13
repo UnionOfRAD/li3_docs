@@ -20,8 +20,8 @@
 	<h4>Package contents</h4>
 	<ul class="children">
 		<?php foreach ($object['children'] as $class) { ?>
-			<?php $parts = explode('\\', $class);?>
-			<li><?=@$this->html->link(end($parts), 'docs/' . $class); ?></li>
+			<?php $parts = explode('\\', $class); ?>
+			<li><?=@$this->html->link(end($parts), 'docs/' . str_replace('\\', '/', $class)); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
