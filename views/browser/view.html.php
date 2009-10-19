@@ -81,3 +81,9 @@
 		<?=$object['info']['tags']['return']; ?>
 	</span>
 <?php } ?>
+
+<?php if (isset($object['info']['tags']['filter'])) { ?>
+	<span class="flag wiki-text">
+		This method is filter-able.
+	</span>
+<?php } ?>
