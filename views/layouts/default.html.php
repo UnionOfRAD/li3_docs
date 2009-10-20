@@ -15,13 +15,12 @@
 	<?=@$this->html->style(array('http://li3.rad-dev.org/css/base.css', 'http://li3.rad-dev.org/css/li3.css', 'docs')); ?>
 	<?=@$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js'); ?>
 	<?=@$this->html->script('http://thechaw.com/js/gshowdown.min.js'); ?>
-	<?=@$this->scripts(); ?>
 	<script type="text/javascript">
 		var converter = new Showdown.converter("/");
 
 		$(document).ready(function(){
 			$(".wiki-text").each(function () {
-				$(this).html(converter.makeHtml(jQuery.trim($(this).text())));
+				$(this).html(converter.makeHtml($.trim($(this).text())));
 			});
 		});
 	</script>
