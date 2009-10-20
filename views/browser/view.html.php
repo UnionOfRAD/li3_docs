@@ -1,6 +1,4 @@
-<span class="type"><?=$object['type']; ?></span>
-
-<h3>
+<nav class="<?=$object['type']; ?>"><span class="type"><?=$object['type']; ?></span>
 <?php
 	$path = array_filter(array_merge(
 		array($object['name']), explode('\\', $object['identifier'])
@@ -9,12 +7,12 @@
 
 	foreach (array_slice($path, 0, -1) as $part) {
 		$url .= '/' . $part;
-		echo @$this->html->link($part, 'docs' . $url) . ' \ ';
+		echo '<h3>' . @$this->html->link($part, 'docs' . $url) . '</h3> \ ';
 	}
-	echo end($path);
+	echo '<h3>' . end($path) . '</h3>';
 	$curPath = str_replace('\\', '/', $name);
 ?>
-</h3>
+</nav>
 
 <?php if ($object['children']) { ?>
 	<h4>Package contents</h4>
