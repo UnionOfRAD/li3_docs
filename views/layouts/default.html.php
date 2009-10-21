@@ -40,7 +40,13 @@
 			</nav>
 		</aside>
 		<aside id="git-shortcuts">
-			<span class="clone">git clone code@rad-dev.org:lithium.git</span>
+			<span id="git-clone-path" class="clone">git clone code@rad-dev.org:lithium.git</span>
+			<nav>
+				<?php /*<a href="#" class="download" title="Download Lithium">download</a> */ ?>
+				<a href="#" id="git-copy" class="copy" title="Copy the git clone shortcut to your clipboard">
+					copy to clipboard
+				</a>
+			</nav>
 		</aside>
 		<div <?php echo !empty($constrained) ? 'class="width-constraint"' : null; ?>>
 			<h1><?=@$this->html->link('Lithium', '/'); ?></h1>
@@ -60,7 +66,7 @@
 	</div>
 
 	<footer id="site-footer">
-		<p class="copyright">Pretty much everything is © 2009 and beyond, the Union of Rad</p>
+		<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
 	</footer>
 	<?=@$this->html->script('http://li3.rad-dev.org/js/li3.js'); ?>
 	<script type="text/javascript" charset="utf-8">
