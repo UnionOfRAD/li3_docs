@@ -12,7 +12,7 @@
 	<?=@$this->html->charset(); ?>
 	<title>Lithium <?=@$this->title(); ?></title>
 	<?=@$this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
-	<?=@$this->html->style(array('http://li3.rad-dev.org/css/base.css', 'http://li3.rad-dev.org/css/li3.css', 'docs')); ?>
+	<?=@$this->html->style(array('http://li3.rad-dev.org/css/base.css', 'http://li3.rad-dev.org/css/li3.css', 'http://li3.rad-dev.org/css/docs.css')); ?>
 	<?=@$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js'); ?>
 	<?=@$this->html->script('http://thechaw.com/js/gshowdown.min.js'); ?>
 	<script type="text/javascript">
