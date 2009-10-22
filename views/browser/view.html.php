@@ -1,4 +1,4 @@
-<nav class="<?=$object['type']; ?>"><span class="type"><?=$object['type']; ?></span>
+<div class="nav" class="<?=$object['type']; ?>"><span class="type"><?=$object['type']; ?></span>
 <?php
 	$path = array_filter(array_merge(
 		array($object['name']), explode('\\', $object['identifier'])
@@ -12,7 +12,7 @@
 	echo '<h3>' . end($path) . '</h3>';
 	$curPath = str_replace('\\', '/', $name);
 ?>
-</nav>
+</div>
 
 <?php if ($object['children']) { ?>
 	<h4>Package contents</h4>
