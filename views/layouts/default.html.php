@@ -13,17 +13,6 @@
 	<title>Lithium <?=@$this->title(); ?></title>
 	<?=@$this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
 	<?=@$this->html->style(array('http://li3.rad-dev.org/css/base.css', 'http://li3.rad-dev.org/css/li3.css', 'http://li3.rad-dev.org/css/docs.css')); ?>
-	<?=@$this->html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js'); ?>
-	<?=@$this->html->script('http://thechaw.com/js/gshowdown.min.js'); ?>
-	<script type="text/javascript">
-		var converter = new Showdown.converter("/");
-
-		$(document).ready(function(){
-			$(".wiki-text").each(function () {
-				$(this).html(converter.makeHtml($.trim($(this).text())));
-			});
-		});
-	</script>
 	<?=@$this->scripts(); ?>
 </head>
 <body <?php echo (!empty($apiNavigation)) ? 'class="side-navigation"' : null ; ?>>
@@ -68,12 +57,22 @@
 	<footer id="site-footer">
 		<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
 	</footer>
-	<?=@$this->html->script('http://li3.rad-dev.org/js/li3.js'); ?>
+	<?=@$this->html->script(array(
+		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
+		'http://li3.rad-dev.org/js/li3.js',
+		'http://li3.rad-dev.org/js/cli.js',
+		'http://li3.rad-dev.org/js/showdown.min.js'
+	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
 			li3.setup({
 				base : '<?php echo $this->_request->env('base');?>',
 				testimonials: <?php echo !empty($testimonials) ? 'true' : 'false'; ?>
+			});
+			li3Cli.setup();
+			var converter = new Showdown.converter("/");
+			$(".wiki-text").each(function () {
+				$(this).html(converter.makeHtml($.trim($(this).text())));
 			});
 		});
 	</script>
