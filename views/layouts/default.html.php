@@ -10,7 +10,7 @@
 <html>
 <head>
 	<?=@$this->html->charset(); ?>
-	<title>Lithium <?=@$this->title(); ?></title>
+	<title>Lithium API <?=@$this->title(); ?></title>
 	<?=@$this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
 	<?=@$this->html->style(array(
 		'http://li3.rad-dev.org/css/base.css',
@@ -65,8 +65,8 @@
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
 		'http://li3.rad-dev.org/js/li3.js',
 		'http://li3.rad-dev.org/js/cli.js',
-		'http://li3.rad-dev.org/js/showdown.min.js',
 		'http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js'
+		'http://li3.rad-dev.org/js/showdown.min.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
