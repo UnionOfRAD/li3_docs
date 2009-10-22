@@ -1,6 +1,6 @@
 <?php
 
-namespace lithium_docs\controllers;
+namespace li3_docs\controllers;
 
 use \DirectoryIterator;
 use \lithium\core\Libraries;

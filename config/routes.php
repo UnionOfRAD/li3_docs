@@ -2,9 +2,9 @@
 
 use \lithium\http\Router;
 
-Router::connect('/docs', array('plugin' => 'lithium_docs', 'controller' => 'browser'));
+Router::connect('/docs', array('plugin' => 'li3_docs', 'controller' => 'browser'));
 Router::connect('/docs/{:library}/{:args}', array(
-	'plugin' => 'lithium_docs', 'controller' => 'browser', 'action' => 'view'
+	'plugin' => 'li3_docs', 'controller' => 'browser', 'action' => 'view'
 ));
 
 ?>
