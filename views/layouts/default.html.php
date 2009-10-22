@@ -12,7 +12,11 @@
 	<?=@$this->html->charset(); ?>
 	<title>Lithium <?=@$this->title(); ?></title>
 	<?=@$this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
-	<?=@$this->html->style(array('http://li3.rad-dev.org/css/base.css', 'http://li3.rad-dev.org/css/li3.css', 'http://li3.rad-dev.org/css/docs.css')); ?>
+	<?=@$this->html->style(array(
+		'http://li3.rad-dev.org/css/base.css',
+		'http://li3.rad-dev.org/css/li3.css',
+		'http://li3.rad-dev.org/css/docs.css'
+	)); ?>
 	<?=@$this->scripts(); ?>
 </head>
 <body <?php echo (!empty($apiNavigation)) ? 'class="side-navigation"' : null ; ?>>
@@ -61,7 +65,8 @@
 		'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
 		'http://li3.rad-dev.org/js/li3.js',
 		'http://li3.rad-dev.org/js/cli.js',
-		'http://li3.rad-dev.org/js/showdown.min.js'
+		'http://li3.rad-dev.org/js/showdown.min.js',
+		'http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
