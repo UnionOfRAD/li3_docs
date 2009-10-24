@@ -4,13 +4,20 @@
 		array($object['name']), explode('\\', $object['identifier'])
 	));
 	$url = '';
+	$curPath = str_replace('\\', '/', $name);
 
 	foreach (array_slice($path, 0, -1) as $part) {
 		$url .= '/' . $part;
-		echo '<h3>' . @$this->html->link($part, 'docs' . $url) . '</h3> \ ';
+		echo '<h3>' . $this->html->link($part, 'docs' . $url) . '</h3> \ ';
 	}
-	echo '<h3>' . end($path) . '</h3>';
-	$curPath = str_replace('\\', '/', $name);
+	$ident = end($path);
+
+	if (strpos($ident, '::') !== false) {
+		list($class, $ident) = explode('::', $ident, 2);
+		echo '<h3>' . $this->html->link($class, "docs{$url}/{$class}") . '</h3> :: ' . $h($ident);
+	} else {
+		echo '<h3>' . $h($ident) . '</h3>';
+	}
 ?>
 </div>
 
@@ -51,6 +58,15 @@
 	<?php } ?>
 <?php } ?>
 
+<?php if ($object['properties']) { ?>
+	<h4>Properties</h4>
+	<ul class="properties">
+		<?php foreach ($object['properties'] as $name => $value) { ?>
+			<li><?=@$this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
+		<?php } ?>
+	</ul>
+<?php } ?>
+
 <?php if ($object['methods']) { ?>
 	<h4>Methods</h4>
 	<ul class="methods">
@@ -80,8 +96,17 @@
 	</span>
 <?php } ?>
 
+<?php if (isset($object['info']['tags']['see'])) { ?>
+	<h4>Related</h4>
+	<ul class="related">
+		<?php foreach ((array)$object['info']['tags']['see'] as $name) { ?>
+			<li><?=@$this->html->link($name, 'docs/' . str_replace('\\', '/', $name)); ?></li>
+		<?php } ?>
+	</ul>
+<?php } ?>
+
 <?php if (isset($object['info']['tags']['filter'])) { ?>
 	<span class="flag wiki-text">
-		This method is filter-able.
+		This method can be filtered.
 	</span>
 <?php } ?>
