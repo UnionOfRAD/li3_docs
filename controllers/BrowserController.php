@@ -30,7 +30,7 @@ class BrowserController extends \lithium\action\Controller {
 			'name' => null,
 			'identifier' => $name,
 			'type'       => null,
-			'info'       => null,
+			'info'       => array(),
 			'classes'    => null,
 			'methods'    => null,
 			'properties' => null,
@@ -42,10 +42,12 @@ class BrowserController extends \lithium\action\Controller {
 
 		switch ($object['type']) {
 			case 'namespace':
-				$object['children'] = Libraries::find($lib, array(
-					'namespaces' => true,
-					'path' => '/' . join('/', (array)$this->request->params['args'])
-				));
+				$path = '/' . join('/', (array)$this->request->params['args']);
+				$children = Libraries::find($lib, array('namespaces' => true) + compact('path'));
+
+				$object['children'] = $children;
+				$doc = $library['path'] . $path . '/readme.wiki';
+				$object['info']['description'] = file_exists($doc) ? file_get_contents($doc) : null;
 			break;
 			case 'class':
 				$object['name'] = null;
@@ -69,7 +71,11 @@ class BrowserController extends \lithium\action\Controller {
 				sort($object['subClasses']);
 			break;
 		}
-		$object['info'] = Inspector::info($object['identifier']);
+		$object['info'] += (array)Inspector::info($object['identifier']);
+
+		if (isset($object['info']['tags']['var'])) {
+			$object['type'] = $object['info']['tags']['var'];
+		}
 
 		return compact('name', 'library', 'object');
 	}
