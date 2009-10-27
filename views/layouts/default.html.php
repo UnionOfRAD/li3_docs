@@ -15,7 +15,7 @@
 	<?=@$this->html->style(array(
 		'http://li3.rad-dev.org/css/base.css',
 		'http://li3.rad-dev.org/css/li3.css',
-		'http://li3.rad-dev.org/css/docs.css'
+		'http://li3.rad-dev.org/css/li3.docs.css'
 	)); ?>
 	<?=@$this->scripts(); ?>
 </head>
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="article">
-			<h1>API</h1>
+			<h1><?=@$this->html->link('API', '/docs');?></h1>
 			<?=@$this->content();?>
 		</div>
 	</div>
