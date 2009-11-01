@@ -26,7 +26,7 @@
 	<ul class="children">
 		<?php foreach ($object['children'] as $class) { ?>
 			<?php $parts = explode('\\', $class); ?>
-			<li><?=@$this->html->link(end($parts), 'docs/' . str_replace('\\', '/', $class)); ?></li>
+			<li><?php echo $this->html->link(end($parts), 'docs/' . str_replace('\\', '/', $class)); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -35,7 +35,7 @@
 	<?php $parent = $object['parent']; ?>
 	<h4>Parent class</h4>
 	<span class="parent">
-		<?=@$this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
+		<?php echo $this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
 	</span>
 <?php } ?>
 
@@ -44,7 +44,7 @@
 	<ul class="subclasses">
 		<?php foreach ($object['subClasses'] as $class) { ?>
 			<?php $url = 'docs/' . str_replace('\\', '/', $class); ?>
-			<li><?=@$this->html->link($class, $url); ?></li>
+			<li><?php echo $this->html->link($class, $url); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -62,7 +62,7 @@
 	<h4>Properties</h4>
 	<ul class="properties">
 		<?php foreach ($object['properties'] as $name => $value) { ?>
-			<li><?=@$this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
+			<li><?php echo $this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -71,7 +71,7 @@
 	<h4>Methods</h4>
 	<ul class="methods">
 		<?php foreach ($object['methods'] as $method) { ?>
-			<li><?=@$this->html->link($method->name, "docs/{$curPath}::{$method->name}()"); ?></li>
+			<li><?php echo $this->html->link($method->name, "docs/{$curPath}::{$method->name}()"); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -100,7 +100,7 @@
 	<h4>Related</h4>
 	<ul class="related">
 		<?php foreach ((array)$object['info']['tags']['see'] as $name) { ?>
-			<li><?=@$this->html->link($name, 'docs/' . str_replace('\\', '/', $name)); ?></li>
+			<li><?php echo$this->html->link($name, 'docs/' . str_replace('\\', '/', $name)); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>

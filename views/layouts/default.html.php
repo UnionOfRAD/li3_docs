@@ -9,14 +9,14 @@
 <!doctype html>
 <html>
 <head>
-	<?=@$this->html->charset(); ?>
-	<title>Lithium API <?=@$this->title(); ?></title>
-	<?=@$this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
-	<?=@$this->html->style(array(
+	<?php echo $this->html->charset(); ?>
+	<title>Lithium API <?php echo $this->title(); ?></title>
+	<?php echo $this->html->link('Icon', 'http://li3.rad-dev.org/favicon.png', array('type' => 'icon')); ?>
+	<?php echo $this->html->style(array(
 		'http://li3.rad-dev.org/css/li3.css',
 		'http://li3.rad-dev.org/css/li3.docs.css'
 	)); ?>
-	<?=@$this->scripts(); ?>
+	<?php echo $this->scripts(); ?>
 </head>
 <body <?php echo (!empty($apiNavigation)) ? 'class="side-navigation"' : null ; ?>>
 <div id="container">
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div <?php echo !empty($constrained) ? 'class="width-constraint"' : null; ?>>
-			<h1><?=@$this->html->link('Lithium', '/'); ?></h1>
+			<h1><?php echo $this->html->link('Lithium', '/'); ?></h1>
 		</div>
 	</div>
 
@@ -53,8 +53,8 @@
 			</div>
 		</div>
 		<div class="article">
-			<h1><?=@$this->html->link('API', '/docs');?></h1>
-			<?=@$this->content();?>
+			<h1><?php echo $this->html->link('API', '/docs');?></h1>
+			<?php echo $this->content();?>
 		</div>
 	</div>
 	<div id="footer-spacer"></div>
@@ -62,7 +62,7 @@
 <div class="footer" id="site-footer">
 	<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
 </div>
-<?=@$this->html->script(array(
+<?php echo $this->html->script(array(
 	'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
 	'http://li3.rad-dev.org/js/li3.js',
 	'http://li3.rad-dev.org/js/cli.js',
