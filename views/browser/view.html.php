@@ -70,7 +70,7 @@
 	</ul>
 <?php } ?>
 
-<?php if ($object['methods']) { ?>
+<?php if ($object['methods'] && $object['methods']->count()) { ?>
 	<h4>Methods</h4>
 	<ul class="methods">
 		<?php foreach ($object['methods'] as $method) { ?>
