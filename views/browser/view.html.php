@@ -21,22 +21,25 @@
 ?>
 </div>
 
-<?php if ($object['children']) { ?>
-	<h4>Package contents</h4>
-	<ul class="children">
-		<?php foreach ($object['children'] as $class) { ?>
-			<?php $parts = explode('\\', $class); ?>
-			<li><?php echo $this->html->link(end($parts), 'docs/' . str_replace('\\', '/', $class)); ?></li>
-		<?php } ?>
-	</ul>
-<?php } ?>
-
 <?php if ($object['parent']) { ?>
 	<?php $parent = $object['parent']; ?>
 	<h4>Parent class</h4>
 	<span class="parent">
 		<?php echo $this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
 	</span>
+<?php } ?>
+
+<?php if ($object['children']) { ?>
+	<h4>Package contents</h4>
+	<ul class="children">
+		<?php foreach ($object['children'] as $class => $type) { ?>
+			<?php
+				$parts = explode('\\', $class);
+				$url = 'docs/' . str_replace('\\', '/', $class);
+			?>
+			<li class="<?=$type; ?>"><?php echo $this->html->link(end($parts), $url); ?></li>
+		<?php } ?>
+	</ul>
 <?php } ?>
 
 <?php if ($object['subClasses']) { ?>

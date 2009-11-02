@@ -6,10 +6,30 @@ use \DirectoryIterator;
 use \lithium\core\Libraries;
 use \lithium\util\reflection\Inspector;
 
+/**
+ * This is the Lithium API browser controller. This class introspects your applications libraries,
+ * plugins and classes to generate on-the-fly API documentation.
+ */
 class BrowserController extends \lithium\action\Controller {
 
+	/**
+	 * The name of the file used to document (describe) namespaces. By default, the document is read
+	 * from the directory being examined, and the contents of it represent the "docblock" for the
+	 * corresponding namespace.
+	 *
+	 * @var string
+	 */
+	public $docFile = 'readme.wiki';
+
+	/**
+	 * This action introspects all libraries and plugins that exist in your app (even if they are
+	 * not loaded), including the app itself and the Lithium core.
+	 *
+	 * @return array
+	 */
 	public function index() {
 		$pluginsDir = new DirectoryIterator(LITHIUM_APP_PATH . '/libraries/plugins');
+		$libraries = Libraries::get();
 		$plugins = array();
 
 		foreach ($pluginsDir as $plugin) {
@@ -17,8 +37,7 @@ class BrowserController extends \lithium\action\Controller {
 				$plugins[$plugin->getPathName()] = $plugin->getFileName();
 			}
 		}
-		$libraries = Libraries::get();
-		$this->set(compact('plugins', 'libraries'));
+		return compact('plugins', 'libraries');
 	}
 
 	public function view() {
@@ -27,7 +46,7 @@ class BrowserController extends \lithium\action\Controller {
 		$name = $library['prefix'] . join('\\', func_get_args());
 
 		$object = array(
-			'name' => null,
+			'name'       => null,
 			'identifier' => $name,
 			'type'       => null,
 			'info'       => array(),
@@ -43,22 +62,27 @@ class BrowserController extends \lithium\action\Controller {
 		switch ($object['type']) {
 			case 'namespace':
 				$path = '/' . join('/', (array)$this->request->params['args']);
-				$children = Libraries::find($lib, array('namespaces' => true) + compact('path'));
+				$searchOptions = array('namespaces' => true) + compact('path');
+				$object['children'] = array();
 
-				$object['children'] = $children;
-				$doc = $library['path'] . $path . '/readme.wiki';
+				foreach (Libraries::find($lib, $searchOptions) as $child) {
+					$path = Libraries::path($child, array('dirs' => true));
+					$type = is_dir($path) ? 'namespace' : 'class';
+					$object['children'][$child] = $type;
+				}
+
+				$doc = $library['path'] . $path . '/' . $this->docFile;
 				$object['info']['description'] = file_exists($doc) ? file_get_contents($doc) : null;
 			break;
 			case 'class':
 				$object['name'] = null;
 				$object['parent'] = get_parent_class($name);
 				$object['methods'] = Inspector::methods($name, null, array('public' => false));
+				$object['properties'] = get_class_vars($name);
 
 				if ($object['parent']) {
-					$object['properties'] = array_diff_key(
-						get_class_vars($name),
-						get_class_vars($object['parent'])
-					);
+					$parentProps = get_class_vars($object['parent']);
+					$object['properties'] = array_diff_key($object['properties'], $parentProps);
 				}
 				$classes = Libraries::find($lib, array('recursive' => true));
 
