@@ -66,8 +66,8 @@ class BrowserController extends \lithium\action\Controller {
 				$object['children'] = array();
 
 				foreach (Libraries::find($lib, $searchOptions) as $child) {
-					$path = Libraries::path($child, array('dirs' => true));
-					$type = is_dir($path) ? 'namespace' : 'class';
+					$libPath = Libraries::path($child, array('dirs' => true));
+					$type = is_dir($libPath) ? 'namespace' : 'class';
 					$object['children'][$child] = $type;
 				}
 
