@@ -21,14 +21,6 @@
 ?>
 </div>
 
-<?php if ($object['parent']) { ?>
-	<?php $parent = $object['parent']; ?>
-	<h4>Parent class</h4>
-	<span class="parent">
-		<?php echo $this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
-	</span>
-<?php } ?>
-
 <?php if ($object['children']) { ?>
 	<h4>Package contents</h4>
 	<ul class="children">
@@ -42,14 +34,13 @@
 	</ul>
 <?php } ?>
 
-<?php if ($object['subClasses']) { ?>
-	<h4>Subclasses</h4>
-	<ul class="subclasses">
-		<?php foreach ($object['subClasses'] as $class) { ?>
-			<?php $url = 'docs/' . str_replace('\\', '/', $class); ?>
-			<li><?php echo $this->html->link($class, $url); ?></li>
-		<?php } ?>
-	</ul>
+<?php // Parent object ?>
+<?php if ($object['parent']) { ?>
+	<?php $parent = $object['parent']; ?>
+	<h4>Parent class</h4>
+	<span class="parent">
+		<?php echo $this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
+	</span>
 <?php } ?>
 
 <?php if ($object['info']['description']) { ?>
@@ -61,24 +52,7 @@
 	<?php } ?>
 <?php } ?>
 
-<?php if ($object['properties']) { ?>
-	<h4>Properties</h4>
-	<ul class="properties">
-		<?php foreach ($object['properties'] as $name => $value) { ?>
-			<li><?php echo $this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
-		<?php } ?>
-	</ul>
-<?php } ?>
-
-<?php if ($object['methods'] && $object['methods']->count()) { ?>
-	<h4>Methods</h4>
-	<ul class="methods">
-		<?php foreach ($object['methods'] as $method) { ?>
-			<li><?php echo $this->html->link($method->name, "docs/{$curPath}::{$method->name}()"); ?></li>
-		<?php } ?>
-	</ul>
-<?php } ?>
-
+<?php // Method parameters ?>
 <?php if (isset($object['info']['tags']['params'])) { ?>
 	<h4>Parameters</h4>
 	<ul class="parameters">
@@ -92,6 +66,7 @@
 	</ul>
 <?php } ?>
 
+<?php // Method return value ?>
 <?php if (isset($object['info']['tags']['return'])) { ?>
 	<h4>Returns</h4>
 	<span class="return wiki-text">
@@ -99,6 +74,14 @@
 	</span>
 <?php } ?>
 
+<?php // Method filtering info ?>
+<?php if (isset($object['info']['tags']['filter'])) { ?>
+	<span class="flag wiki-text">
+		This method can be filtered.
+	</span>
+<?php } ?>
+
+<?php // Related items ?>
 <?php if (isset($object['info']['tags']['see'])) { ?>
 	<h4>Related</h4>
 	<ul class="related">
@@ -108,8 +91,34 @@
 	</ul>
 <?php } ?>
 
-<?php if (isset($object['info']['tags']['filter'])) { ?>
-	<span class="flag wiki-text">
-		This method can be filtered.
-	</span>
+<?php // Object properties ?>
+<?php if ($object['properties']) { ?>
+	<h4>Properties</h4>
+	<ul class="properties">
+		<?php foreach ($object['properties'] as $name => $value) { ?>
+			<li><?php echo $this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
+		<?php } ?>
+	</ul>
+<?php } ?>
+
+<?php // Object methods ?>
+<?php if ($object['methods'] && $object['methods']->count()) { ?>
+	<h4>Methods</h4>
+	<ul class="methods">
+		<?php foreach ($object['methods'] as $method) { ?>
+			<?php $url = "docs/{$curPath}::{$method->name}()"; ?>
+			<li><?php echo $this->html->link($method->name, $url); ?></li>
+		<?php } ?>
+	</ul>
+<?php } ?>
+
+<?php // Object subclasses ?>
+<?php if ($object['subClasses']) { ?>
+	<h4>Subclasses</h4>
+	<ul class="subclasses">
+		<?php foreach ($object['subClasses'] as $class) { ?>
+			<?php $url = 'docs/' . str_replace('\\', '/', $class); ?>
+			<li><?php echo $this->html->link($class, $url); ?></li>
+		<?php } ?>
+	</ul>
 <?php } ?>
