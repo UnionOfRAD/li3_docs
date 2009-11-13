@@ -2,6 +2,7 @@
 
 namespace li3_docs\controllers;
 
+use \Exception;
 use \DirectoryIterator;
 use \lithium\core\Libraries;
 use \lithium\util\reflection\Inspector;
@@ -90,7 +91,11 @@ class BrowserController extends \lithium\action\Controller {
 					if (preg_match('/\\\(libraries|plugins)\\\/', $class)) {
 						return false;
 					}
-					return get_parent_class($class) == $name;
+					try {
+						return get_parent_class($class) == $name;
+					} catch (Exception $e) {
+						return false;
+					}
 				});
 				sort($object['subClasses']);
 			break;
