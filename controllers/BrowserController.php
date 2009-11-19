@@ -105,7 +105,6 @@ class BrowserController extends \lithium\action\Controller {
 		if (isset($object['info']['tags']['var'])) {
 			$object['type'] = $object['info']['tags']['var'];
 		}
-
 		return compact('name', 'library', 'object');
 	}
 }

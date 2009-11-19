@@ -54,7 +54,7 @@
 		</div>
 		<div class="article">
 			<h1><?php echo $this->html->link('API', '/docs');?></h1>
-			<?php echo $this->content();?>
+			<?php echo $this->content(); ?>
 		</div>
 	</div>
 	<div id="footer-spacer"></div>

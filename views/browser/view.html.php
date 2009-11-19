@@ -1,24 +1,33 @@
-<div class="nav" class="<?=$object['type']; ?>"><span class="type"><?=$object['type']; ?></span>
 <?php
-	$path = array_filter(array_merge(
-		array($object['name']), explode('\\', $object['identifier'])
-	));
-	$url = '';
-	$curPath = str_replace('\\', '/', $name);
 
-	foreach (array_slice($path, 0, -1) as $part) {
-		$url .= '/' . $part;
-		echo '<h3>' . $this->html->link($part, 'docs' . $url) . '</h3> \ ';
-	}
-	$ident = end($path);
+$cleanup = function($text) {
+	return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
+};
 
-	if (strpos($ident, '::') !== false) {
-		list($class, $ident) = explode('::', $ident, 2);
-		echo '<h3>' . $this->html->link($class, "docs{$url}/{$class}") . '</h3> :: ' . $h($ident);
-	} else {
-		echo '<h3>' . $h($ident) . '</h3>';
-	}
 ?>
+<div class="nav" class="<?=$object['type']; ?>">
+	<span class="type"><?=$object['type']; ?></span>
+	<?php
+		$path = array_filter(array_merge(
+			array($object['name']), explode('\\', $object['identifier'])
+		));
+		$url = '';
+		$curPath = str_replace('\\', '/', $name);
+
+		foreach (array_slice($path, 0, -1) as $part) {
+			$url .= '/' . $part;
+			echo '<h3>' . $this->html->link($part, 'docs' . $url) . '</h3> \ ';
+		}
+		$ident = end($path);
+
+		if (strpos($ident, '::') !== false) {
+			list($class, $ident) = explode('::', $ident, 2);
+			echo '<h3>' . $this->html->link($class, "docs{$url}/{$class}") . '</h3> :: ';
+			echo $h($ident);
+		} else {
+			echo '<h3>' . $h($ident) . '</h3>';
+		}
+	?>
 </div>
 
 <?php if ($object['children']) { ?>
@@ -45,7 +54,7 @@
 
 <?php if ($object['info']['description']) { ?>
 	<h4>Description</h4>
-	<p class="description wiki-text"><?=$object['info']['description']; ?></p>
+	<p class="description wiki-text"><?=$cleanup($object['info']['description']); ?></p>
 
 	<?php if (!empty($object['info']['text'])) { ?>
 		<p class="text wiki-text"><?=$object['info']['text']; ?></p>
@@ -60,7 +69,7 @@
 			<li>
 				<span class="type"><?=$data['type']; ?></span>
 				<?=$name; ?>
-				<span class="description wiki-text"><?=$data['text']; ?></span>
+				<span class="description wiki-text"><?=$cleanup($data['text']); ?></span>
 			</li>
 		<?php } ?>
 	</ul>
@@ -70,7 +79,7 @@
 <?php if (isset($object['info']['tags']['return'])) { ?>
 	<h4>Returns</h4>
 	<span class="return wiki-text">
-		<?=$object['info']['tags']['return']; ?>
+		<?=$cleanup($object['info']['tags']['return']); ?>
 	</span>
 <?php } ?>
 
