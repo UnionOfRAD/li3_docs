@@ -76,11 +76,10 @@ $cleanup = function($text) {
 <?php } ?>
 
 <?php // Method return value ?>
-<?php if (isset($object['info']['tags']['return'])) { ?>
+<?php if (isset($object['info']['return'])) { ?>
 	<h4>Returns</h4>
-	<span class="return wiki-text">
-		<?=$cleanup($object['info']['tags']['return']); ?>
-	</span>
+	<span class="type"><?=$object['info']['return']['type']; ?></span>
+	<span class="return wiki-text"><?=$cleanup($object['info']['return']['text']); ?></span>
 <?php } ?>
 
 <?php // Method filtering info ?>

@@ -8,7 +8,7 @@ use \lithium\core\Libraries;
 use \lithium\util\reflection\Inspector;
 
 /**
- * This is the Lithium API browser controller. This class introspects your applications libraries,
+ * This is the Lithium API browser controller. This class introspects your application's libraries,
  * plugins and classes to generate on-the-fly API documentation.
  */
 class BrowserController extends \lithium\action\Controller {
@@ -41,6 +41,19 @@ class BrowserController extends \lithium\action\Controller {
 		return compact('plugins', 'libraries');
 	}
 
+	/**
+	 * This action renders the detail page for all API elements, including namespaces, classes,
+	 * properties and methods. The action determines what type of entity is being displayed, and
+	 * gathers all available data on it. Any wiki text embedded in the data is then post-processed
+	 * and prepped for display.
+	 *
+	 * @return array Returns an array with the following keys:
+	 *               - `'name'`: A string containing the full name of the entity being displayed
+	 *               - `'library'`: An array with the details of the current class library being
+	 *                 browsed, in which the current entity is contained.
+	 *               - `'object'`: A multi-level array containing all data extracted about the
+	 *                 current entity.
+	 */
 	public function view() {
 		$lib = $this->request->params['library'];
 		$library = Libraries::get($lib);
@@ -101,11 +114,61 @@ class BrowserController extends \lithium\action\Controller {
 			break;
 		}
 		$object['info'] += (array)Inspector::info($object['identifier']);
+		$object = $this->_process($object);
+		return compact('name', 'library', 'object');
+	}
 
+	/**
+	 * Handles post-processing of aggregated object data, including re-mapping properties and
+	 * processing embedded text commands.
+	 *
+	 * @param array $object
+	 * @return array
+	 */
+	protected function _process($object) {
 		if (isset($object['info']['tags']['var'])) {
 			$object['type'] = $object['info']['tags']['var'];
 		}
-		return compact('name', 'library', 'object');
+
+		if ($object['info']['description']) {
+			$object['info']['description'] = $this->_embed($object['info']['description']);
+		}
+
+		if ($object['info']['text']) {
+			$object['info']['text'] = $this->_embed($object['info']['text']);
+		}
+
+		if (isset($object['info']['tags']['return'])) {
+			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2);
+			$object['info']['return'] = compact('type', 'text');
+			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
+		}
+		return $object;
+	}
+
+	/**
+	 * Replaces class and method references with code snippets pulled from the class.
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	protected function _embed($text) {
+		$regex = '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)';
+
+		if (preg_match_all("/\{\{\{\s*(embed:{$regex}\))\s*\}\}\}/", $text, $matches)) {
+			foreach ($matches['class'] as $i => $class) {
+				$methods = array($matches['method'][$i]);
+				$markers = Inspector::methods($class, 'extents', compact('methods'));
+				$methodStart = $markers[current($methods)][0];
+				$replace = $matches[0][$i];
+
+				list($start, $end) = explode('-', $matches['lines'][$i]);
+				$lines = range(intval($start) + $methodStart, intval($end) + $methodStart);
+				$code = '{{{' . join("\n", Inspector::lines($class, $lines)) . '}}}';
+				$text = str_replace($replace, $code, $text);
+			}
+		}
+		return $text;
 	}
 }
 
