@@ -101,7 +101,7 @@ class Docs extends \lithium\g11n\catalog\adapters\Base {
 
 		// $methods = Inspector::methods($class, null, array('public' => false));
 		$methods = get_class_methods($class);
-		$properties = get_class_vars($class);
+		$properties = array_keys(get_class_vars($class));
 
 		$ident = $class;
 		$info = Inspector::info($ident);
@@ -144,7 +144,17 @@ class Docs extends \lithium\g11n\catalog\adapters\Base {
 			}
 		}
 		foreach ($properties as $property) {
-			$info = Inspector::info("{$class}::\${$property}");
+			$ident = "{$class}::\${$property}";
+			$info = Inspector::info($ident);
+			$info = Docblock::comment($info['comment']);
+			$this->_mergeMessageItem($data, array(
+				'singularId' => $info['description'],
+				'comments' => array($ident)
+			));
+			$this->_mergeMessageItem($data, array(
+				'singularId' => $info['text'],
+				'comments' => array($ident)
+			));
 		}
 		return $data;
 	}
