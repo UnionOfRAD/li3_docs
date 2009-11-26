@@ -54,13 +54,15 @@
 		</div>
 		<div class="article">
 			<h1><?php echo $this->html->link('API', '/docs');?></h1>
-			<?php echo $this->content(); ?>
+			<?php echo $this->content();?>
 		</div>
 	</div>
 	<div id="footer-spacer"></div>
 </div>
 <div class="footer" id="site-footer">
-	<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad</p>
+	<p class="copyright">
+		<?=$t('Pretty much everything is &copy; 2009 and beyond, the Union of Rad'); ?>
+	</p>
 </div>
 <?php echo $this->html->script(array(
 	'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',

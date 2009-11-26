@@ -1,0 +1,174 @@
+<?php
+/**
+ * Lithium: the most rad php framework
+ *
+ * @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+ * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ */
+
+namespace li3_docs\extensions\adapters\g11n\catalog;
+
+use \Exception;
+use \RecursiveIteratorIterator;
+use \RecursiveDirectoryIterator;
+use \lithium\core\Libraries;
+use \lithium\util\reflection\Inspector;
+use \lithium\util\reflection\Docblock;
+use \lithium\util\Set;
+
+class Docs extends \lithium\g11n\catalog\adapters\Base {
+
+	/**
+	 * Supported categories.
+	 *
+	 * @var array
+	 */
+	protected $_categories = array(
+		'message' => array(
+			'template' => array('read' => true)
+	));
+
+	/**
+	 * Constructor.
+	 *
+	 * @param array $config Available configuration options are:
+	 *        - `'library'`
+	 *        - `'scope'`: Scope to use.
+	 * @return void
+	 */
+	public function __construct($config = array()) {
+		$defaults = array('library' => null, 'scope' => null);
+		parent::__construct($config + $defaults);
+	}
+
+	/**
+	 * Initializer.  Checks if the configured path exists.
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
+	protected function _init() {
+		parent::_init();
+
+		if (!Libraries::get($this->_config['library'])) {
+			throw new Exception("Library `{$this->_config['library']}` is not configured");
+		}
+	}
+
+	/**
+	 * Extracts data from files within configured path recursively.
+	 *
+	 * @param string $category Dot-delimited category.
+	 * @param string $locale A locale identifier.
+	 * @param string $scope The scope for the current operation.
+	 * @return mixed
+	 */
+	public function read($category, $locale, $scope) {
+		if ($scope != $this->_config['scope']) {
+			return null;
+		}
+		$library = Libraries::get($this->_config['library']);
+		$data = array();
+
+		$classes = Libraries::find($this->_config['library'], array(
+			'recursive' => true,
+			'exclude' => '/\w+Test$|Mock+\w|webroot|index$|^app\\\\config|^\w+\\\\views\/|\./'
+		));
+		foreach ($classes as $class) {
+			if (preg_match('/\\\(libraries|plugins)\\\/', $class)) {
+				continue;
+			}
+			$data += $this->_parseClass($class);
+		}
+		if ($data) {
+			return $data;
+		}
+	}
+
+	/**
+	 * Writing is not supported.
+	 *
+	 * @param string $category Dot-delimited category.
+	 * @param string $locale A locale identifier.
+	 * @param string $scope The scope for the current operation.
+	 * @param mixed $data The data to write.
+	 * @return void
+	 */
+	public function write($category, $locale, $scope, $data) {}
+
+	public function _parseClass($class) {
+		$data = array();
+
+		// $methods = Inspector::methods($class, null, array('public' => false));
+		$methods = get_class_methods($class);
+		$properties = get_class_vars($class);
+
+		$ident = $class;
+		$info = Inspector::info($ident);
+		$info = Docblock::comment($info['comment']);
+		$this->_mergeMessageItem($data, array(
+			'singularId' => $info['description'],
+			'comments' => array($ident)
+		));
+		$this->_mergeMessageItem($data, array(
+			'singularId' => $info['text'],
+			'comments' => array($class)
+		));
+
+		foreach ($methods as $method) {
+			$ident = "{$class}::{$method}()";
+			$info = Inspector::info($ident);
+			$info = Docblock::comment($info['comment']);
+
+			$this->_mergeMessageItem($data, array(
+				'singularId' => $info['description'],
+				'comments' => array($ident)
+			));
+			$this->_mergeMessageItem($data, array(
+				'singularId' => $info['text'],
+				'comments' => array($ident)
+			));
+
+			if (isset($info['tags']['return'])) {
+				$this->_mergeMessageItem($data, array(
+					'singularId' => $info['tags']['return'],
+					'comments' => array($ident)
+				));
+			}
+
+			foreach (Set::extract($info, '/tags/params/text') as $text) {
+				$this->_mergeMessageItem($data, array(
+					'singularId' => $text,
+					'comments' => array($ident)
+				));
+			}
+		}
+		foreach ($properties as $property) {
+			$info = Inspector::info("{$class}::\${$property}");
+		}
+		return $data;
+	}
+
+	/**
+	 * Cleans and merges a message item into given data.
+	 *
+	 * The implementation of the `$cleanup` closure should correspond to the one
+	 * used in the templates.
+	 *
+	 * @param array $data Data to merge item into.
+	 * @param array $item Item to merge into $data.
+	 * @return void
+	 * @see lithium\g11n\catalog\adapters\Base::_mergeMessageItem()
+	 */
+	protected function _mergeMessageItem(&$data, $item) {
+		$cleanup = function($text) {
+			return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
+		};
+		if (isset($item['singularId'])) {
+			$item['singularId'] = $cleanup($item['singularId']);
+		}
+		return parent::_mergeMessageItem($data, $item);
+	}
+}
+
+?>
