@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div id="git-shortcuts">
-		<span id="git-clone-path" class="clone fixed">git clone code@rad-dev.org:lithium.git</span>
+		<span id="git-clone-path" class="clone fixed"><strong>git clone</strong> code@rad-dev.org:lithium.git</span>
 		<a href="#" id="git-copy" class="copy" title="Copy the git clone shortcut to your clipboard">copy to clipboard</a>
 	</div>
 	<div id="container">
