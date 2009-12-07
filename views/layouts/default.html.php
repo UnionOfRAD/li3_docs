@@ -61,7 +61,7 @@
 	'http://code.jquery.com/jquery-1.4.1.min.js',
 	'li3',
 	'cli',
-//		'libraries/ZeroClipboard/ZeroClipboard.js',
+	'libraries/ZeroClipboard/ZeroClipboard.js',
 	'showdown.min.js'
 )); ?>
 <script type="text/javascript" charset="utf-8">
