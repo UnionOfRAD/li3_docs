@@ -1,4 +1,4 @@
-<h2>Available Libraries</h2>
+<h2>Libraries</h2>
 <ul class="libraries">
 	<?php foreach ($libraries as $name => $config) { ?>
 		<?php $display = ucwords(str_replace('_', ' ', $name)); ?>
