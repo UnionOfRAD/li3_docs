@@ -115,7 +115,34 @@ class BrowserController extends \lithium\action\Controller {
 		}
 		$object['info'] += (array)Inspector::info($object['identifier']);
 		$object = $this->_process($object);
-		return compact('name', 'library', 'object');
+
+		$crumbs = $this->_crumbs($object);
+		return compact('name', 'library', 'object', 'crumbs');
+	}
+
+	protected function _crumbs($object) {
+		$path = array_filter(array_merge(
+			array($object['name']), explode('\\', $object['identifier'])
+		));
+		$crumbs[] = array(
+			'title' => $object['type'],
+			'url' => null,
+			'class' => 'type ' . $object['type']
+		);
+
+		$url = '';
+		foreach (array_slice($path, 0, -1) as $part) {
+			$url .= '/' . $part;
+			$crumbs[] = array('title' => $part, 'url' => 'docs' . $url, 'class' => null);
+		}
+		$ident = end($path);
+
+		if (strpos($ident, '::') !== false) {
+			list($class, $ident) = explode('::', $ident, 2);
+			$crumbs[] = array('title' => $class, 'url' => "docs{$url}/{$class}", 'class' => null);
+		}
+		$crumbs[] = array('title' => $ident, 'url' => null, 'class' => null);
+		return $crumbs;
 	}
 
 	/**
@@ -134,12 +161,13 @@ class BrowserController extends \lithium\action\Controller {
 			$object['info']['description'] = $this->_embed($object['info']['description']);
 		}
 
-		if ($object['info']['text']) {
+		if (isset($object['info']['text'])) {
 			$object['info']['text'] = $this->_embed($object['info']['text']);
 		}
 
 		if (isset($object['info']['tags']['return'])) {
-			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2);
+			$type = strtok($object['info']['tags']['return'], ' ');
+			$text = strtok(' ');
 			$object['info']['return'] = compact('type', 'text');
 			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
 		}

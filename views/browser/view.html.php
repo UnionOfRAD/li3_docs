@@ -4,33 +4,10 @@ $cleanup = function($text) {
 	return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 };
 
+$scope = strtok($object['identifier'], '\\') . '_docs';
+$curPath = str_replace('\\', '/', $name);
+
 ?>
-<div class="nav" class="<?=$object['type']; ?>">
-	<span class="type"><?=$object['type']; ?></span>
-	<?php
-		$path = array_filter(array_merge(
-			array($object['name']), explode('\\', $object['identifier'])
-		));
-		$url = '';
-		$curPath = str_replace('\\', '/', $name);
-
-		foreach (array_slice($path, 0, -1) as $part) {
-			$url .= '/' . $part;
-			echo '<h3>' . $this->html->link($part, 'docs' . $url) . '</h3> \ ';
-		}
-		$ident = end($path);
-
-		if (strpos($ident, '::') !== false) {
-			list($class, $ident) = explode('::', $ident, 2);
-			echo '<h3>' . $this->html->link($class, "docs{$url}/{$class}") . '</h3> :: ';
-			echo $h($ident);
-		} else {
-			echo '<h3>' . $h($ident) . '</h3>';
-		}
-		$scope = reset($path) . '_docs';
-	?>
-</div>
-
 <?php if ($object['children']) { ?>
 	<h4><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="children">
@@ -55,12 +32,12 @@ $cleanup = function($text) {
 
 <?php if ($object['info']['description']) { ?>
 	<h4><?=$t('Description', array('scope' => 'li3_docs')); ?></h4>
-	<p class="description wiki-text">
+	<p class="description markdown">
 		<?=$t($cleanup($object['info']['description']), compact('scope')); ?>
 	</p>
 
 	<?php if (!empty($object['info']['text'])) { ?>
-		<p class="text wiki-text">
+		<p class="text markdown">
 			<?=$t($cleanup($object['info']['text']), compact('scope')); ?>
 		</p>
 	<?php } ?>
@@ -74,7 +51,7 @@ $cleanup = function($text) {
 			<li>
 				<span class="type"><?=$data['type']; ?></span>
 				<?=$name; ?>
-				<span class="description wiki-text">
+				<span class="description markdown">
 					<?=$t($cleanup($data['text']), compact('scope')); ?>
 				</span>
 			</li>
@@ -86,14 +63,14 @@ $cleanup = function($text) {
 <?php if (isset($object['info']['return'])) { ?>
 	<h4><?=$t('Returns', array('scope' => 'li3_docs')); ?></h4>
 	<span class="type"><?=$object['info']['return']['type']; ?></span>
-	<span class="return wiki-text">
+	<span class="return markdown">
 		<?=$t($cleanup($object['info']['return']['text']), compact('scope')); ?>
 	</span>
 <?php } ?>
 
 <?php // Method filtering info ?>
 <?php if (isset($object['info']['tags']['filter'])) { ?>
-	<span class="flag wiki-text">
+	<span class="flag markdown">
 		<?=$t('This method can be filtered.', array('scope' => 'li3_docs')); ?>
 	</span>
 <?php } ?>

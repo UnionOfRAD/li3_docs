@@ -1,0 +1,96 @@
+/*-------------------------------------------------------------------------------------------------
+   Lithium: the most rad php framework
+
+   @copyright     Copyright 2009, Union of RAD (http://union-of-rad.org)
+   @license       http://opensource.org/licenses/bsd-license.php The BSD License
+-------------------------------------------------------------------------------------------------*/
+
+/*--- This is the stylesheet for li3_docs ---*/
+
+.crumbs li + li:before {
+	content: ' \\ ';
+}
+.crumbs li + li.ident:before {
+	content: ' :: ';
+}
+.crumbs li.type + li:before {
+	content: '';
+}
+.crumbs .type {
+	font-size: 18px;
+	font-style: oblique;
+	margin-right: 10px;
+}
+.crumbs .type.namespace {
+}
+.crumbs .type.class {
+}
+.crumbs .type.method {
+}
+
+.markdown ul p {
+	margin: .25em 0 .75em 0;
+}
+
+ul.libraries {
+	list-style: none;
+}
+.libraries > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/package_green.png) no-repeat center left;
+	padding: .25em 0 .25em 26px;
+}
+
+ul.children, ul.subclasses, ul.properties, ul.methods, ul.parameters, ul.related {
+	list-style: none;
+	padding: 0;
+}
+
+.children > li, .subclasses > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/package.png) no-repeat 0 6px;
+	padding: .25em 0 .25em 26px;
+}
+
+.children > li.class {
+	background: url(http://li3.rad-dev.org/img/icons/silk/brick.png) no-repeat 0 6px;
+}
+
+.properties > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/cog.png) no-repeat 0 6px;
+	padding: .25em 0 .25em 26px;
+}
+
+.methods > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/wrench.png) no-repeat 0 6px;
+	padding: .25em 0 .25em 26px;
+}
+
+.parameters > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/cog_go.png) no-repeat 0 6px;
+	padding: .25em 0 .25em 26px;
+}
+
+.related > li {
+	background: url(http://li3.rad-dev.org/img/icons/silk/brick_add.png) no-repeat 0 6px;
+	padding: .25em 0 .25em 26px;
+}
+
+.nav.namespace {
+	background: url(http://li3.rad-dev.org/img/icons/silk/package_green.png) no-repeat center left;
+	padding: .25em 0 .25em 26px;
+}
+
+.nav.class {
+	background: url(http://li3.rad-dev.org/img/icons/silk/package.png) no-repeat center left;
+	padding: .25em 0 .25em 26px;
+}
+
+.nav.method {
+	background: url(http://li3.rad-dev.org/img/icons/silk/wrench.png) no-repeat center left;
+	padding: .25em 0 .25em 26px;
+}
+
+span.parent {
+	background: url(http://li3.rad-dev.org/img/icons/silk/brick_link.png) no-repeat center left;
+	padding: .25em 0 .25em 26px;
+}
+
