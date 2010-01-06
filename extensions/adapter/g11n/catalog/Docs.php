@@ -19,16 +19,6 @@ use \lithium\util\Set;
 class Docs extends \lithium\g11n\catalog\adapter\Base {
 
 	/**
-	 * Supported categories.
-	 *
-	 * @var array
-	 */
-	protected $_categories = array(
-		'message' => array(
-			'template' => array('read' => true)
-	));
-
-	/**
 	 * Constructor.
 	 *
 	 * @param array $config Available configuration options are:
@@ -80,21 +70,8 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 			}
 			$data += $this->_parseClass($class);
 		}
-		if ($data) {
-			return $data;
-		}
+		return $data;
 	}
-
-	/**
-	 * Writing is not supported.
-	 *
-	 * @param string $category Dot-delimited category.
-	 * @param string $locale A locale identifier.
-	 * @param string $scope The scope for the current operation.
-	 * @param mixed $data The data to write.
-	 * @return void
-	 */
-	public function write($category, $locale, $scope, $data) {}
 
 	public function _parseClass($class) {
 		$data = array();
@@ -106,12 +83,12 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 		$ident = $class;
 		$info = Inspector::info($ident);
 		$info = Docblock::comment($info['comment']);
-		$this->_mergeMessageItem($data, array(
-			'singularId' => $info['description'],
+		$data = $this->_merge($data, array(
+			'id' => $info['description'],
 			'comments' => array($ident)
 		));
-		$this->_mergeMessageItem($data, array(
-			'singularId' => $info['text'],
+		$this->_merge($data, array(
+			'id' => $info['text'],
 			'comments' => array($class)
 		));
 
@@ -120,25 +97,25 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 			$info = Inspector::info($ident);
 			$info = Docblock::comment($info['comment']);
 
-			$this->_mergeMessageItem($data, array(
-				'singularId' => $info['description'],
+			$this->_merge($data, array(
+				'id' => $info['description'],
 				'comments' => array($ident)
 			));
-			$this->_mergeMessageItem($data, array(
-				'singularId' => $info['text'],
+			$this->_merge($data, array(
+				'id' => $info['text'],
 				'comments' => array($ident)
 			));
 
 			if (isset($info['tags']['return'])) {
-				$this->_mergeMessageItem($data, array(
-					'singularId' => $info['tags']['return'],
+				$this->_merge($data, array(
+					'id' => $info['tags']['return'],
 					'comments' => array($ident)
 				));
 			}
 
 			foreach (Set::extract($info, '/tags/params/text') as $text) {
-				$this->_mergeMessageItem($data, array(
-					'singularId' => $text,
+				$this->_merge($data, array(
+					'id' => $text,
 					'comments' => array($ident)
 				));
 			}
@@ -147,12 +124,12 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 			$ident = "{$class}::\${$property}";
 			$info = Inspector::info($ident);
 			$info = Docblock::comment($info['comment']);
-			$this->_mergeMessageItem($data, array(
-				'singularId' => $info['description'],
+			$data = $this->_merge($data, array(
+				'id' => $info['description'],
 				'comments' => array($ident)
 			));
-			$this->_mergeMessageItem($data, array(
-				'singularId' => $info['text'],
+			$data = $this->_merge($data, array(
+				'id' => $info['text'],
 				'comments' => array($ident)
 			));
 		}
@@ -168,16 +145,16 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 	 * @param array $data Data to merge item into.
 	 * @param array $item Item to merge into $data.
 	 * @return void
-	 * @see lithium\g11n\catalog\adapter\Base::_mergeMessageItem()
+	 * @see lithium\g11n\catalog\adapter\Base::_merge()
 	 */
-	protected function _mergeMessageItem(&$data, $item) {
+	protected function _merge($data, $item) {
 		$cleanup = function($text) {
 			return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 		};
-		if (isset($item['singularId'])) {
-			$item['singularId'] = $cleanup($item['singularId']);
+		if (isset($item['id'])) {
+			$item['id'] = $cleanup($item['id']);
 		}
-		return parent::_mergeMessageItem($data, $item);
+		return parent::_merge($data, $item);
 	}
 }
 
