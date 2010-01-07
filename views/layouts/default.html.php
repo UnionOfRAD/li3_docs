@@ -38,5 +38,17 @@
 			<?php echo $this->content; ?>
 		</div>
 	</div>
+<?php echo $this->html->script(array(
+	'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
+	'showdown.min.js'
+)); ?>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+		var converter = new Showdown.converter("/");
+		$(".markdown").each(function () {
+			$(this).html(converter.makeHtml($.trim($(this).text())));
+		});
+	});
+</script>
 </body>
 </html>
