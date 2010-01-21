@@ -9,7 +9,7 @@
 namespace li3_docs\extensions\command\docs;
 
 use \lithium\core\Libraries;
-use \lithium\util\reflection\Inspector;
+use \lithium\analysis\Inspector;
 
 /**
  * Adds headers and docblocks to classes and methods

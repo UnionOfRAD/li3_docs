@@ -10,7 +10,7 @@ namespace li3_docs\extensions\command\docs;
 
 use \lithium\core\Libraries;
 use \lithium\util\Inflector;
-use \lithium\util\reflection\Parser;
+use \lithium\analysis\Parser;
 
 /**
  * Searches and displays @todo, @discuss, @fix and @important comments in your code.
@@ -23,23 +23,23 @@ class Todo extends \lithium\console\Command {
 	 * @var id
 	 */
 	public $show = true;
-	
+
 	/**
 	 * undocumented function
 	 *
-	 * @param string $dir 
+	 * @param string $dir
 	 * @return void
 	 */
 	public function run($library = 'lithium') {
 		$libs = Libraries::find($library, array('recursive' => true));
 		$files = array();
-		
+
 		foreach ((array)$libs as $lib) {
 			$file = Libraries::path($lib);
 			$this->_display($file);
 		}
 	}
-	
+
 	protected function _display($file) {
 		$matches = Parser::tokenize(file_get_contents($file));
 		if (empty($matches)) {

@@ -12,8 +12,8 @@ use \Exception;
 use \RecursiveIteratorIterator;
 use \RecursiveDirectoryIterator;
 use \lithium\core\Libraries;
-use \lithium\util\reflection\Inspector;
-use \lithium\util\reflection\Docblock;
+use \lithium\analysis\Inspector;
+use \lithium\analysis\Docblock;
 use \lithium\util\Set;
 
 class Docs extends \lithium\g11n\catalog\adapter\Base {
