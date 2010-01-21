@@ -147,8 +147,11 @@ class BrowserController extends \lithium\action\Controller {
 		if (strpos($ident, '::') !== false) {
 			list($class, $ident) = explode('::', $ident, 2);
 			$crumbs[] = array('title' => $class, 'url' => "docs{$url}/{$class}", 'class' => null);
+			$isMethod = true;
+		} else {
+			$isMethod = false;
 		}
-		$crumbs[] = array('title' => $ident, 'url' => null, 'class' => null);
+		$crumbs[] = array('title' => $ident, 'url' => null, 'class' => $isMethod ? 'ident' : null);
 		return $crumbs;
 	}
 
