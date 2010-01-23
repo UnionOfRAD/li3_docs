@@ -101,3 +101,6 @@ span.parent {
 	background: url("../img/icons/silk/brick_link.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
 }
+span.type {
+	color: #454545;
+}
