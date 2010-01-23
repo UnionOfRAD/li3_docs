@@ -13,6 +13,16 @@
 	list-style-type: none;
 	display: inline;
 }
+
+p.description,
+p.text,
+.parameters {
+	width: 760px;
+}
+
+#footer-spacer {
+	height: 100px;
+}
 .crumbs li + li:before {
 	content: ' \\ ';
 }
