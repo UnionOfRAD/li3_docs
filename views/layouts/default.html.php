@@ -56,7 +56,7 @@
 </div>
 <div id="footer">
 	<p class="copyright">
-		<?=$t('Pretty much everything is &copy; 2009 and beyond, the Union of Rad'); ?>
+	<?php printf($t('Pretty much everything is %s 2009 and beyond, the Union of Rad'), '&copy;'); ?>
 	</p>
 </div>
 <?php echo $this->html->script(array(
