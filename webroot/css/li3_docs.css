@@ -23,6 +23,20 @@ p.text,
 #footer-spacer {
 	height: 100px;
 }
+
+.crumbs span {
+	color: #0D0D0D;
+}
+.crumbs .type {
+	display: none;
+}
+.crumbs :last-child span {
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	background: #111;
+	color: white;
+	padding: 0.2em 0.3em;
+}
 .crumbs li + li:before {
 	content: ' \\ ';
 }
@@ -31,11 +45,6 @@ p.text,
 }
 .crumbs li.type + li:before {
 	content: '';
-}
-.crumbs .type {
-	font-size: 18px;
-	font-style: oblique;
-	margin-right: 10px;
 }
 
 ul.libraries, ul.children, ul.subclasses, ul.properties, ul.methods, ul.parameters, ul.related {
