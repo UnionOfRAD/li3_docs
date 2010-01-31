@@ -11,7 +11,7 @@ namespace li3_docs\controllers;
 use \Exception;
 use \DirectoryIterator;
 use \lithium\core\Libraries;
-use \lithium\util\reflection\Inspector;
+use \lithium\analysis\Inspector;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,
@@ -59,6 +59,7 @@ class BrowserController extends \lithium\action\Controller {
 	 *                 browsed, in which the current entity is contained.
 	 *               - `'object'`: A multi-level array containing all data extracted about the
 	 *                 current entity.
+	 * @link http://www.faqs.org/rfcs/rfc2396.html
 	 */
 	public function view() {
 		$lib = $this->request->params['library'];
@@ -91,7 +92,7 @@ class BrowserController extends \lithium\action\Controller {
 					$object['children'][$child] = $type;
 				}
 
-				$doc = $library['path'] . $path . '/' . $this->docFile;
+				$doc = $library['path'] . rtrim($path, '/') . '/' . $this->docFile;
 				$object['info']['description'] = file_exists($doc) ? file_get_contents($doc) : null;
 			break;
 			case 'class':
@@ -119,7 +120,7 @@ class BrowserController extends \lithium\action\Controller {
 				sort($object['subClasses']);
 			break;
 		}
-		$object['info'] += (array)Inspector::info($object['identifier']);
+		$object['info'] += (array) Inspector::info($object['identifier']);
 		$object = $this->_process($object);
 
 		$crumbs = $this->_crumbs($object);
@@ -172,8 +173,7 @@ class BrowserController extends \lithium\action\Controller {
 		}
 
 		if (isset($object['info']['tags']['return'])) {
-			$type = strtok($object['info']['tags']['return'], ' ');
-			$text = strtok(' ');
+			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2);
 			$object['info']['return'] = compact('type', 'text');
 			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
 		}
