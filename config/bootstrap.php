@@ -9,7 +9,7 @@
 // 	)
 // ));
 
-use \lithium\http\Media;
+use \lithium\net\http\Media;
 use \lithium\g11n\Message;
 
 Media::applyFilter('_handle', function($self, $params, $chain) {

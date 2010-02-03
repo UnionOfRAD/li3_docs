@@ -1,6 +1,6 @@
 <?php
 
-use \lithium\http\Router;
+use \lithium\net\http\Router;
 
 Router::connect('/docs', array('plugin' => 'li3_docs', 'controller' => 'browser'));
 Router::connect('/docs/{:library}/{:args}', array(
