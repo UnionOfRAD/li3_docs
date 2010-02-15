@@ -11,7 +11,7 @@
 <head>
 	<?php echo $this->html->charset(); ?>
 	<title>Lithium API <?php echo $this->title(); ?></title>
-	<?php echo $this->html->style(array('base', 'li3_docs')); ?>
+	<?php echo $this->html->style(array('lithium', 'li3_docs/li3_docs')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
 </head>
@@ -38,8 +38,14 @@
 			<?php echo $this->content; ?>
 		</div>
 	</div>
+<?php
+	$jQuery = 'http://code.jquery.com/jquery-1.4.1.min';
+	if (\lithium\core\Environment::is('development')) {
+		$jQuery = 'li3_docs/jquery-1.4.1.min';
+	}
+?>
 <?php echo $this->html->script(array(
-	'http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js',
+	$jQuery,
 	'showdown.min.js'
 )); ?>
 <script type="text/javascript" charset="utf-8">
