@@ -39,14 +39,14 @@
 		</div>
 	</div>
 <?php
-	$jQuery = 'http://code.jquery.com/jquery-1.4.1.min';
+	$jQuery = 'http://code.jquery.com/jquery-1.4.1.min.js';
 	if (\lithium\core\Environment::is('development')) {
 		$jQuery = 'li3_docs/jquery-1.4.1.min';
 	}
 ?>
 <?php echo $this->html->script(array(
 	$jQuery,
-	'showdown.min.js'
+	'li3_docs/showdown.min'
 )); ?>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function () {
