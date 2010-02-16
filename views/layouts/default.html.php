@@ -18,8 +18,8 @@
 <body class="docs">
 	<div id="container">
 		<div id="header">
-			<h1>Lithium</h1>
-			<h2><?php echo $this->html->link('API', '/docs');?></h2>
+			<h1><?php echo $this->html->link('Docs', '/docs');?></h1>
+			<h2>Powered by <?php echo $this->html->link('Lithium', 'http://lithify.me');?>.</h2>
 			<ul class="crumbs">
 			<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
 				<li class="<?= $crumb['class'];?>">
