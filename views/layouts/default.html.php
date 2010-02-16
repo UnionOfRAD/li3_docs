@@ -1,4 +1,4 @@
-<?php
+	<?php
 /**
  * Lithium: the most rad php framework
  *
@@ -11,29 +11,15 @@
 <head>
 	<?php echo $this->html->charset(); ?>
 	<title>Docs > <?php echo $this->title(); ?></title>
-	<?php echo $this->html->style(array('lithium', '/li3_docs/css/li3_docs')); ?>
+	<?php echo $this->html->style(array('lithium', 'u1m', '/li3_docs/css/li3_docs')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
 </head>
 <body class="docs">
 <div id="wrapper">
-	<div id="cli">
-		<div id="cli-display"></div>
-		<div>
-			<form id="cli-form" onSubmit="return false">
-				<input type="text" id="cli-input" />
-				<input id="cli-submit" type="submit" />
-			</form>
-		</div>
-	</div>
-	<div id="git-shortcuts">
-		<span id="git-clone-path" class="clone fixed"><strong>git clone</strong> code@rad-dev.org:lithium.git</span>
-		<a href="#" id="git-copy" class="copy" title="Copy the git clone shortcut to your clipboard">copy to clipboard</a>
-	</div>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->html->link('Docs', '/docs');?></h1>
-			<h2>Powered by <?php echo $this->html->link('Lithium', 'http://lithify.me');?>.</h2>
+			<h1><?php echo $this->html->link('Lithium API', '/docs');?></h1>
 			<ul class="crumbs">
 			<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
 				<li class="<?= $crumb['class'];?>">
@@ -56,23 +42,21 @@
 </div>
 <div id="footer">
 	<p class="copyright">
-	<?php printf($t('Pretty much everything is %s 2009 and beyond, the Union of Rad'), '&copy;'); ?>
+	<?php printf(
+		$t('Pretty much everything is %s %s and beyond, the Union of Rad'),
+		'&copy;',
+		date('Y')
+	); ?>
 	</p>
 </div>
 <?php echo $this->html->script(array(
 	'http://code.jquery.com/jquery-1.4.1.min.js',
-	'li3',
-	'cli',
-	'libraries/ZeroClipboard/ZeroClipboard.js',
-	'showdown.min.js'
+	'rad.cli',
+	'showdown.min'
 )); ?>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function () {
-		li3.setup({
-			base : '<?php echo $this->_request->env('base');?>',
-			testimonials: <?php echo !empty($testimonials) ? 'true' : 'false'; ?>
-		});
-		li3Cli.setup();
+		RadCli.setup();
 		var converter = new Showdown.converter("/");
 
 		$(".markdown").each(function () {
