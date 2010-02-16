@@ -23,7 +23,7 @@ Dispatcher::applyFilter('_callable', function($self, $params, $chain) {
 			return function () use ($asset) {
 				$info = pathinfo($asset);
 				$type = Media::type($info['extension']);
-				header("Content-type: {$type}");
+				header("Content-type: {$type['content']}");
 				return file_get_contents($asset);
 			};
 		}
