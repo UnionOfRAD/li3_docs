@@ -8,6 +8,7 @@
 /*--- This is the stylesheet for li3_docs ---*/
 .crumbs {
 	margin-left: 0;
+	margin-top: 1.5em;
 }
 .crumbs li {
 	list-style-type: none;
