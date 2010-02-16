@@ -6,7 +6,10 @@
 -------------------------------------------------------------------------------------------------*/
 
 /*--- This is the stylesheet for li3_docs ---*/
-
+.crumbs li {
+	list-style-type: none;
+	display: inline;
+}
 .crumbs li + li:before {
 	content: ' \\ ';
 }
