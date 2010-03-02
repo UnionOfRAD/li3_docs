@@ -16,7 +16,7 @@ use \lithium\analysis\Inspector;
 use \lithium\analysis\Docblock;
 use \lithium\util\Set;
 
-class Docs extends \lithium\g11n\catalog\adapter\Base {
+class Docs extends \lithium\g11n\catalog\Adapter {
 
 	/**
 	 * Constructor.
@@ -147,7 +147,7 @@ class Docs extends \lithium\g11n\catalog\adapter\Base {
 	 * @return void
 	 * @see lithium\g11n\catalog\adapter\Base::_merge()
 	 */
-	protected function _merge($data, $item) {
+	protected function _merge(array $data, array $item) {
 		$cleanup = function($text) {
 			return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 		};
