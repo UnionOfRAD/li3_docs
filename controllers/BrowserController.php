@@ -68,7 +68,8 @@ class BrowserController extends \lithium\action\Controller {
 			'properties' => null,
 			'parent'     => null,
 			'subClasses' => null,
-			'children'   => null
+			'children'   => null,
+			'source'     => null,
 		);
 		$object['type'] = Inspector::type($name);
 
@@ -113,6 +114,13 @@ class BrowserController extends \lithium\action\Controller {
 			break;
 		}
 		$object['info'] += (array) Inspector::info($object['identifier']);
+
+		if ($object['type'] == 'method') {
+			$object['source'] = join("\n", Inspector::lines(
+				$object['info']['file'], range($object['info']['start'], $object['info']['end'])
+			));
+		}
+
 		$object = $this->_process($object);
 
 		$crumbs = $this->_crumbs($object);
