@@ -52,7 +52,8 @@
 <?php echo $this->html->script(array(
 	'http://code.jquery.com/jquery-1.4.1.min.js',
 	'rad.cli',
-	'showdown.min'
+	'showdown.min',
+	'highlight.pack'
 )); ?>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function () {
@@ -70,6 +71,7 @@
 			$(this).text((visible ? 'Show' : 'Hide') + ' source');
 			visible ? $('pre code').slideUp() : $('pre code').slideDown();
 		});
+		hljs.initHighlightingOnLoad();
 	});
 </script>
 </body>
