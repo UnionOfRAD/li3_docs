@@ -166,6 +166,7 @@ class BrowserController extends \lithium\action\Controller {
 		if (isset($object['info']['tags']['var'])) {
 			$object['type'] = $object['info']['tags']['var'];
 		}
+		$object['info'] += array('description' => '');
 
 		if ($object['info']['description']) {
 			$object['info']['description'] = $this->_embed($object['info']['description']);

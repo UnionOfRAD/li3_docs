@@ -23,13 +23,13 @@
 			<ul class="crumbs">
 			<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
 				<li class="<?= $crumb['class'];?>">
-				<?php
-					if ($crumb['url']) {
-						echo $this->html->link($crumb['title'], $crumb['url']);
-					} else {
-						echo "<span>{$h($crumb['title'])}</span>";
-					}
-				?>
+					<?php
+						if ($crumb['url']) {
+							echo $this->html->link($crumb['title'], $crumb['url']);
+							continue;
+						}
+					?>
+					<span><?=$crumb['title']; ?></span>
 				</li>
 			<?php endforeach; ?>
 			</ul>
