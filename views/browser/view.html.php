@@ -75,14 +75,6 @@ $curPath = str_replace('\\', '/', $name);
 	</span>
 <?php } ?>
 
-<?php // Method source ?>
-<?php if (isset($object['source'])) { ?>
-	<h4>Source</h4>
-	<pre>
-		<code><?php echo $object['source']; ?></code>
-	</pre>
-<?php } ?>
-
 <?php // Related items ?>
 <?php if (isset($object['info']['tags']['see'])) { ?>
 	<h4><?=$t('Related', array('scope' => 'li3_docs')); ?></h4>
@@ -123,4 +115,12 @@ $curPath = str_replace('\\', '/', $name);
 			<li><?php echo $this->html->link($class, $url); ?></li>
 		<?php } ?>
 	</ul>
+<?php } ?>
+
+<?php // Method source ?>
+<?php if (isset($object['source'])) { ?>
+	<pre class="source-code">
+		<code><?php echo $object['source']; ?></code>
+	</pre>
+	<button class="source-toggle">Show source</button>
 <?php } ?>

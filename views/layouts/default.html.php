@@ -50,8 +50,17 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function () {
 		var converter = new Showdown.converter("/");
+
 		$(".markdown").each(function () {
 			$(this).html(converter.makeHtml($.trim($(this).text())));
+		});
+
+		$('pre.source-code').hide();
+
+		$('.source-toggle').bind('click', function() {
+			visible = $('pre.source-code').is(':visible');
+			$(this).text((visible ? 'Show' : 'Hide') + ' source');
+			visible ? $('pre.source-code').slideUp() : $('pre.source-code').slideDown();
 		});
 	});
 </script>
