@@ -6,6 +6,9 @@
 -------------------------------------------------------------------------------------------------*/
 
 /*--- This is the stylesheet for li3_docs ---*/
+.crumbs {
+	margin-left: 0;
+}
 .crumbs li {
 	list-style-type: none;
 	display: inline;
@@ -24,13 +27,6 @@
 	font-style: oblique;
 	margin-right: 10px;
 }
-.crumbs .type.namespace {
-}
-.crumbs .type.class {
-}
-.crumbs .type.method {
-}
-
 .parameters ul {
 	margin-left: 1em;
 }

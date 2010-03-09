@@ -35,16 +35,8 @@ class BrowserController extends \lithium\action\Controller {
 	 * @return array
 	 */
 	public function index() {
-		$pluginsDir = new DirectoryIterator(LITHIUM_APP_PATH . '/libraries/plugins');
 		$libraries = Libraries::get();
-		$plugins = array();
-
-		foreach ($pluginsDir as $plugin) {
-			if ($plugin->isDir() && !$plugin->isDot()) {
-				$plugins[$plugin->getPathName()] = $plugin->getFileName();
-			}
-		}
-		return compact('plugins', 'libraries');
+		return compact('libraries');
 	}
 
 	/**
@@ -82,7 +74,7 @@ class BrowserController extends \lithium\action\Controller {
 
 		switch ($object['type']) {
 			case 'namespace':
-				$path = '/' . join('/', (array)$this->request->params['args']);
+				$path = '/' . join('/', (array) $this->request->params['args']);
 				$searchOptions = array('namespaces' => true) + compact('path');
 				$object['children'] = array();
 
@@ -176,7 +168,7 @@ class BrowserController extends \lithium\action\Controller {
 		}
 
 		if (isset($object['info']['tags']['return'])) {
-			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2);
+			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2) + array('', '');
 			$object['info']['return'] = compact('type', 'text');
 			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
 		}

@@ -27,7 +27,7 @@
 					if ($crumb['url']) {
 						echo $this->html->link($crumb['title'], $crumb['url']);
 					} else {
-						echo $this->html->tag('span', $crumb['title']);
+						echo "<span>{$h($crumb['title'])}</span>";
 					}
 				?>
 				</li>
