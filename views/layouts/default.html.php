@@ -66,9 +66,9 @@
 		$('pre.source-code').hide();
 
 		$('.source-toggle').bind('click', function() {
-			visible = $('pre.source-code').is(':visible');
+			visible = $('pre code').is(':visible');
 			$(this).text((visible ? 'Show' : 'Hide') + ' source');
-			visible ? $('pre.source-code').slideUp() : $('pre.source-code').slideDown();
+			visible ? $('pre code').slideUp() : $('pre code').slideDown();
 		});
 		hljs.initHighlightingOnLoad();
 	});
