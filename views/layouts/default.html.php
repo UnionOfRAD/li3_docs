@@ -67,7 +67,6 @@
 		$(".markdown").each(function () {
 			$(this).html(converter.makeHtml($.trim($(this).text())));
 		});
-		$('pre.source-code').hide();
 
 		$('.source-toggle').bind('click', function() {
 			visible = $(codeSelector).is(':visible');
