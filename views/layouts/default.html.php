@@ -63,13 +63,12 @@
 		$(".markdown").each(function () {
 			$(this).html(converter.makeHtml($.trim($(this).text())));
 		});
-
-		$('pre code').hide();
+		$('pre.source-code').hide();
 
 		$('.source-toggle').bind('click', function() {
-			visible = $('pre code').is(':visible');
+			visible = $('pre.source-code').is(':visible');
 			$(this).text((visible ? 'Show' : 'Hide') + ' source');
-			visible ? $('pre code').slideUp() : $('pre code').slideDown();
+			visible ? $('pre.source-code').slideUp() : $('pre.source-code').slideDown();
 		});
 		hljs.initHighlightingOnLoad();
 	});

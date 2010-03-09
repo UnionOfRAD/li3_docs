@@ -118,7 +118,7 @@ $this->title($namespace);
 <?php // Method source ?>
 <?php if (isset($object['source'])) { ?>
 	<pre class="source-code">
-		<code><?php echo $object['source']; ?></code>
+		<code class="php"><?php echo $object['source']; ?></code>
 	</pre>
 	<button class="source-toggle">Show source</button>
 <?php } ?>
