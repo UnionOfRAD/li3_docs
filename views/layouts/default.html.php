@@ -51,12 +51,16 @@
 </div>
 <?php echo $this->html->script(array(
 	'http://code.jquery.com/jquery-1.4.1.min.js',
-	'rad.cli',
-	'showdown.min',
-	'highlight.pack'
+	'rad.cli.js',
+	'showdown.min.js',
+	'highlight.pack.js'
 )); ?>
 <script type="text/javascript" charset="utf-8">
+	var codeSelector = '.source-wrapper';
+
 	$(document).ready(function () {
+		$(codeSelector).hide();
+
 		RadCli.setup();
 		var converter = new Showdown.converter("/");
 
@@ -66,9 +70,9 @@
 		$('pre.source-code').hide();
 
 		$('.source-toggle').bind('click', function() {
-			visible = $('pre code').is(':visible');
+			visible = $(codeSelector).is(':visible');
 			$(this).text((visible ? 'Show' : 'Hide') + ' source');
-			visible ? $('pre code').slideUp() : $('pre code').slideDown();
+			visible ? $(codeSelector).slideUp() : $(codeSelector).slideDown();
 		});
 		hljs.initHighlightingOnLoad();
 	});
