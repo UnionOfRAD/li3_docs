@@ -1,25 +1,32 @@
-	<?php
+<?php
 /**
  * Lithium: the most rad php framework
  *
  * @copyright     Copyright 2009, Union of Rad, Inc. (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
+
+use \lithium\core\Environment;
+use \lithium\g11n\Locale;
+
 ?>
 <!doctype html>
-<html>
+<html lang="<?= str_replace('_', '-', Environment::get('locale')); ?>">
 <head>
 	<?php echo $this->html->charset(); ?>
-	<title>Docs > <?php echo $this->title(); ?></title>
+	<title><?=$t('Docs', array('scope' => 'li3_docs')) . ' ' . $this->title(); ?></title>
 	<?php echo $this->html->style(array('lithium', 'u1m', '/li3_docs/css/li3_docs')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
 </head>
 <body class="docs">
 <div id="wrapper">
+	<?=$this->_view->render(array('element' => 'locale_navigation')); ?>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->html->link('Lithium API', '/docs');?></h1>
+			<h1><?php echo $this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
+				'plugin' => 'li3_docs', 'controller' => 'browser', 'action' => 'index'
+			));?></h1>
 			<ul class="crumbs">
 			<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
 				<li class="<?= $crumb['class'];?>">
@@ -42,11 +49,10 @@
 </div>
 <div id="footer">
 	<p class="copyright">
-	<?php printf(
-		$t('Pretty much everything is %s %s and beyond, the Union of Rad'),
-		'&copy;',
-		date('Y')
-	); ?>
+		<?=$t('Pretty much everything is &copy; {:year} and beyond, the Union of Rad', array(
+			'year' => date('Y'),
+			'scope' => 'li3_docs'
+		)); ?>
 	</p>
 </div>
 <?php echo $this->html->script(array(
@@ -61,7 +67,10 @@
 	$(document).ready(function () {
 		$(codeSelector).hide();
 
-		RadCli.setup();
+		RadCli.setup({
+			commandBase: 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
+		});
+
 		var converter = new Showdown.converter("/");
 
 		$(".markdown").each(function () {
@@ -70,7 +79,14 @@
 
 		$('.source-toggle').bind('click', function() {
 			visible = $(codeSelector).is(':visible');
-			$(this).text((visible ? 'Show' : 'Hide') + ' source');
+
+			if (visible) {
+				text = '<?=$t('Show source', array('scope' => 'li3_docs')); ?>';
+			} else {
+				text = '<?=$t('Hide source', array('scope' => 'li3_docs')); ?>';
+			}
+			$(this).text((text));
+
 			visible ? $(codeSelector).slideUp() : $(codeSelector).slideDown();
 		});
 		hljs.initHighlightingOnLoad();

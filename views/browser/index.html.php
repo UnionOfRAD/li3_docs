@@ -2,6 +2,10 @@
 <ul class="libraries">
 	<?php foreach ($libraries as $name => $config) { ?>
 		<?php $display = ucwords(str_replace('_', ' ', $name)); ?>
-		<li><?php echo $this->html->link($display, "docs/{$name}"); ?></li>
+		<li><?=$this->html->link($display, array(
+			'plugin' => 'li3_docs',
+			'controller' => 'browser', 'action' => 'view',
+			'library' => $name
+		)); ?></li>
 	<?php } ?>
 </ul>

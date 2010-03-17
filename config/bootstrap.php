@@ -1,10 +1,15 @@
 <?php
 
 /**
- * Require the g11n if it has not been included yet.
- *
+ * Register g11n resource.
  */
-require_once LITHIUM_APP_PATH . '/config/bootstrap/g11n.php';
+use \lithium\g11n\Catalog;
+
+Catalog::config(array(
+	'li3_docs' => array(
+		'adapter' => 'Gettext',
+		'path' => dirname(__DIR__) . '/resources/g11n'
+)) + Catalog::config());
 
 /**
  * Filter to serve the assets from plugins.

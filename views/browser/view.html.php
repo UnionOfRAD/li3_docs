@@ -2,6 +2,16 @@
 $cleanup = function($text) {
 	return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 };
+$identifierUrl = function($class) {
+	$parts = explode('\\', $class);
+	return array(
+		'plugin' => 'li3_docs',
+		'controller' => 'browser', 'action' => 'view',
+		'library' => array_shift($parts),
+		'args' => $parts
+	);
+};
+
 $scope = strtok($object['identifier'], '\\') . '_docs';
 $namespace = str_replace('\\', '/', $name);
 $this->title($namespace);
@@ -12,7 +22,7 @@ $this->title($namespace);
 		<?php foreach ($object['children'] as $class => $type) { ?>
 			<?php
 				$parts = explode('\\', $class);
-				$url = 'docs/' . str_replace('\\', '/', $class);
+				$url = $identifierUrl($class);
 			?>
 			<li class="<?=$type; ?>"><?php echo $this->html->link(end($parts), $url); ?></li>
 		<?php } ?>
@@ -24,7 +34,7 @@ $this->title($namespace);
 	<?php $parent = $object['parent']; ?>
 	<h4><?=$t('Parent class', array('scope' => 'li3_docs')); ?></h4>
 	<span class="parent">
-		<?php echo $this->html->link($parent, 'docs/' . str_replace('\\', '/', $parent)); ?>
+		<?php echo $this->html->link($parent, $identifierUrl($parent)); ?>
 	</span>
 <?php } ?>
 
@@ -78,7 +88,7 @@ $this->title($namespace);
 	<h4><?=$t('Related', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="related">
 		<?php foreach ((array)$object['info']['tags']['see'] as $name) { ?>
-			<li><?php echo$this->html->link($name, 'docs/' . str_replace('\\', '/', $name)); ?></li>
+			<li><?=$this->html->link($name, $identifierUrl($name)); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -88,7 +98,7 @@ $this->title($namespace);
 	<h4><?=$t('Properties', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="properties">
 		<?php foreach ($object['properties'] as $name => $value) { ?>
-			<li><?php echo $this->html->link($name, "docs/{$namespace}::\${$name}"); ?></li>
+			<li><?=$this->html->link($name, $identifierUrl("{$namespace}::\${$name}")); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -98,7 +108,7 @@ $this->title($namespace);
 	<h4><?=$t('Methods', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="methods">
 		<?php foreach ($object['methods'] as $method) { ?>
-			<?php $url = "docs/{$namespace}::{$method->name}()"; ?>
+			<?php $url = $identifierUrl("{$namespace}::{$method->name}()"); ?>
 			<li><?php echo $this->html->link($method->name, $url); ?></li>
 		<?php } ?>
 	</ul>
@@ -109,7 +119,7 @@ $this->title($namespace);
 	<h4><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="subclasses">
 		<?php foreach ($object['subClasses'] as $class) { ?>
-			<?php $url = 'docs/' . str_replace('\\', '/', $class); ?>
+			<?php $url = $identifierUrl($class); ?>
 			<li><?php echo $this->html->link($class, $url); ?></li>
 		<?php } ?>
 	</ul>
@@ -122,5 +132,5 @@ $this->title($namespace);
 			<code class="php"><?php echo $h($object['source']); ?></code>
 		</pre>
 	</div>
-	<button class="source-toggle">Show source</button>
+	<button class="source-toggle"><?=$t('Show source', array('scope' => 'li3_docs')); ?></button>
 <?php } ?>
