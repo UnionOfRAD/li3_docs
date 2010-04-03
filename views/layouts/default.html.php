@@ -10,7 +10,7 @@
 <html>
 <head>
 	<?php echo $this->html->charset(); ?>
-	<title>Lithium API <?php echo $this->title(); ?></title>
+	<title>Docs > <?php echo $this->title(); ?></title>
 	<?php echo $this->html->style(array('lithium', '/li3_docs/css/li3_docs')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>

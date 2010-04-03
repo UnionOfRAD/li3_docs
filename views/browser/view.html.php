@@ -1,12 +1,10 @@
 <?php
-
 $cleanup = function($text) {
 	return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 };
-
 $scope = strtok($object['identifier'], '\\') . '_docs';
-$curPath = str_replace('\\', '/', $name);
-
+$namespace = str_replace('\\', '/', $name);
+$this->title($namespace);
 ?>
 <?php if ($object['children']) { ?>
 	<h4><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h4>
@@ -90,7 +88,7 @@ $curPath = str_replace('\\', '/', $name);
 	<h4><?=$t('Properties', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="properties">
 		<?php foreach ($object['properties'] as $name => $value) { ?>
-			<li><?php echo $this->html->link($name, "docs/{$curPath}::\${$name}"); ?></li>
+			<li><?php echo $this->html->link($name, "docs/{$namespace}::\${$name}"); ?></li>
 		<?php } ?>
 	</ul>
 <?php } ?>
@@ -100,7 +98,7 @@ $curPath = str_replace('\\', '/', $name);
 	<h4><?=$t('Methods', array('scope' => 'li3_docs')); ?></h4>
 	<ul class="methods">
 		<?php foreach ($object['methods'] as $method) { ?>
-			<?php $url = "docs/{$curPath}::{$method->name}()"; ?>
+			<?php $url = "docs/{$namespace}::{$method->name}()"; ?>
 			<li><?php echo $this->html->link($method->name, $url); ?></li>
 		<?php } ?>
 	</ul>
