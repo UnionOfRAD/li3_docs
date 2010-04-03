@@ -49,7 +49,7 @@ use \lithium\g11n\Locale;
 </div>
 <div id="footer">
 	<p class="copyright">
-		<?=$t('Pretty much everything is &copy; {:year} and beyond, the Union of Rad', array(
+		<?=$t('Pretty much everything is © {:year} and beyond, the Union of Rad', array(
 			'year' => date('Y'),
 			'scope' => 'li3_docs'
 		)); ?>
