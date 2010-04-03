@@ -14,7 +14,7 @@ use \lithium\g11n\Locale;
 <html lang="<?= str_replace('_', '-', Environment::get('locale')); ?>">
 <head>
 	<?php echo $this->html->charset(); ?>
-	<title><?=$t('Docs', array('scope' => 'li3_docs')) . ' ' . $this->title(); ?></title>
+	<title><?=$t('Lithium API', array('scope' => 'li3_docs')) . ' > ' . $this->title(); ?></title>
 	<?php echo $this->html->style(array('lithium', 'u1m', '/li3_docs/css/li3_docs')); ?>
 	<?php echo $this->scripts(); ?>
 	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
