@@ -12,6 +12,7 @@ use \Exception;
 use \DirectoryIterator;
 use \lithium\core\Libraries;
 use \lithium\analysis\Inspector;
+use \li3_docs\extensions\analysis\DocExtractor;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,
@@ -54,75 +55,12 @@ class BrowserController extends \lithium\action\Controller {
 	 * @link http://www.faqs.org/rfcs/rfc2396.html
 	 */
 	public function view() {
-		$lib = $this->request->params['library'];
-		$library = Libraries::get($lib);
+		$library = DocExtractor::library($this->request->lib);
 		$name = $library['prefix'] . join('\\', func_get_args());
 
-		$object = array(
-			'name'       => null,
-			'identifier' => $name,
-			'type'       => null,
-			'info'       => array(),
-			'classes'    => null,
-			'methods'    => null,
-			'properties' => null,
-			'parent'     => null,
-			'subClasses' => null,
-			'children'   => null,
-			'source'     => null,
-		);
-		$object['type'] = Inspector::type($name);
-
-		switch ($object['type']) {
-			case 'namespace':
-				$path = '/' . join('/', (array) $this->request->params['args']);
-				$searchOptions = array('namespaces' => true) + compact('path');
-				$object['children'] = array();
-
-				foreach (Libraries::find($lib, $searchOptions) as $child) {
-					$libPath = Libraries::path($child, array('dirs' => true));
-					$type = is_dir($libPath) ? 'namespace' : 'class';
-					$object['children'][$child] = $type;
-				}
-
-				$doc = $library['path'] . rtrim($path, '/') . '/' . $this->docFile;
-				$object['info']['description'] = file_exists($doc) ? file_get_contents($doc) : null;
-			break;
-			case 'class':
-				$object['name'] = null;
-				$object['parent'] = get_parent_class($name);
-				$object['methods'] = Inspector::methods($name, null, array('public' => false));
-				$object['properties'] = get_class_vars($name);
-
-				if ($object['parent']) {
-					$parentProps = get_class_vars($object['parent']);
-					$object['properties'] = array_diff_key($object['properties'], $parentProps);
-				}
-				$classes = Libraries::find($lib, array('recursive' => true));
-
-				$object['subClasses'] = array_filter($classes, function($class) use ($name) {
-					if (preg_match('/\\\(libraries|plugins)\\\/', $class)) {
-						return false;
-					}
-					try {
-						return get_parent_class($class) == $name;
-					} catch (Exception $e) {
-						return false;
-					}
-				});
-				sort($object['subClasses']);
-			break;
-		}
-		$object['info'] += (array) Inspector::info($object['identifier']);
-
-		if ($object['type'] == 'method') {
-			$object['source'] = join("\n", Inspector::lines(
-				$object['info']['file'], range($object['info']['start'], $object['info']['end'])
-			));
-		}
-
-		$object = $this->_process($object);
-
+		$object = DocExtractor::get($this->request->lib, $name, array(
+			'namespaceDoc' => $this->docFile
+		));
 		$crumbs = $this->_crumbs($object);
 		return compact('name', 'library', 'object', 'crumbs');
 	}
@@ -136,8 +74,8 @@ class BrowserController extends \lithium\action\Controller {
 			'url' => null,
 			'class' => 'type ' . $object['type']
 		);
-
 		$url = '';
+
 		foreach (array_slice($path, 0, -1) as $part) {
 			$url .= '/' . $part;
 			$crumbs[] = array('title' => $part, 'url' => 'docs' . $url, 'class' => null);
@@ -155,14 +93,7 @@ class BrowserController extends \lithium\action\Controller {
 		return $crumbs;
 	}
 
-	/**
-	 * Handles post-processing of aggregated object data, including re-mapping properties and
-	 * processing embedded text commands.
-	 *
-	 * @param array $object
-	 * @return array
-	 */
-	protected function _process($object) {
+	protected function _oldProcess($object) {
 		if (isset($object['info']['tags']['var'])) {
 			$object['type'] = $object['info']['tags']['var'];
 		}
@@ -182,31 +113,6 @@ class BrowserController extends \lithium\action\Controller {
 			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
 		}
 		return $object;
-	}
-
-	/**
-	 * Replaces class and method references with code snippets pulled from the class.
-	 *
-	 * @param string $text
-	 * @return string
-	 */
-	protected function _embed($text) {
-		$regex = '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)';
-
-		if (preg_match_all("/\{\{\{\s*(embed:{$regex}\))\s*\}\}\}/", $text, $matches)) {
-			foreach ($matches['class'] as $i => $class) {
-				$methods = array($matches['method'][$i]);
-				$markers = Inspector::methods($class, 'extents', compact('methods'));
-				$methodStart = $markers[current($methods)][0];
-				$replace = $matches[0][$i];
-
-				list($start, $end) = explode('-', $matches['lines'][$i]);
-				$lines = range(intval($start) + $methodStart, intval($end) + $methodStart);
-				$code = '{{{' . join("\n", Inspector::lines($class, $lines)) . '}}}';
-				$text = str_replace($replace, $code, $text);
-			}
-		}
-		return $text;
 	}
 }
 

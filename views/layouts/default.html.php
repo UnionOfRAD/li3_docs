@@ -13,40 +13,45 @@ use \lithium\g11n\Locale;
 <!doctype html>
 <html lang="<?= str_replace('_', '-', Environment::get('locale')); ?>">
 <head>
-	<?php echo $this->html->charset(); ?>
+	<?=$this->html->charset(); ?>
 	<title><?=$t('Lithium API', array('scope' => 'li3_docs')) . ' > ' . $this->title(); ?></title>
-	<?php echo $this->html->style(array('lithium', 'u1m', '/li3_docs/css/li3_docs')); ?>
-	<?php echo $this->scripts(); ?>
-	<?php echo $this->html->link('Icon', null, array('type' => 'icon')); ?>
+	<?=$this->html->style(array('lithium', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight')); ?>
+	<?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/css/u1m.css')) { ?>
+		<?=$this->html->style('u1m'); ?>
+	<?php } ?>
+	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 </head>
+
 <body class="docs">
 <div id="wrapper">
-	<?=$this->_view->render(array('element' => 'locale_navigation')); ?>
+	<?php //$this->_view->render(array('element' => 'locale_navigation')); ?>
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
-				'plugin' => 'li3_docs', 'controller' => 'browser', 'action' => 'index'
-			));?></h1>
+				'library' => 'li3_docs', 'controller' => 'browser', 'action' => 'index'
+			)); ?></h1>
 			<ul class="crumbs">
-			<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
-				<li class="<?= $crumb['class'];?>">
-					<?php
-						if ($crumb['url']) {
-							echo $this->html->link($crumb['title'], $crumb['url']);
-							continue;
-						}
-					?>
-					<span><?=$crumb['title']; ?></span>
-				</li>
-			<?php endforeach; ?>
+				<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
+					<li class="<?= $crumb['class'];?>">
+						<?php
+							if ($crumb['url']) {
+								echo $this->html->link($crumb['title'], $crumb['url']);
+								continue;
+							}
+						?>
+						<span><?=$crumb['title']; ?></span>
+					</li>
+				<?php endforeach; ?>
 			</ul>
 		</div>
+
 		<div id="content">
 			<?php echo $this->content; ?>
 		</div>
 	</div>
 	<div id="footer-spacer"></div>
 </div>
+
 <div id="footer">
 	<p class="copyright">
 		<?=$t('Pretty much everything is © {:year} and beyond, the Union of Rad', array(
@@ -55,22 +60,22 @@ use \lithium\g11n\Locale;
 		)); ?>
 	</p>
 </div>
-<?php echo $this->html->script(array(
-	'http://code.jquery.com/jquery-1.4.1.min.js',
-	'rad.cli.js',
-	'showdown.min.js',
-	'highlight.pack.js'
-)); ?>
+<?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
+<?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
+<?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/js/rad.cli.js')) { ?>
+	<?=$this->html->script('rad.cli.js'); ?>
+<?php } ?>
+
 <script type="text/javascript" charset="utf-8">
 	var codeSelector = '.source-wrapper';
+	var cmdUrl = 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd';
 
 	$(document).ready(function () {
 		$(codeSelector).hide();
 
-		RadCli.setup({
-			commandBase: 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
-		});
-
+		if (typeof RadCli != 'undefined') {
+			RadCli.setup({ commandBase: cmdUrl });
+		}
 		var converter = new Showdown.converter("/");
 
 		$(".markdown").each(function () {
@@ -85,11 +90,11 @@ use \lithium\g11n\Locale;
 			} else {
 				text = '<?=$t('Hide source', array('scope' => 'li3_docs')); ?>';
 			}
-			$(this).text((text));
+			$(this).text(text);
 
 			visible ? $(codeSelector).slideUp() : $(codeSelector).slideDown();
 		});
-		hljs.initHighlightingOnLoad();
+		hljs.initHighlighting();
 	});
 </script>
 </body>
