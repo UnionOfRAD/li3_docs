@@ -55,7 +55,9 @@ class BrowserController extends \lithium\action\Controller {
 	 * @link http://www.faqs.org/rfcs/rfc2396.html
 	 */
 	public function view() {
-		$library = DocExtractor::library($this->request->lib);
+		if (!$library = DocExtractor::library($this->request->lib)) {
+			return $this->render('../errors/not_found');
+		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 
 		$object = DocExtractor::get($this->request->lib, $name, array(

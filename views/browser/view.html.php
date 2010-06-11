@@ -12,18 +12,6 @@ $this->title($namespace);
 	array('library' => 'li3_docs')
 ); ?>
 
-<?php if ($object['description']) { ?>
-	<p class="description markdown">
-		<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
-	</p>
-<?php } ?>
-
-<?php if ($object['text']) { ?>
-	<p class="text markdown">
-		<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
-	</p>
-<?php } ?>
-
 <?php // Related items ?>
 <?php if (isset($object['tags']['see'])) { ?>
 	<h4><?=$t('Related', array('scope' => 'li3_docs')); ?></h4>
@@ -33,6 +21,12 @@ $this->title($namespace);
 		<?php } ?>
 	</ul>
 <?php } ?>
+
+<?=$this->view()->render(
+	array('element' => 'links'),
+	compact('namespace', 'object', 'scope'),
+	array('library' => 'li3_docs')
+); ?>
 
 <?php // Object subclasses ?>
 <?php if ($object['subClasses']) { ?>

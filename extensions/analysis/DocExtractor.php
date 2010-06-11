@@ -46,7 +46,10 @@ class DocExtractor extends \lithium\core\StaticObject {
 	public static function library($name, array $options = array()) {
 		$defaults = array('docs' => 'config/docs.json');
 		$options += $defaults;
-		$config = Libraries::get($name);
+
+		if (!$config = Libraries::get($name)) {
+			return array();
+		}
 
 		if (file_exists($file = "{$config['path']}/{$options['docs']}")) {
 			$config += (array) json_decode(file_get_contents($file));
@@ -55,8 +58,18 @@ class DocExtractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _method(array $object, array $data, array $options = array()) {
-		$lines = Inspector::lines($info['file'], range($data['start'], $data['end']));
-		return array('source' => join("\n", $lines)) + $object;
+		if (!$data) {
+			return array();
+		}
+		$lines = Inspector::lines($data['file'], range($data['start'], $data['end']));
+		$object = array('source' => join("\n", $lines)) + $object;
+		$object += array('tags' => isset($data['tags']) ? $data['tags'] : array());
+
+		if (isset($object['tags']['return'])) {
+			list($type, $text) = explode(' ', $object['tags']['return'], 2) + array('', '');
+			$object['return'] = compact('type', 'text');
+		}
+		return $object;
 	}
 
 	protected static function _namespace(array $object, array $data, array $options = array()) {
@@ -105,7 +118,7 @@ class DocExtractor extends \lithium\core\StaticObject {
 			}
 		});
 		sort($proto['subClasses']);
-		return $proto + $object;
+		return $proto + $object + array('tags' => isset($data['tags']) ? $data['tags'] : array());
 	}
 
 	protected static function _property(array $object, array $data, array $options = array()) {
