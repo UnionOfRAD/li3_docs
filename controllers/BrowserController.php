@@ -12,13 +12,24 @@ use \Exception;
 use \DirectoryIterator;
 use \lithium\core\Libraries;
 use \lithium\analysis\Inspector;
-use \li3_docs\extensions\analysis\DocExtractor;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,
  * plugins and classes to generate on-the-fly API documentation.
  */
 class BrowserController extends \lithium\action\Controller {
+
+	/**
+	 * The `DocExtractor` class dependency, which can be replaced with a proxy file to read from
+	 * a cache or database.
+	 *
+	 * @var array
+	 */
+	protected $_classes = array(
+		'media' => 'lithium\net\http\Media',
+		'response' => 'lithium\action\Response',
+		'docExtractor' => 'li3_docs\extensions\analysis\DocExtractor'
+	);
 
 	/**
 	 * The name of the file used to document (describe) namespaces. By default, the document is read
@@ -52,17 +63,17 @@ class BrowserController extends \lithium\action\Controller {
 	 *                 browsed, in which the current entity is contained.
 	 *               - `'object'`: A multi-level array containing all data extracted about the
 	 *                 current entity.
-	 * @link http://www.faqs.org/rfcs/rfc2396.html
 	 */
 	public function view() {
-		if (!$library = DocExtractor::library($this->request->lib)) {
+		$docExtractor = $this->_classes['docExtractor'];
+
+		if (!$library = $docExtractor::library($this->request->lib)) {
 			return $this->render('../errors/not_found');
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
+		$options = array('namespaceDoc' => $this->docFile);
 
-		$object = DocExtractor::get($this->request->lib, $name, array(
-			'namespaceDoc' => $this->docFile
-		));
+		$object = $docExtractor::get($this->request->lib, $name, $options);
 		$crumbs = $this->_crumbs($object);
 		return compact('name', 'library', 'object', 'crumbs');
 	}
