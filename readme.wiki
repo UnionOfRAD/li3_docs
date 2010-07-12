@@ -23,7 +23,7 @@ There are also general tags which can be added to any docblock. These include th
 
 ### Markdown syntax
 
-Docblock descriptions are written in Markdown format, with a few conventions. Namely, any code references or identifiers should be enclosed in backticks. This includes namespaces, classes, variable names, and keywords like `true`, `false` and `null`. Extended code examples should be written enclosed in three sets of curly braces, i.e.: {{ // Code goes here }}}.
+Docblock descriptions are written in Markdown format, with a few conventions. Namely, any code references or identifiers should be enclosed in backticks. This includes namespaces, classes, variable names, and keywords like `true`, `false` and `null`. Extended code examples should be written enclosed in three sets of curly braces, i.e.: {{&#123; // Code goes here }}}.
 
 ### Code embedding
 
