@@ -6,8 +6,8 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-use \lithium\core\Environment;
-use \lithium\g11n\Locale;
+use lithium\g11n\Locale;
+use lithium\core\Environment;
 
 ?>
 <!doctype html>
@@ -27,7 +27,7 @@ use \lithium\g11n\Locale;
 	<?php //$this->_view->render(array('element' => 'locale_navigation')); ?>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
+			<h1><?=$this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
 				'library' => 'li3_docs', 'controller' => 'browser', 'action' => 'index'
 			)); ?></h1>
 			<ul class="crumbs">
@@ -46,7 +46,7 @@ use \lithium\g11n\Locale;
 		</div>
 
 		<div id="content">
-			<?php echo $this->content; ?>
+			<?=$this->content; ?>
 		</div>
 	</div>
 	<div id="footer-spacer"></div>
@@ -54,7 +54,7 @@ use \lithium\g11n\Locale;
 
 <div id="footer">
 	<p class="copyright">
-		<?=$t('Pretty much everything is © {:year} and beyond, the Union of Rad', array(
+		<?=$t('Pretty much everything is © {:year} and beyond, the Union of RAD', array(
 			'year' => date('Y'),
 			'scope' => 'li3_docs'
 		)); ?>
@@ -83,16 +83,13 @@ use \lithium\g11n\Locale;
 		});
 
 		$('.source-toggle').bind('click', function() {
-			visible = $(codeSelector).is(':visible');
-
-			if (visible) {
+			if ($(codeSelector).is(':visible')) {
 				text = '<?=$t('Show source', array('scope' => 'li3_docs')); ?>';
 			} else {
 				text = '<?=$t('Hide source', array('scope' => 'li3_docs')); ?>';
 			}
-			$(this).text(text);
-
-			visible ? $(codeSelector).slideUp() : $(codeSelector).slideDown();
+			$button = $(this);
+			$(codeSelector).slideToggle(400, function() { $button.text(text); });
 		});
 		hljs.initHighlighting();
 	});

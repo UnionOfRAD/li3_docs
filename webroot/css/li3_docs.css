@@ -147,6 +147,9 @@ span.parent {
 span.type {
 	color: #454545;
 }
+.source-display {
+	margin-top: 20px;
+}
 #footer p {
 	color: #fff;
 }

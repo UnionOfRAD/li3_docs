@@ -13,14 +13,9 @@ $this->title($namespace);
 ); ?>
 
 <?php // Related items ?>
-<?php if (isset($object['tags']['see'])) { ?>
-	<h4><?=$t('Related', array('scope' => 'li3_docs')); ?></h4>
-	<ul class="related">
-		<?php foreach ((array) $object['tags']['see'] as $name) { ?>
-			<li><?=$this->html->link($name, $this->docs->identifierUrl($name)); ?></li>
-		<?php } ?>
-	</ul>
-<?php } ?>
+<?=$this->view()->render(
+	array('element' => 'related'), compact('object', 'scope'), array('library' => 'li3_docs')
+); ?>
 
 <?=$this->view()->render(
 	array('element' => 'links'),
@@ -41,10 +36,14 @@ $this->title($namespace);
 
 <?php // Method source ?>
 <?php if (isset($object['source'])) { ?>
-	<div class="source-wrapper">
-		<pre class="source-code">
-			<code class="php"><?php echo $h($object['source']); ?></code>
-		</pre>
+	<div class="source-display">
+		<div class="source-wrapper">
+			<pre class="source-code">
+				<code class="php"><?=$object['source']; ?></code>
+			</pre>
+		</div>
+		<button class="source-toggle">
+			<?=$t('Show source', array('scope' => 'li3_docs')); ?>
+		</button>
 	</div>
-	<button class="source-toggle"><?=$t('Show source', array('scope' => 'li3_docs')); ?></button>
 <?php } ?>

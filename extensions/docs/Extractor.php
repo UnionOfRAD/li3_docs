@@ -6,18 +6,24 @@
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
-namespace li3_docs\extensions\analysis;
+namespace li3_docs\extensions\docs;
 
-use \Exception;
-use \lithium\core\Libraries;
-use \lithium\util\Inflector;
-use \lithium\analysis\Inspector;
+use Exception;
+use lithium\core\Libraries;
+use lithium\util\Inflector;
+use lithium\analysis\Docblock;
+use lithium\analysis\Inspector;
 
-class DocExtractor extends \lithium\core\StaticObject {
+class Extractor extends \lithium\core\StaticObject {
 
 	public static function get($library, $identifier, array $options = array()) {
 		$defaults = array('namespaceDoc' => null);
 		$options += $defaults;
+		$path = Libraries::path($identifier);
+
+		if (file_exists($path) && !static::_isClassFile($path)) {
+			return static::_file(compact('library', 'path', 'identifier'), $options);
+		}
 		$data = Inspector::info($identifier);
 
 		$proto = compact('identifier', 'library') + array(
@@ -125,6 +131,70 @@ class DocExtractor extends \lithium\core\StaticObject {
 		return $object + $data;
 	}
 
+	protected static function _file(array $object, array $options = array()) {
+		$identifier = $object['identifier'];
+		$config = Libraries::get($object['library']);
+		$ds = DIRECTORY_SEPARATOR;
+
+		$data = compact('identifier') + array(
+			'name' => '',
+			'type' => 'file',
+			'info' => static::_codeToDoc(file_get_contents($object['path'])),
+			'children' => array(),
+			'subClasses' => array()
+		);
+		$subPath = dirname($object['path']) . $ds . basename($object['path'], '.php');
+
+		if (is_dir($subPath)) {
+			$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
+			$path = '/' . str_replace('\\', '/', $path);
+			$searchOpts = array('recursive' => true, 'namespaces' => true, 'filter' => false);
+
+			foreach (Libraries::find($object['library'], compact('path') + $searchOpts) as $file) {
+				$libPath = Libraries::path($file, array('dirs' => true));
+				$type = is_dir($libPath) ? 'namespace' : 'class';
+				$data['children'][$file] = $type;
+			}
+		}
+		return $data;
+	}
+
+	protected static function _codeToDoc($code) {
+		$tokens = token_get_all($code);
+		$display = array();
+		$current = '';
+
+		foreach ($tokens as $i => $token) {
+			if ($i == 0 || ($token[0] == T_CLOSE_TAG && ($i + 1) == count($tokens))) {
+				continue;
+			}
+			if ($token[0] == T_DOC_COMMENT) {
+				if (preg_match('/@copyright/', $token[1])) {
+					continue;
+				}
+				if (!trim($current)) {
+					$current = '';
+				}
+				if ($current) {
+					$display[] = "{{{\n{$current}}}}";
+					$current = '';
+				}
+				$doc = Docblock::comment($token[1]);
+
+				foreach (array('text', 'description') as $key) {
+					$doc[$key] = static::_embedCode($doc[$key]);
+				}
+				$display[] = $doc;
+				continue;
+			}
+			$current .= (is_array($token) ? $token[1] : $token);
+		}
+		if ($current) {
+			$display[] = "{{{\n{$current}}}}";
+		}
+		return $display;
+	}
+
 	/**
 	 * Replaces class and method references with code snippets pulled from the class.
 	 *
@@ -158,6 +228,20 @@ class DocExtractor extends \lithium\core\StaticObject {
 			$text = str_replace($replace, $code, $text);
 		}
 		return $text;
+	}
+
+	protected static function _isClassFile($path) {
+		$tokens = token_get_all(file_get_contents($path));
+
+		for ($i = 2; $i < count($tokens); $i++) {
+			if (!($tokens[$i - 2][0] == T_CLASS && $tokens[$i - 1][0] == T_WHITESPACE)) {
+				continue;
+			}
+			if ($tokens[$i][0] == T_STRING) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

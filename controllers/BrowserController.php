@@ -8,10 +8,10 @@
 
 namespace li3_docs\controllers;
 
-use \Exception;
-use \DirectoryIterator;
-use \lithium\core\Libraries;
-use \lithium\analysis\Inspector;
+use Exception;
+use DirectoryIterator;
+use lithium\core\Libraries;
+use lithium\analysis\Inspector;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,
@@ -20,7 +20,7 @@ use \lithium\analysis\Inspector;
 class BrowserController extends \lithium\action\Controller {
 
 	/**
-	 * The `DocExtractor` class dependency, which can be replaced with a proxy file to read from
+	 * The `Extractor` class dependency, which can be replaced with a proxy file to read from
 	 * a cache or database.
 	 *
 	 * @var array
@@ -28,7 +28,7 @@ class BrowserController extends \lithium\action\Controller {
 	protected $_classes = array(
 		'media' => 'lithium\net\http\Media',
 		'response' => 'lithium\action\Response',
-		'docExtractor' => 'li3_docs\extensions\analysis\DocExtractor'
+		'extractor' => 'li3_docs\extensions\docs\Extractor'
 	);
 
 	/**
@@ -65,15 +65,15 @@ class BrowserController extends \lithium\action\Controller {
 	 *                 current entity.
 	 */
 	public function view() {
-		$docExtractor = $this->_classes['docExtractor'];
+		$extractor = $this->_classes['extractor'];
 
-		if (!$library = $docExtractor::library($this->request->lib)) {
+		if (!$library = $extractor::library($this->request->lib)) {
 			return $this->render('../errors/not_found');
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 		$options = array('namespaceDoc' => $this->docFile);
 
-		$object = $docExtractor::get($this->request->lib, $name, $options);
+		$object = $extractor::get($this->request->lib, $name, $options);
 		$crumbs = $this->_crumbs($object);
 		return compact('name', 'library', 'object', 'crumbs');
 	}
