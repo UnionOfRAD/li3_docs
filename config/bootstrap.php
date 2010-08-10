@@ -6,8 +6,8 @@
 use \lithium\g11n\Catalog;
 
 $catalog = array('li3_docs' => array(
-		'adapter' => 'Gettext',
-		'path' => dirname(__DIR__) . '/resources/g11n'
+	'adapter' => 'Gettext',
+	'path' => dirname(__DIR__) . '/resources/g11n'
 ));
 Catalog::config($catalog + Catalog::config());
 
@@ -17,7 +17,6 @@ if (file_exists(LITHIUM_APP_PATH . '/config/bootstrap/g11n.php')) {
 
 /**
  * Filter to serve the assets from plugins.
- *
  */
 use \lithium\action\Dispatcher;
 use \lithium\core\Libraries;
