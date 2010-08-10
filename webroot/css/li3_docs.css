@@ -63,6 +63,16 @@ a {
 	-webkit-border-radius: 10px;
 }
 
+#locale-navigation {
+	position: absolute;
+	right: 20px;
+	top: 60px;
+	z-index: 2000;
+}
+#locale-navigation ul {
+	list-style-type: none;
+}
+
 #footer-spacer {
 	height: 100px;
 }
