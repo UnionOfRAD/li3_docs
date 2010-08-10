@@ -36,3 +36,7 @@ In order to improve the testability of documented code examples, and to help ens
 This will embed code from the `testSetAndGetCurrentEnvironment()` method of the `Environment` test case, from line 1 through line 3 as an inline code example in the Markdown text. This way, whenever the code changes, the tests change to match it, and the documentation stays up-to-date with what's in the test.
 
 Finally, since explanations and descriptions of code can fall out of sync with examples presented, Li3 Docs can be configured with a storage backend which retains hash values which represent the embedded code examples. When the underlying code changes, the hash values will fall out-of-sync, and corresponding documentation can be reviewed for accuracy.
+
+### Browsing
+
+Once loaded into your application the plugin will enable browsing for all added libraries. In some cases it may be desired to disable browsing for certain libraries. In order to do so pass the `'index'` option in the second parameter when adding Li3 Docs: `Libraries::add('li3_docs', array('index' => array('lithium', 'li3_bot')))`.
