@@ -48,6 +48,14 @@ class BrowserController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$libraries = Libraries::get();
+		$config = Libraries::get('li3_docs');
+
+		if (isset($config['index'])) {
+			$libraries = array_combine(
+				$config['index'],
+				array_map(function($lib) { return Libraries::get($lib); }, $config['index'])
+			);
+		}
 		return compact('libraries');
 	}
 
@@ -66,8 +74,12 @@ class BrowserController extends \lithium\action\Controller {
 	 */
 	public function view() {
 		$extractor = $this->_classes['extractor'];
+		$config = Libraries::get('li3_docs');
 
 		if (!$library = $extractor::library($this->request->lib)) {
+			return $this->render('../errors/not_found');
+		}
+		if (isset($config['index']) && !in_array($this->request->lib, $config['index'])) {
 			return $this->render('../errors/not_found');
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
