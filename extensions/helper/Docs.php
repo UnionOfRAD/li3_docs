@@ -18,7 +18,7 @@ class Docs extends \lithium\template\Helper {
 		$parts = explode('\\', $class);
 		$lib = array_shift($parts);
 		$args = $parts;
-		return array('Browser::view', 'library' => 'li3_docs') + compact('lib', 'args');
+		return array('ApiBrowser::view', 'library' => 'li3_docs') + compact('lib', 'args');
 	}
 }
 

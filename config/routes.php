@@ -10,9 +10,9 @@ if (isset($config['showApi']) && $config['showApi'] === false) {
 	return;
 }
 
-Router::connect('/docs', array('library' => 'li3_docs', 'controller' => 'browser'));
+Router::connect('/docs', array('library' => 'li3_docs', 'controller' => 'api_browser'));
 Router::connect('/docs/{:lib}/{:args}', array(
-	'library' => 'li3_docs', 'controller' => 'browser', 'action' => 'view'
+	'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'view'
 ));
 // Router::connect(new Locale(array(
 // 	'template' => '/docs',

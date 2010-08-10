@@ -17,7 +17,7 @@ use lithium\analysis\Inspector;
  * This is the Lithium API browser controller. This class introspects your application's libraries,
  * plugins and classes to generate on-the-fly API documentation.
  */
-class BrowserController extends \lithium\action\Controller {
+class ApiBrowserController extends \lithium\action\Controller {
 
 	/**
 	 * The `Extractor` class dependency, which can be replaced with a proxy file to read from

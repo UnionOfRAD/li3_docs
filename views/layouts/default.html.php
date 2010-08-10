@@ -28,7 +28,7 @@ use lithium\core\Environment;
 	<div id="container">
 		<div id="header">
 			<h1><?=$this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
-				'library' => 'li3_docs', 'controller' => 'browser', 'action' => 'index'
+				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
 			)); ?></h1>
 			<ul class="crumbs">
 				<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
