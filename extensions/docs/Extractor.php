@@ -44,7 +44,8 @@ class Extractor extends \lithium\core\StaticObject {
 		$data = static::$format($proto, (array) $data, $options);
 
 		foreach (array('text', 'description') as $key) {
-			$data[$key] = static::_embedCode($data[$key]);
+			$data[$key] = static::_embedMethodCode($data[$key]);
+			$data[$key] = static::_embedFileCode($data[$key], compact('library'));
 		}
 		return $data;
 	}
@@ -139,9 +140,11 @@ class Extractor extends \lithium\core\StaticObject {
 		$data = compact('identifier') + array(
 			'name' => '',
 			'type' => 'file',
-			'info' => static::_codeToDoc(file_get_contents($object['path'])),
 			'children' => array(),
-			'subClasses' => array()
+			'subClasses' => array(),
+			'info' => static::_codeToDoc(file_get_contents($object['path']), array(
+				'library' => $object['library']
+			)),
 		);
 		$subPath = dirname($object['path']) . $ds . basename($object['path'], '.php');
 
@@ -182,7 +185,8 @@ class Extractor extends \lithium\core\StaticObject {
 				$doc = Docblock::comment($token[1]);
 
 				foreach (array('text', 'description') as $key) {
-					$doc[$key] = static::_embedCode($doc[$key]);
+					$doc[$key] = static::_embedMethodCode($doc[$key]);
+					$doc[$key] = static::_embedFileCode($doc[$key]);
 				}
 				$display[] = $doc;
 				continue;
@@ -202,7 +206,7 @@ class Extractor extends \lithium\core\StaticObject {
 	 * @param array $options
 	 * @return string
 	 */
-	protected static function _embedCode($text, array $options = array()) {
+	protected static function _embedMethodCode($text, array $options = array()) {
 		$defaults = array('pad' => "\t");
 		$options += $defaults;
 		$regex = '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)';
@@ -217,14 +221,35 @@ class Extractor extends \lithium\core\StaticObject {
 			$methodStart = $markers[current($methods)][0];
 			$replace = $matches[0][$i];
 
-			list($start, $end) = explode('-', $matches['lines'][$i]);
-			$lines = range(intval($start) + $methodStart, intval($end) + $methodStart);
-			$lines = Inspector::lines($class, $lines);
+			list($start, $end) = array_map('intval', explode('-', $matches['lines'][$i]));
+			$lines = Inspector::lines($class, range($start + $methodStart, $end + $methodStart));
 
-			$pad = substr_count(current($lines), $options['pad'], 0, 4);
-			$lines = array_map('substr', $lines, array_fill(0, count($lines), 2));
+			$pad = substr_count(current($lines), $options['pad'], 0);
+			$lines = array_map('substr', $lines, array_fill(0, count($lines), $pad));
 
-			$code = '{{{' . join("\n", $lines) . '}}}';
+			$code = '{{{' . "\n\n" . join("\n", $lines) . "\n\n" . '}}}';
+			$text = str_replace($replace, $code, $text);
+		}
+		return $text;
+	}
+
+	protected static function _embedFileCode($text, array $options = array()) {
+		$defaults = array('pad' => "\t", 'library' => true);
+		$options += $defaults;
+		$regex = '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)';
+		$library = Libraries::get($options['library']);
+
+		if (!preg_match_all("/\{\{\{\s*(embed:{$regex})\s*\}\}\}/", $text, $matches)) {
+			return $text;
+		}
+
+		foreach ($matches['file'] as $i => $file) {
+			$path = realpath("{$library['path']}/{$file}");
+			$replace = $matches[0][$i];
+
+			list($start, $end) = array_map('intval', explode('-', $matches['lines'][$i]));
+			$lines = Inspector::lines(file_get_contents($path), range($start - 1, $end - 1));
+			$code = '{{{' . "\t" . join("\n\t", $lines) . ' }}}';
 			$text = str_replace($replace, $code, $text);
 		}
 		return $text;

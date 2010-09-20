@@ -28,9 +28,11 @@ a {
 
 .contents {
 	width: 200px;
-	float: right;
+	float: left;
+	clear: left;
 	display: block;
 	padding: 0 0 25px 25px;
+	margin: 0 50px 25px 0;
 	background-color: #F0F3FF;
 }
 
@@ -38,15 +40,16 @@ a {
 	background-color: transparent;
 }
 
-.description, .text, .parameters {
-	width: 63%;
+.text, .parameters {
+	width: 100%;
 }
 
 .description {
-	margin: 20px 0;
-	padding: 10px 10px -10px 10px;
+	float: right;
+	clear: right;
+	padding: 10px;
 	font-size: 115%;
-	line-height: 170%;
+	line-height: 200%;
 	border: 2px solid #AACCFF;
 	border-top-color: #99AACC;
 	border-left-color: #99AACC;
@@ -80,6 +83,10 @@ a {
 .crumbs span {
 	color: #0D0D0D;
 }
+.crumbs li a, .crumbs li span {
+	font-size: .85em;
+	font-family: Monaco, Courier, monospace !important;
+}
 .crumbs .type {
 	display: none;
 }
@@ -99,7 +106,6 @@ a {
 .crumbs li.type + li:before {
 	content: '';
 }
-
 ul.libraries, ul.children, ul.subclasses, ul.properties, ul.methods, ul.parameters, ul.related {
 	margin: 0;
 	list-style: none;
@@ -119,10 +125,14 @@ ul.libraries, ul.children, ul.subclasses, ul.properties, ul.methods, ul.paramete
 .properties > li {
 	background: url("http://lithify.me/img/icons/silk/cog.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
+	font-family: Monaco, Courier, monospace !important;
+	font-size: .85em;
 }
 .methods > li {
 	background: url("http://lithify.me/img/icons/silk/wrench.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
+	font-family: Monaco, Courier, monospace !important;
+	font-size: .85em;
 }
 .parameters > li {
 	background: url("http://lithify.me/img/icons/silk/cog_go.png") no-repeat 0 6px;
@@ -150,9 +160,12 @@ ul.libraries, ul.children, ul.subclasses, ul.properties, ul.methods, ul.paramete
 	background: url("http://lithify.me/img/icons/silk/wrench.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
 }
-span.parent {
+.parent {
+	font-size: .85em;
+	font-family: Monaco, Courier, monospace !important;
 	background: url("http://lithify.me/img/icons/silk/brick_link.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
+	margin-bottom: 15px;
 }
 span.type {
 	color: #454545;

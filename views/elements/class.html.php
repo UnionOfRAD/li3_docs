@@ -2,9 +2,15 @@
 <?php if ($object['parent']) { ?>
 	<?php $parent = $object['parent']; ?>
 	<h4><?=$t('Parent class', array('scope' => 'li3_docs')); ?></h4>
-	<span class="parent">
-		<?php echo $this->html->link($parent, $this->docs->identifierUrl($parent)); ?>
-	</span>
+	<div class="parent">
+		<?=$this->html->link($parent, $this->docs->identifierUrl($parent)); ?>
+	</div>
+<?php } ?>
+
+<?php if ($object['description']) { ?>
+	<p class="description markdown">
+		<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
+	</p>
 <?php } ?>
 
 <?php if ($object['properties'] || ($object['methods'] && $object['methods']->count())) { ?>
@@ -31,12 +37,6 @@
 		</ul>
 	<?php } ?>
 </div>
-<?php } ?>
-
-<?php if ($object['description']) { ?>
-	<p class="description markdown">
-		<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
-	</p>
 <?php } ?>
 
 <?php if ($object['text']) { ?>

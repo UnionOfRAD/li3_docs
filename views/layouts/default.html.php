@@ -24,11 +24,7 @@ use lithium\core\Environment;
 
 <body class="docs">
 <div id="wrapper">
-	<?=$this->view()->render(
-		array('element' => 'locale_navigation'),
-		array(),
-		array('library' => 'li3_docs')
-	); ?>
+	<?php //$this->_view->render(array('element' => 'locale_navigation'), array(), array('library' => 'li3_docs')); ?>
 	<div id="container">
 		<div id="header">
 			<h1><?=$this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
