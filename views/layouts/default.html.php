@@ -34,19 +34,9 @@ use lithium\core\Environment;
 			<h1><?=$this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
 				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
 			)); ?></h1>
-			<ul class="crumbs">
-				<?php foreach (isset($crumbs) ? $crumbs : array() as $crumb): ?>
-					<li class="<?= $crumb['class'];?>">
-						<?php
-							if ($crumb['url']) {
-								echo $this->html->link($crumb['title'], $crumb['url']);
-								continue;
-							}
-						?>
-						<span><?=$crumb['title']; ?></span>
-					</li>
-				<?php endforeach; ?>
-			</ul>
+			<?=$this->_view->render(
+				array('element' => 'nav'), compact('object'), array('library' => 'li3_docs')
+			); ?>
 		</div>
 
 		<div id="content">
@@ -66,6 +56,7 @@ use lithium\core\Environment;
 </div>
 <?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
 <?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
+
 <?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/js/rad.cli.js')) { ?>
 	<?=$this->html->script('rad.cli.js'); ?>
 <?php } ?>

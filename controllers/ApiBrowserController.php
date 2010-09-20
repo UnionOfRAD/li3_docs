@@ -86,36 +86,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 		$options = array('namespaceDoc' => $this->docFile);
 
 		$object = $extractor::get($this->request->lib, $name, $options);
-		$crumbs = $this->_crumbs($object);
-		return compact('name', 'library', 'object', 'crumbs');
-	}
-
-	protected function _crumbs($object) {
-		$path = array_filter(array_merge(
-			array($object['name']), explode('\\', $object['identifier'])
-		));
-		$crumbs[] = array(
-			'title' => $object['type'],
-			'url' => null,
-			'class' => 'type ' . $object['type']
-		);
-		$url = '';
-
-		foreach (array_slice($path, 0, -1) as $part) {
-			$url .= '/' . $part;
-			$crumbs[] = array('title' => $part, 'url' => 'docs' . $url, 'class' => null);
-		}
-		$ident = end($path);
-
-		if (strpos($ident, '::') !== false) {
-			list($class, $ident) = explode('::', $ident, 2);
-			$crumbs[] = array('title' => $class, 'url' => "docs{$url}/{$class}", 'class' => null);
-			$isMethod = true;
-		} else {
-			$isMethod = false;
-		}
-		$crumbs[] = array('title' => $ident, 'url' => null, 'class' => $isMethod ? 'ident' : null);
-		return $crumbs;
+		return compact('name', 'library', 'object');
 	}
 
 	protected function _oldProcess($object) {
