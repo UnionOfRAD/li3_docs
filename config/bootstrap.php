@@ -23,7 +23,8 @@ use \lithium\core\Libraries;
 use \lithium\net\http\Media;
 
 Dispatcher::applyFilter('_callable', function($self, $params, $chain) {
-	list($plugin, $asset) = explode('/', $params['request']->url, 2) + array("", "");
+	list($plugin, $asset) = explode('/', ltrim($params['request']->url, '/'), 2) + array("", "");
+
 	if ($asset && ($library = Libraries::get($plugin)) && isset($library['path'])) {
 		$asset = "{$library['path']}/webroot/{$asset}";
 

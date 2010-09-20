@@ -1,3 +1,6 @@
+<?php if (!isset($object) || !$object) {
+	return;
+} ?>
 <ul class="crumbs">
 	<?php foreach ($this->docs->crumbs($object) as $crumb): ?>
 		<li class="<?= $crumb['class']; ?>">
