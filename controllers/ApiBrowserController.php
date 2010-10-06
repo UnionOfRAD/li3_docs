@@ -41,21 +41,19 @@ class ApiBrowserController extends \lithium\action\Controller {
 	public $docFile = 'readme.wiki';
 
 	/**
-	 * This action introspects all libraries and plugins that exist in your app (even if they are
-	 * not loaded), including the app itself and the Lithium core.
+	 * This action introspects all libraries and plugins that exist in your app, including the app
+	 * itself and the Lithium core.
 	 *
 	 * @return array
 	 */
 	public function index() {
-		$libraries = Libraries::get();
 		$config = Libraries::get('li3_docs');
+		$libs = isset($config['index']) ? $config['index'] : array_keys(Libraries::get());
 
-		if (isset($config['index'])) {
-			$libraries = array_combine(
-				$config['index'],
-				array_map(function($lib) { return Libraries::get($lib); }, $config['index'])
-			);
-		}
+		$class = $this->_classes['extractor'];
+		$configs = array_map(function($lib) use ($class) { return $class::library($lib); }, $libs);
+		$libraries = array_combine($libs, $configs);
+
 		return compact('libraries');
 	}
 
@@ -87,28 +85,6 @@ class ApiBrowserController extends \lithium\action\Controller {
 
 		$object = $extractor::get($this->request->lib, $name, $options);
 		return compact('name', 'library', 'object');
-	}
-
-	protected function _oldProcess($object) {
-		if (isset($object['info']['tags']['var'])) {
-			$object['type'] = $object['info']['tags']['var'];
-		}
-		$object['info'] += array('description' => '');
-
-		if ($object['info']['description']) {
-			$object['info']['description'] = $this->_embed($object['info']['description']);
-		}
-
-		if (isset($object['info']['text'])) {
-			$object['info']['text'] = $this->_embed($object['info']['text']);
-		}
-
-		if (isset($object['info']['tags']['return'])) {
-			list($type, $text) = explode(' ', $object['info']['tags']['return'], 2) + array('', '');
-			$object['info']['return'] = compact('type', 'text');
-			$object['info']['return']['text'] = $this->_embed($object['info']['return']['text']);
-		}
-		return $object;
 	}
 }
 

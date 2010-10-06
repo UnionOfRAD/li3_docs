@@ -1,4 +1,4 @@
-The Lithium documentation plugin (Li3 Docs) is a tool for creating automatically browseable documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
+The Lithium documentation plugin (Li3 Docs) is a tool for creating automatically browse-able documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
 
 ### Documentation structure
 
