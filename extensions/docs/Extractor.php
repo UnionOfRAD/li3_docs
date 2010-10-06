@@ -51,7 +51,7 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	public static function library($name, array $options = array()) {
-		$defaults = array('docs' => 'config/docs.json');
+		$defaults = array('docs' => 'config/docs/index.json');
 		$options += $defaults;
 
 		if (!$config = Libraries::get($name)) {
@@ -59,9 +59,9 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		if (file_exists($file = "{$config['path']}/{$options['docs']}")) {
-			$config += (array) json_decode(file_get_contents($file));
+			$config += json_decode(file_get_contents($file), true);
 		}
-		return $config + array('title' => Inflector::humanize($name));
+		return $config + array('title' => Inflector::humanize($name), 'category' => 'libraries');
 	}
 
 	protected static function _method(array $object, array $data, array $options = array()) {

@@ -1,10 +1,18 @@
-<h2><?=$this->title($t('Libraries', array('scope' => 'li3_docs'))); ?></h2>
+<?php $defaults = array(
+	'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'view'
+); ?>
+
+<h2><?=$this->title($t('Library APIs', array('scope' => 'li3_docs'))); ?></h2>
 
 <ul class="libraries">
 	<?php foreach ($libraries as $lib => $config) { ?>
-		<?php $display = ucwords(str_replace('_', ' ', $lib)); ?>
-		<li><?=$this->html->link($display, compact('lib') + array(
-			'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'view'
-		)); ?></li>
+		<li>
+			<div class="title">
+				<?=$this->html->link($config['title'], compact('lib') + $defaults); ?>
+			</div>
+			<?php if (isset($config['description'])) { ?>
+				<p class="markdown"><?=$config['description']; ?></p>
+			<?php } ?>
+		</li>
 	<?php } ?>
 </ul>

@@ -167,12 +167,20 @@ ul.libraries, ul.children, ul.subclasses, ul.properties, ul.methods, ul.paramete
 	padding: .25em 0 .25em 26px;
 	margin-bottom: 15px;
 }
+
 span.type {
 	color: #454545;
 }
+
 .source-display {
+
 	margin-top: 20px;
 }
+
 #footer p {
 	color: #fff;
+}
+
+.source-wrapper {
+	clear: both;
 }
