@@ -29,15 +29,13 @@ $menu = array_filter(compact('params','return','filter','related','links','subCl
 	</menu>
 </div>
 
-<?
-if ($meta) {
-	echo $this->view()->render(
+<?php if ($meta) { ?>
+	<?=$this->view()->render(
 		array('element' => 'meta'),
 		compact('namespace','meta'),
 		array('library' => 'li3_docs')
-	);
-}
-?>
+	); ?>
+<?php } ?>
 
 <?=$this->view()->render(
 	array('element' => $object['type']),
