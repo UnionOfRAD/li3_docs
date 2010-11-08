@@ -22,6 +22,19 @@ use lithium\core\Environment;
 		<?=$this->html->style('u1m'); ?>
 	<?php } ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
+	<?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
+	<?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function () {
+			var converter = new Showdown.converter("/");
+
+			$(".markdown").each(function () {
+				$(this).html(converter.makeHtml($.trim($(this).text())));
+			});
+
+			hljs.initHighlighting();
+		});
+	</script>
 </head>
 
 <body class="docs">
@@ -32,6 +45,9 @@ use lithium\core\Environment;
 					'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
 				), array('escape' => false)); ?>
 			</h1>
+			<?=$this->html->link($t('<span class="home"></span>', array('scope' => 'li3_docs')), array(
+				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
+			), array('escape' => false, 'title' => 'Return to Lithium Docs home')); ?>
 		</header>
 	</div>
 
@@ -49,29 +65,19 @@ use lithium\core\Environment;
 		</article>
 	</div>
 
-<?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
-<?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
-
 <?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/js/rad.cli.js')) { ?>
-	<?=$this->html->script('rad.cli.js'); ?>
+	<?=$this->html->script('rad.cli'); ?>
+<?php } else { ?>
+	<?=$this->html->script('http://lithify.me/js/rad.cli.js');?>
 <?php } ?>
-
-<script type="text/javascript" charset="utf-8">
-	var cmdUrl = 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd';
-
-	$(document).ready(function () {
-
-		if (typeof RadCli != 'undefined') {
-			RadCli.setup({ commandBase: cmdUrl });
-		}
-		var converter = new Showdown.converter("/");
-
-		$(".markdown").each(function () {
-			$(this).html(converter.makeHtml($.trim($(this).text())));
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function () {
+			RadCli.setup({
+				setupGitCopy: false,
+				commandBase: 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
+			});
+			$('#header').css({borderTop: '40px solid black'});
 		});
-
-		hljs.initHighlighting();
-	});
-</script>
+	</script>
 </body>
 </html>

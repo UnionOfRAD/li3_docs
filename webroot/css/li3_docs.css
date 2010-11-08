@@ -16,9 +16,10 @@ body.docs {
 
 body.docs #header h1 {
 	margin: 0;
-	float:right;
+	float: right;
 	font-weight: normal;
 	font-size: 2em;
+	text-align: right;
 }
 
 body.docs #header h1 a {
@@ -33,14 +34,14 @@ body.docs .triangle::before {
 	content: '\25B2';
 	font-size: 1em;
 }
-
 body.docs #header {
 	margin: 0;
 	padding: 0;
 }
-body.docs #header::before {
+
+body.docs a .home {
 	display: block;
-	content: ' \25b4 \25b2 \25b4';
+	float: left;
 	background: #E6E6E6;
 	color: #999;
 	color: rgba(0,0,0,.15);
@@ -51,6 +52,10 @@ body.docs #header::before {
 	text-align: center;
 	width: 21%;
 	line-height: 1.2em;
+}
+body.docs a .home::before {
+	display: block;
+	content: ' \25b4 \25b2 \25b4';
 }
 body.docs #header:after {
 	display: block;
