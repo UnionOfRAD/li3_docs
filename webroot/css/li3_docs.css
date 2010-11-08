@@ -161,18 +161,22 @@ body.docs .crumbs h3 {
 	padding-bottom: 2em;
 }
 .article .section h3 {
-	margin-top: 0;
 	font-size: 1.75em;
+	margin-top: 1em;
+}
+.article .section h3:first-child {
+	margin-top: 0;
+
 }
 .article .section h4 {
 	font-size: 1.25em;
 	margin-top: 1em;
-	padding-bottom: .25em;
-	border-bottom: 1px solid #efefef;
+	padding: .5em;
+	background: #e6e6e6;
 }
-
 .article .section h4 a {
 	border-bottom: none;
+	color: #000;
 }
 
 .article .section .library-description {
@@ -250,15 +254,15 @@ body.docs .crumbs h3 {
 	content: ':';
 }
 .crumbs li:last-child span {
-	-moz-border-radius: .45em;
-	-webkit-border-radius: .45em;
-	border-radius: .45em;
+	-moz-border-radius: .35em;
+	-webkit-border-radius: .35em;
+	border-radius: .35em;
 	-webkit-box-shadow: inset 0 0 .25em rgba(0,0,0,.75);
 	-moz-box-shadow: inset 0 0 .25em rgba(0,0,0,.75);
 	box-shadow: inset 0 0 .25em rgba(0,0,0,.75);
-	background: #62B212;
+	background: #999;
 	color: white;
-	padding: 0.2em 0.5em;
+	padding: 0.1em 0.3em;
 }
 .crumbs li + li::before {
 	content: '\\';
