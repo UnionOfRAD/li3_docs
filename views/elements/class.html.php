@@ -30,7 +30,7 @@
 </div>
 
 
-<div id="class" class="section">
+<div id="parent" class="section">
 	<section>
 		<?php if ($object['parent']) { ?>
 			<?php $parent = $object['parent']; ?>
@@ -39,6 +39,10 @@
 				$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
 			); ?>
 		<?php } ?>
+	</section>
+</div>
+<div class="section">
+	<section>
 		<?php if ($object['description']) { ?>
 			<div class="description markdown">
 				<pre>
@@ -46,9 +50,6 @@
 				</pre>
 			</div>
 		<?php } ?>
-
-
-
 		<?php if ($object['text']) { ?>
 			<div class="text markdown">
 				<pre>
@@ -56,6 +57,5 @@
 				</pre>
 			</div>
 		<?php } ?>
-
 	</section>
 </div>

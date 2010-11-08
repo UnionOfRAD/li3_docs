@@ -68,7 +68,7 @@ body.docs .crumbs {
 body.docs .crumbs h3 {
 	color: #bbb;
 	font-size: .75em;
-	margin: 0 0 1em 0;
+	margin: 0 0 .75em 0;
 }
 
 .crumbs ul {
@@ -153,6 +153,9 @@ body.docs .crumbs h3 {
 	float: right;
 	padding: 2em 2% 0;
 	width: 75%;
+}
+.article #parent {
+	padding-top: 0;
 }
 .article .section:last-child {
 	padding-bottom: 2em;
@@ -327,8 +330,6 @@ ul.parameters {
 	padding: .25em 0 .25em 26px;
 }
 h2.parent, a.parent {
-	position: relative;
-	top: -1.5em;
 	font-size: 1em;
 	border-bottom: none;
 }

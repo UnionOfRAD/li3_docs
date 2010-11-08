@@ -28,7 +28,7 @@
 	</nav>
 </div>
 
-<div class="section">
+<div id="parent" class="section">
 	<section>
 		<?php if ($meta['parent']) { ?>
 			<?php $parent = $meta['parent']; ?>

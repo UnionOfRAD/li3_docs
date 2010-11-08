@@ -7,15 +7,15 @@
 <?php } ?>
 	</section>
 </div>
+<?php if ($object['text']) { ?>
 <div class="section">
 	<section>
-<?php if ($object['text']) { ?>
-	<div class="text markdown">
-		<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
-	</div>
-<?php } ?>
+		<div class="text markdown">
+			<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
+		</div>
 	</section>
 </div>
+<?php } ?>
 
 <?php // Method parameters ?>
 <?php if (isset($object['tags']['params'])) { ?>
