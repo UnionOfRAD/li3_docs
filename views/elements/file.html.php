@@ -1,7 +1,7 @@
 <?php if ($object['children']) { ?>
-	<div class="contents">
+	<div class="nav">
 		<nav>
-		<h4><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h4>
+		<h2><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h2>
 		<ul class="children">
 			<?php foreach ($object['children'] as $class => $type) { ?>
 				<?php
@@ -17,15 +17,22 @@
 	</div>
 <?php } ?>
 
-<section>
-<?php foreach ($object['info'] as $info) { ?>
+<?php foreach ($object['info'] as $info) {
+ ?>
 	<?php if (is_string($info)) { ?>
-		<p class="markdown">
-			<?=$info; ?>
-		</p>
+<div class="section">
+	<section>
+		<h3>Source</h3>
+		<div class="markdown"><pre><?=$info; ?></pre></div>
+	</section>
+</div>
 	<?php } else { ?>
-		<p class="markdown"><?=$info['description']; ?></p>
-		<p class="markdown"><?=$info['text']; ?></p>
+<div class="section">
+	<section>
+		<div class="markdown"><pre><?=$info['description']; ?></pre></div>
+		<div class="markdown"><pre><?=$info['text']; ?></pre></div>
+	</section>
+</div>
 		<?php if (isset($info['tags']['see'])) { ?>
 			<?=$this->view()->render(
 				array('element' => 'related'),
@@ -41,5 +48,5 @@
 			); ?>
 		<?php } ?>
 	<?php } ?>
+
 <?php } ?>
-</section>
