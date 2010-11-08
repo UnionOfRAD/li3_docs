@@ -86,15 +86,7 @@ class Extractor extends \lithium\core\StaticObject {
 
 		$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
-		$object['children'] = array();
-
-		foreach (Libraries::find($library, array('namespaces' => true) + compact('path')) as $c) {
-			$libPath = Libraries::path($c, array('dirs' => true));
-			is_dir($libPath) ? $object['children'][$c] = 'namespace' : null;
-		}
-		foreach (Libraries::find($library, array('namespaces' => false) + compact('path')) as $c) {
-			$object['children'][$c] = 'class';
-		}
+		$object['children'] = static::_children($library, $path);
 
 		$path = $config['path'] . rtrim($path, '/');
 		$doc = "{$path}/{$options['namespaceDoc']}";
@@ -136,7 +128,8 @@ class Extractor extends \lithium\core\StaticObject {
 
 	protected static function _file(array $object, array $options = array()) {
 		$identifier = $object['identifier'];
-		$config = Libraries::get($object['library']);
+		$library = $object['library'];
+		$config = Libraries::get($library);
 		$ds = DIRECTORY_SEPARATOR;
 
 		$data = compact('identifier') + array(
@@ -153,15 +146,25 @@ class Extractor extends \lithium\core\StaticObject {
 		if (is_dir($subPath)) {
 			$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 			$path = '/' . str_replace('\\', '/', $path);
-			$searchOpts = array('recursive' => true, 'namespaces' => true, 'filter' => false);
-
-			foreach (Libraries::find($object['library'], compact('path') + $searchOpts) as $file) {
-				$libPath = Libraries::path($file, array('dirs' => true));
-				$type = is_dir($libPath) ? 'namespace' : 'class';
-				$data['children'][$file] = $type;
-			}
+			$data['children'] = static::_children($library, $path);
 		}
 		return $data;
+	}
+
+	protected static function _children($library, $path) {
+		$result = array();
+		$types = array(
+			'namespace' => array('namespaces' => true),
+			'class' => array('namespaces' => false),
+			'file' => array('namespaces' => false, 'filter' => false, 'preFilter' => false),
+		);
+
+		foreach ($types as $type => $options) {
+			foreach (Libraries::find($library, compact('path') + $options) as $child) {
+				$result += array($child => $type);
+			}
+		}
+		return $result;
 	}
 
 	protected static function _codeToDoc($code) {
