@@ -45,8 +45,7 @@ a {
 }
 
 .description {
-	float: right;
-	clear: right;
+	width: 100%;
 	padding: 10px;
 	font-size: 115%;
 	line-height: 200%;
@@ -173,12 +172,12 @@ span.type {
 }
 
 .source-display {
-
 	margin-top: 20px;
 }
 
-#footer p {
-	color: #fff;
+#footer {
+	clear: both;
+	color: #E0E0E0;
 }
 
 .source-wrapper {
