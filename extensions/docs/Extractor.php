@@ -90,8 +90,10 @@ class Extractor extends \lithium\core\StaticObject {
 
 		foreach (Libraries::find($library, array('namespaces' => true) + compact('path')) as $c) {
 			$libPath = Libraries::path($c, array('dirs' => true));
-			$type = is_dir($libPath) ? 'namespace' : 'class';
-			$object['children'][$c] = $type;
+			is_dir($libPath) ? $object['children'][$c] = 'namespace' : null;
+		}
+		foreach (Libraries::find($library, array('namespaces' => false) + compact('path')) as $c) {
+			$object['children'][$c] = 'class';
 		}
 
 		$path = $config['path'] . rtrim($path, '/');

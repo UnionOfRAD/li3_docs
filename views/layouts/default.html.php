@@ -14,7 +14,9 @@ use lithium\core\Environment;
 <html lang="<?= str_replace('_', '-', Environment::get('locale')); ?>">
 <head>
 	<?=$this->html->charset(); ?>
-	<title><?=$t('Lithium API', array('scope' => 'li3_docs')) . ' > ' . $this->title(); ?></title>
+	<title>
+		<?=$t('Lithium Documentation', array('scope' => 'li3_docs')) . ' > ' . $this->title(); ?>
+	</title>
 	<?=$this->html->style(array('lithium', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight')); ?>
 	<?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/css/u1m.css')) { ?>
 		<?=$this->html->style('u1m'); ?>
@@ -27,7 +29,7 @@ use lithium\core\Environment;
 	<?php //$this->_view->render(array('element' => 'locale_navigation'), array(), array('library' => 'li3_docs')); ?>
 	<div id="container">
 		<div id="header">
-			<h1><?=$this->html->link($t('Lithium API', array('scope' => 'li3_docs')), array(
+			<h1><?=$this->html->link($t('Lithium Docs', array('scope' => 'li3_docs')), array(
 				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
 			)); ?></h1>
 			<?=$this->_view->render(
