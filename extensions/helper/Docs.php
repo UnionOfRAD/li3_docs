@@ -15,6 +15,10 @@ class Docs extends \lithium\template\Helper {
 	}
 
 	public function identifierUrl($class) {
+		if (strpos($class, '://') !== false) {
+			return $class;
+		}
+
 		$parts = explode('\\', $class);
 		$lib = array_shift($parts);
 		$args = $parts;
