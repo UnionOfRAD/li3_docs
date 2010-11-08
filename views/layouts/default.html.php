@@ -35,13 +35,13 @@ use lithium\core\Environment;
 		</header>
 	</div>
 
-	<!-- <div class="nav">
-		<nav> -->
-			<?php /*echo //$this->_view->render(
+	<div class="nav">
+		<nav>
+			<?php echo $this->_view->render(
 				array('element' => 'nav'), compact('object'), array('library' => 'li3_docs')
-			); */ ?>
-		<!-- </nav>
-	</div> -->
+			); ?>
+		</nav>
+	</div>
 
 	<div class="article">
 		<article>

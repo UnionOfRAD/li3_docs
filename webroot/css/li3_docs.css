@@ -159,6 +159,20 @@ body.docs .crumbs h3 {
 	margin-top: 0;
 	font-size: 1.75em;
 }
+.article .section h4 {
+	font-size: 1.25em;
+	margin-top: 1em;
+	padding-bottom: .25em;
+	border-bottom: 1px solid #efefef;
+}
+
+.article .section h4 a {
+	border-bottom: none;
+}
+
+.article .section .library-description {
+	padding: .25em 1em;
+}
 
 .text, .parameters {
 	width: 100%;
