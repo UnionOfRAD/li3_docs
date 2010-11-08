@@ -1,5 +1,6 @@
 <?php if ($object['children']) { ?>
 	<div class="contents">
+		<nav>
 		<h4><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h4>
 		<ul class="children">
 			<?php foreach ($object['children'] as $class => $type) { ?>
@@ -12,10 +13,11 @@
 				</li>
 			<?php } ?>
 		</ul>
+		</nav>
 	</div>
 <?php } ?>
 
-
+<section>
 <?php foreach ($object['info'] as $info) { ?>
 	<?php if (is_string($info)) { ?>
 		<p class="markdown">
@@ -40,3 +42,4 @@
 		<?php } ?>
 	<?php } ?>
 <?php } ?>
+</section>

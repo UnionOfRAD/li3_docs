@@ -82,9 +82,15 @@ class ApiBrowserController extends \lithium\action\Controller {
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 		$options = array('namespaceDoc' => $this->docFile);
-
 		$object = $extractor::get($this->request->lib, $name, $options);
-		return compact('name', 'library', 'object');
+
+		$meta = array();
+		if (strpos($name, '::') !== false) {
+			list($class, $method) = explode('::', $name, 2);
+			$meta =  $extractor::get($this->request->lib, $class);
+		}
+
+		return compact('name', 'library', 'object', 'meta');
 	}
 }
 

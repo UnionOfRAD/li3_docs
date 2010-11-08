@@ -1,6 +1,7 @@
-<?php if ($object['children']) { ?>
-	<div class="contents">
-		<h4><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h4>
+<div class="nav">
+	<nav>
+	<?php if ($object['children']) { ?>
+		<h2><?=$t('Packages', array('scope' => 'li3_docs')); ?></h2>
 		<ul class="children">
 			<?php foreach ($object['children'] as $class => $type) { ?>
 				<?php
@@ -10,9 +11,12 @@
 				<li class="<?=$type; ?>"><?php echo $this->html->link(end($parts), $url); ?></li>
 			<?php } ?>
 		</ul>
-	</div>
-<?php } ?>
+	<?php } ?>
+	</nav>
+</div>
 
+<div class="section">
+	<section>
 <?php if ($object['description']) { ?>
 	<p class="description markdown">
 		<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
@@ -24,3 +28,5 @@
 		<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
 	</p>
 <?php } ?>
+	</section>
+</div>

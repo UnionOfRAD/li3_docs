@@ -25,33 +25,30 @@ use lithium\core\Environment;
 </head>
 
 <body class="docs">
-<div id="wrapper">
-	<?php //$this->_view->render(array('element' => 'locale_navigation'), array(), array('library' => 'li3_docs')); ?>
-	<div id="container">
-		<div id="header">
-			<h1><?=$this->html->link($t('Lithium Docs', array('scope' => 'li3_docs')), array(
-				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
-			)); ?></h1>
-			<?=$this->_view->render(
-				array('element' => 'nav'), compact('object'), array('library' => 'li3_docs')
-			); ?>
-		</div>
-
-		<div id="content">
-			<?=$this->content; ?>
-		</div>
+	<div id="header">
+		<header>
+			<h1>
+				<?=$this->html->link($t('<span class="triangle"></span> Lithium Docs', array('scope' => 'li3_docs')), array(
+					'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
+				), array('escape' => false)); ?>
+			</h1>
+		</header>
 	</div>
-	<div id="footer-spacer"></div>
-</div>
 
-<div id="footer">
-	<p class="copyright">
-		<?=$t('Pretty much everything is © {:year} and beyond, the Union of RAD', array(
-			'year' => date('Y'),
-			'scope' => 'li3_docs'
-		)); ?>
-	</p>
-</div>
+	<!-- <div class="nav">
+		<nav> -->
+			<?php /*echo //$this->_view->render(
+				array('element' => 'nav'), compact('object'), array('library' => 'li3_docs')
+			); */ ?>
+		<!-- </nav>
+	</div> -->
+
+	<div class="article">
+		<article>
+			<?=$this->content; ?>
+		</article>
+	</div>
+
 <?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
 <?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
 
@@ -60,11 +57,9 @@ use lithium\core\Environment;
 <?php } ?>
 
 <script type="text/javascript" charset="utf-8">
-	var codeSelector = '.source-wrapper';
 	var cmdUrl = 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd';
 
 	$(document).ready(function () {
-		$(codeSelector).hide();
 
 		if (typeof RadCli != 'undefined') {
 			RadCli.setup({ commandBase: cmdUrl });
@@ -75,15 +70,6 @@ use lithium\core\Environment;
 			$(this).html(converter.makeHtml($.trim($(this).text())));
 		});
 
-		$('.source-toggle').bind('click', function() {
-			if ($(codeSelector).is(':visible')) {
-				text = '<?=$t('Show source', array('scope' => 'li3_docs')); ?>';
-			} else {
-				text = '<?=$t('Hide source', array('scope' => 'li3_docs')); ?>';
-			}
-			$button = $(this);
-			$(codeSelector).slideToggle(400, function() { $button.text(text); });
-		});
 		hljs.initHighlighting();
 	});
 </script>

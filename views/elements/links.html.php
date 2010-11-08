@@ -1,5 +1,5 @@
 <?php if (isset($object['tags']['link'])) { ?>
-	<h4><?=$t('Links', array('scope' => 'li3_docs')); ?></h4>
+	<h3><?=$t('Links', array('scope' => 'li3_docs')); ?></h3>
 	<ul class="links">
 		<?php foreach ((array) $object['tags']['link'] as $url) { ?>
 			<?php
