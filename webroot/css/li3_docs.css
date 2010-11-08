@@ -133,6 +133,8 @@ body.docs .crumbs h3 {
 
 .article .menu a {
 	background: #E6E6E6;
+	-moz-border-radius: .35em;
+	-webkit-border-radius: .35em;
 	border-radius: .35em;
 	border-bottom: 0;
 	color: #666;
@@ -187,6 +189,8 @@ body.docs .crumbs h3 {
 	font-size: 1.25em;
 	background: #efefef;
 	background: rgba(0,0,0,.05);
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
 	border-radius: .5em;
 }
 
