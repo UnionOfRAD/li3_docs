@@ -6,9 +6,9 @@
 			<?php if ($meta['properties']) { ?>
 				<h2><?=$t('Class Properties', array('scope' => 'li3_docs')); ?></h2>
 				<ul class="properties">
-					<?php foreach ($meta['properties'] as $name => $value) { ?>
-						<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::\${$name}"); ?>
-						<li><?=$this->html->link($name, $url); ?></li>
+					<?php foreach ($meta['properties'] as $property) { ?>
+						<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::\${$property['name']}"); ?>
+						<li><?=$this->html->link($property['name'], $url); ?></li>
 					<?php } ?>
 				</ul>
 			<?php } ?>
