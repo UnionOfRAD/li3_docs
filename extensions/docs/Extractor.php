@@ -99,13 +99,8 @@ class Extractor extends \lithium\core\StaticObject {
 		$proto = array(
 			'parent' => get_parent_class($identifier),
 			'methods' => Inspector::methods($identifier, null, array('public' => false)),
-			'properties' => get_class_vars($identifier)
+			'properties' => Inspector::properties($identifier, array('public' => false))
 		);
-
-		if ($proto['parent']) {
-			$parentProps = get_class_vars($proto['parent']);
-			$proto['properties'] = array_diff_key($proto['properties'], $parentProps);
-		}
 		$classes = Libraries::find($object['library'], array('recursive' => true));
 
 		$proto['subClasses'] = array_filter($classes, function($class) use ($identifier) {

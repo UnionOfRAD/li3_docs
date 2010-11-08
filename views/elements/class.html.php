@@ -19,9 +19,9 @@
 	<?php if ($object['properties']) { ?>
 		<h4><?=$t('Properties', array('scope' => 'li3_docs')); ?></h4>
 		<ul class="properties">
-			<?php foreach ($object['properties'] as $name => $value) { ?>
-				<?php $url = $this->docs->identifierUrl("{$namespace}::\${$name}"); ?>
-				<li><?=$this->html->link($name, $url); ?></li>
+			<?php foreach ($object['properties'] as $property) { ?>
+				<?php $url = $this->docs->identifierUrl("{$namespace}::\${$property['name']}"); ?>
+				<li><?=$this->html->link($property['name'], $url); ?></li>
 			<?php } ?>
 		</ul>
 	<?php } ?>
