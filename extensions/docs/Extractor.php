@@ -85,7 +85,7 @@ class Extractor extends \lithium\core\StaticObject {
 		$config = Libraries::get($library);
 
 		$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
-		$path = '/' . str_replace('\\', '/', $path);
+		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
 		$object['children'] = array();
 
 		foreach (Libraries::find($library, array('namespaces' => true) + compact('path')) as $c) {
@@ -117,7 +117,7 @@ class Extractor extends \lithium\core\StaticObject {
 		$classes = Libraries::find($object['library'], array('recursive' => true));
 
 		$proto['subClasses'] = array_filter($classes, function($class) use ($identifier) {
-			if (preg_match('/\\\(libraries)\\\/', $class)) {
+			if (preg_match('/\\\(libraries)\\\|\\\(mocks)\\\/', $class)) {
 				return false;
 			}
 			try {
