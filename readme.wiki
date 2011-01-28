@@ -23,14 +23,14 @@ There are also general tags which can be added to any docblock. These include th
 
 ### Markdown syntax
 
-Docblock descriptions are written in Markdown format, with a few conventions. Namely, any code references or identifiers should be enclosed in backticks. This includes namespaces, classes, variable names, and keywords like `true`, `false` and `null`. Extended code examples should be written enclosed in three sets of curly braces, i.e.: {{&#123; // Code goes here }}}.
+Docblock descriptions are written in Markdown format, with a few conventions. Namely, any code references or identifiers should be enclosed in backticks. This includes namespaces, classes, variable names, and keywords like `true`, `false` and `null`. Extended code examples should be written enclosed in three sets of curly braces, i.e.: {&zwj;{{ // Code goes here }}}.
 
 ### Code embedding
 
 In order to improve the testability of documented code examples, and to help ensure that code and documentation stay in sync, Li3 Docs supports a special syntax that allows code from class methods to be embedded inline inside Markdown text. Consider the following:
 
 {{{
-{{{ embed:lithium\tests\cases\core\EnvironmentTest::testSetAndGetCurrentEnvironment(1-3) }} }
+{{{ embed:lithium\tests\cases\core\EnvironmentTest::testSetAndGetCurrentEnvironment(1-3) }‍}}
 }}}
 
 This will embed code from the `testSetAndGetCurrentEnvironment()` method of the `Environment` test case, from line 1 through line 3 as an inline code example in the Markdown text. This way, whenever the code changes, the tests change to match it, and the documentation stays up-to-date with what's in the test.
@@ -39,4 +39,10 @@ Finally, since explanations and descriptions of code can fall out of sync with e
 
 ### Browsing
 
-Once loaded into your application the plugin will enable browsing for all added libraries. In some cases it may be desired to disable browsing for certain libraries. In order to do so pass the `'index'` option in the second parameter when adding Li3 Docs: `Libraries::add('li3_docs', array('index' => array('lithium', 'li3_bot')))`.
+Once loaded into your application the plugin will enable browsing for all added libraries. In some cases it may be desired to disable browsing for certain libraries. In order to do so pass the `'index'` option in the second parameter when adding Li3 Docs:
+
+{{{
+Libraries::add('li3_docs', array(
+	'index' => array('lithium', 'li3_bot')
+));
+}}}
