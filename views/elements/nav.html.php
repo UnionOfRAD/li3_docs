@@ -1,6 +1,10 @@
-<?php if (!isset($object) || !$object) {
+<?php
+
+if (!isset($object) || !$object) {
 	return;
-} ?>
+}
+
+?>
 <div class="aside crumbs">
 	<aside>
 		<h3>docs for</h3>
