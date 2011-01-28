@@ -78,7 +78,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 			return $this->render('../errors/not_found');
 		}
 		if (isset($config['index']) && !in_array($this->request->lib, $config['index'])) {
-			return $this->render('../errors/not_found');
+			return $this->render(array('template' => '../errors/not_found'));
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 		$options = array('namespaceDoc' => $this->docFile);
