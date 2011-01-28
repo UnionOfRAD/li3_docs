@@ -13,6 +13,7 @@ use lithium\core\Libraries;
 use lithium\util\Inflector;
 use lithium\analysis\Docblock;
 use lithium\analysis\Inspector;
+use li3_docs\extensions\docs\Code;
 
 class Extractor extends \lithium\core\StaticObject {
 
@@ -44,14 +45,13 @@ class Extractor extends \lithium\core\StaticObject {
 		$data = static::$format($proto, (array) $data, $options);
 
 		foreach (array('text', 'description') as $key) {
-			$data[$key] = static::_embedMethodCode($data[$key]);
-			$data[$key] = static::_embedFileCode($data[$key], compact('library'));
+			$data[$key] = Code::embed($data[$key], compact('library'));
 		}
 		return $data;
 	}
 
 	public static function library($name, array $options = array()) {
-		$defaults = array('docs' => 'config/docs/index.json');
+		$defaults = array('docs' => 'config/docs/index.json', 'language' => 'en');
 		$options += $defaults;
 
 		if (!$config = Libraries::get($name)) {
@@ -59,7 +59,14 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		if (file_exists($file = "{$config['path']}/{$options['docs']}")) {
-			$config += json_decode(file_get_contents($file), true);
+			$config += (array) json_decode(file_get_contents($file), true);
+		}
+		if (isset($config['languages']) && in_array($options['language'], $config['languages'])) {
+			$config += $config[$options['language']];
+
+			foreach ($config['languages'] as $language) {
+				unset($config[$language]);
+			}
 		}
 		return $config + array('title' => Inflector::humanize($name), 'category' => 'libraries');
 	}
@@ -185,8 +192,7 @@ class Extractor extends \lithium\core\StaticObject {
 				$doc = Docblock::comment($token[1]);
 
 				foreach (array('text', 'description') as $key) {
-					$doc[$key] = static::_embedMethodCode($doc[$key]);
-					$doc[$key] = static::_embedFileCode($doc[$key]);
+					$doc[$key] = Code::embed($doc[$key]);
 				}
 				$display[] = $doc;
 				continue;
@@ -197,62 +203,6 @@ class Extractor extends \lithium\core\StaticObject {
 			$display[] = "{{{\n{$current}}}}";
 		}
 		return $display;
-	}
-
-	/**
-	 * Replaces class and method references with code snippets pulled from the class.
-	 *
-	 * @param string $text
-	 * @param array $options
-	 * @return string
-	 */
-	protected static function _embedMethodCode($text, array $options = array()) {
-		$defaults = array('pad' => "\t");
-		$options += $defaults;
-		$regex = '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)';
-
-		if (!preg_match_all("/\{\{\{\s*(embed:{$regex}\))\s*\}\}\}/", $text, $matches)) {
-			return $text;
-		}
-
-		foreach ($matches['class'] as $i => $class) {
-			$methods = array($matches['method'][$i]);
-			$markers = Inspector::methods($class, 'extents', compact('methods'));
-			$methodStart = $markers[current($methods)][0];
-			$replace = $matches[0][$i];
-
-			list($start, $end) = array_map('intval', explode('-', $matches['lines'][$i]));
-			$lines = Inspector::lines($class, range($start + $methodStart, $end + $methodStart));
-
-			$pad = substr_count(current($lines), $options['pad'], 0);
-			$lines = array_map('substr', $lines, array_fill(0, count($lines), $pad));
-
-			$code = '{{{' . "\n\n" . join("\n", $lines) . "\n\n" . '}}}';
-			$text = str_replace($replace, $code, $text);
-		}
-		return $text;
-	}
-
-	protected static function _embedFileCode($text, array $options = array()) {
-		$defaults = array('pad' => "\t", 'library' => true);
-		$options += $defaults;
-		$regex = '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)';
-		$library = Libraries::get($options['library']);
-
-		if (!preg_match_all("/\{\{\{\s*(embed:{$regex})\s*\}\}\}/", $text, $matches)) {
-			return $text;
-		}
-
-		foreach ($matches['file'] as $i => $file) {
-			$path = realpath("{$library['path']}/{$file}");
-			$replace = $matches[0][$i];
-
-			list($start, $end) = array_map('intval', explode('-', $matches['lines'][$i]));
-			$lines = Inspector::lines(file_get_contents($path), range($start - 1, $end - 1));
-			$code = '{{{' . "\t" . join("\n\t", $lines) . ' }}}';
-			$text = str_replace($replace, $code, $text);
-		}
-		return $text;
 	}
 
 	protected static function _isClassFile($path) {
