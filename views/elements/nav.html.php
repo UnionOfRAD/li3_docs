@@ -7,7 +7,7 @@
 		<ul>
 				<!-- <li class="home">
 					<?=$this->html->link($t('\\', array('scope' => 'li3_docs')), array(
-						'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
+						'controller' => 'li3_docs.ApiBrowser', 'action' => 'index'
 					), array('escape' => false)); ?>
 				</li> -->
 			<?php foreach ($this->docs->crumbs($object) as $crumb): ?>

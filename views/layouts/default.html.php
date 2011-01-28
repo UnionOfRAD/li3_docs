@@ -41,13 +41,17 @@ use lithium\core\Environment;
 	<div id="header">
 		<header>
 			<h1>
-				<?=$this->html->link($t('<span class="triangle"></span> Lithium Docs', array('scope' => 'li3_docs')), array(
-					'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
-				), array('escape' => false)); ?>
+				<?=$this->html->link(
+					$t('<span class="triangle"></span> Lithium Docs', array('scope' => 'li3_docs')),
+					array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
+					array('escape' => false)
+				); ?>
 			</h1>
-			<?=$this->html->link($t('<span class="home"></span>', array('scope' => 'li3_docs')), array(
-				'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'index'
-			), array('escape' => false, 'title' => 'Return to Lithium Docs home')); ?>
+			<?=$this->html->link(
+				$t('<span class="home"></span>', array('scope' => 'li3_docs')),
+				array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
+				array('escape' => false, 'title' => 'Return to Lithium Docs home')
+			); ?>
 		</header>
 	</div>
 

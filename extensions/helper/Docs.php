@@ -22,7 +22,7 @@ class Docs extends \lithium\template\Helper {
 		$parts = explode('\\', $class);
 		$lib = array_shift($parts);
 		$args = $parts;
-		return array('ApiBrowser::view', 'library' => 'li3_docs') + compact('lib', 'args');
+		return array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view') + compact('lib', 'args');
 	}
 
 	public function crumbs($object) {

@@ -39,7 +39,7 @@ $menu = array_filter(compact('params','return','filter','related','links','subCl
 
 <?=$this->view()->render(
 	array('element' => $object['type']),
-	compact('namespace', 'object', 'scope'),
+	compact('namespace', 'object', 'scope', 'library'),
 	array('library' => 'li3_docs')
 ); ?>
 

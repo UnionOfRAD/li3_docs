@@ -1,13 +1,17 @@
 <?php
 
+use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
 use li3_docs\extensions\route\Locale;
 
-Router::connect('/docs', array('library' => 'li3_docs', 'controller' => 'api_browser'));
+$config = Libraries::get('li3_docs');
+$base = isset($config['url']) ? $config['url'] : '/docs';
 
-Router::connect('/docs/{:lib}/{:args}', array(
-	'library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'view'
+Router::connect($base, array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
+
+Router::connect("{$base}/{:lib}/{:args}", array(
+	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
 ));
 
 Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($request) {
@@ -27,13 +31,13 @@ Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($r
 });
 
 Router::connect(new Locale(array(
-	'template' => '/docs',
-	'params' => array('library' => 'li3_docs', 'controller' => 'api_browser')
+	'template' => $base,
+	'params' => array('controller' => 'li3_docs.ApiBrowser')
 )));
 
 Router::connect(new Locale(array(
-	'template' => '/docs/{:lib}/{:args}',
-	'params' => array('library' => 'li3_docs', 'controller' => 'api_browser', 'action' => 'view')
+	'template' => "{$base}/{:lib}/{:args}",
+	'params' => array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view')
 )));
 
 ?>
