@@ -225,6 +225,10 @@ body.docs .crumbs h3 {
 	text-align: justify;
 }
 
+.text.markdown li {
+	margin-bottom: 15px;
+}
+
 #locale-navigation {
 	position: absolute;
 	right: 20px;
