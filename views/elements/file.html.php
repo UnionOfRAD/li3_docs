@@ -22,15 +22,18 @@
 	<?php if (is_string($info)) { ?>
 <div class="section">
 	<section>
-		<h3>Source</h3>
 		<div class="markdown"><pre><?=$info; ?></pre></div>
 	</section>
 </div>
 	<?php } else { ?>
 <div class="section">
 	<section>
-		<div class="markdown"><pre><?=$info['description']; ?></pre></div>
-		<div class="markdown"><pre><?=$info['text']; ?></pre></div>
+		<?php if ($info['description']): ?>
+			<div class="markdown"><pre><?=$info['description']; ?></pre></div>
+		<?php endif ?>
+		<?php if ($info['text']): ?>
+			<div class="markdown"><pre><?=$info['text']; ?></pre></div>
+		<?php endif ?>
 	</section>
 </div>
 		<?php if (isset($info['tags']['see'])) { ?>

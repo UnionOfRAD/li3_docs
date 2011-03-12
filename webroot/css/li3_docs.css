@@ -162,7 +162,7 @@ body.docs .crumbs h3 {
 }
 .article .section {
 	float: right;
-	padding: 1em 2% 0;
+	margin: 0.5em 2% 0 0;
 	width: 75%;
 }
 .article #parent {
@@ -180,8 +180,7 @@ body.docs .crumbs h3 {
 	margin-top: 1em;
 }
 .article .section h3:first-child {
-	margin-top: 0;
-
+	margin-top: 0.2em;
 }
 .article .section h4 {
 	font-size: 1.25em;
@@ -192,6 +191,10 @@ body.docs .crumbs h3 {
 .article .section h4 a {
 	border-bottom: none;
 	color: #000;
+}
+
+.article .section p {
+	margin-bottom: 0.2em;
 }
 
 .article .section .library-description {
@@ -222,6 +225,7 @@ body.docs .crumbs h3 {
 }
 
 .markdown p {
+	margin-top: 10px;
 	text-align: justify;
 }
 
@@ -343,6 +347,8 @@ ul.parameters {
 	margin: 0;
 }
 .related > li {
+	font-size: 0.85em;
+	font-family: Monaco, Courier, monospace;
 	background: url("http://lithify.me/img/icons/silk/brick_add.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
 }
