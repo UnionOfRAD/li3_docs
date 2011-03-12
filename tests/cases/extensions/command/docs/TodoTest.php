@@ -8,7 +8,7 @@
 
 namespace li3_docs\tests\cases\extensions\command\docs;
 
-use \li3_docs\extensions\command\docs\Todo;
+use li3_docs\extensions\command\docs\Todo;
 
 class TodoTest extends \lithium\test\Unit {
 }

@@ -3,7 +3,7 @@
 /**
  * Register g11n resource.
  */
-use \lithium\g11n\Catalog;
+use lithium\g11n\Catalog;
 
 $catalog = array('li3_docs' => array(
 	'adapter' => 'Gettext',

@@ -8,7 +8,7 @@
 
 namespace li3_docs\extensions\route;
 
-use \lithium\core\Environment;
+use lithium\core\Environment;
 
 class Locale extends \lithium\net\http\Route {
 

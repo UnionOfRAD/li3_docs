@@ -8,7 +8,7 @@
 
 namespace li3_docs\tests\cases\extensions\command;
 
-use \li3_docs\extensions\command\Docs;
+use li3_docs\extensions\command\Docs;
 
 class DocsTest extends \lithium\test\Unit {
 }

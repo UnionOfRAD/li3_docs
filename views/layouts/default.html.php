@@ -80,7 +80,7 @@ use lithium\core\Environment;
 				setupGitCopy: false,
 				commandBase: 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
 			});
-			$('#header').css({borderTop: '40px solid black'});
+			$('#header').css({ borderTop: '40px solid black' });
 		});
 	</script>
 </body>

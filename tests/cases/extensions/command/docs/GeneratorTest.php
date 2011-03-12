@@ -8,7 +8,7 @@
 
 namespace li3_docs\tests\cases\extensions\command\docs;
 
-use \li3_docs\extensions\command\docs\Generator;
+use li3_docs\extensions\command\docs\Generator;
 
 class GeneratorTest extends \lithium\test\Unit {
 }

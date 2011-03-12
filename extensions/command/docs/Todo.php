@@ -8,9 +8,9 @@
 
 namespace li3_docs\extensions\command\docs;
 
-use \lithium\core\Libraries;
-use \lithium\util\Inflector;
-use \lithium\analysis\Parser;
+use lithium\core\Libraries;
+use lithium\util\Inflector;
+use lithium\analysis\Parser;
 
 /**
  * Searches and displays @todo, @discuss, @fix and @important comments in your code.

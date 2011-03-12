@@ -8,8 +8,8 @@
 
 namespace li3_docs\extensions\command\docs;
 
-use \lithium\core\Libraries;
-use \lithium\analysis\Inspector;
+use lithium\core\Libraries;
+use lithium\analysis\Inspector;
 
 /**
  * Adds headers and docblocks to classes and methods

@@ -8,13 +8,13 @@
 
 namespace li3_docs\extensions\adapter\g11n\catalog;
 
-use \Exception;
-use \RecursiveIteratorIterator;
-use \RecursiveDirectoryIterator;
-use \lithium\core\Libraries;
-use \lithium\analysis\Inspector;
-use \lithium\analysis\Docblock;
-use \lithium\util\Set;
+use Exception;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use lithium\core\Libraries;
+use lithium\analysis\Inspector;
+use lithium\analysis\Docblock;
+use lithium\util\Set;
 
 class Docs extends \lithium\g11n\catalog\Adapter {
 
