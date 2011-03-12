@@ -40,6 +40,11 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 */
 	public $docFile = 'readme.wiki';
 
+	protected function _init() {
+		parent::_init();
+		$this->response->encoding = 'UTF-8';
+	}
+
 	/**
 	 * This action introspects all libraries and plugins that exist in your app, including the app
 	 * itself and the Lithium core.
@@ -49,12 +54,11 @@ class ApiBrowserController extends \lithium\action\Controller {
 	public function index() {
 		$config = Libraries::get('li3_docs');
 		$libs = isset($config['index']) ? $config['index'] : array_keys(Libraries::get());
-
 		$class = $this->_classes['extractor'];
-		$configs = array_map(function($lib) use ($class) { return $class::library($lib); }, $libs);
-		$libraries = array_combine($libs, $configs);
 
-		return compact('libraries');
+		return array('libraries' => array_combine($libs, array_map(
+			function($lib) use ($class) { return $class::library($lib); }, $libs)
+		));
 	}
 
 	/**
