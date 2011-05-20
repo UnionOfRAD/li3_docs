@@ -107,7 +107,7 @@ class Extractor extends \lithium\core\StaticObject {
 		$doc = "{$path}/{$options['namespaceDoc']}";
 		$object['text'] = file_exists($doc) ? file_get_contents($doc) : null;
 
-		if (!file_exists($doc) && file_exists($path)) {
+		if (!file_exists($doc) && file_exists($path) && !is_dir($path)) {
 			$object['text'] = file_get_contents($path);
 		}
 		return $object;
