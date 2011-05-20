@@ -89,7 +89,6 @@ class ApiBrowserController extends \lithium\action\Controller {
 			list($class, $method) = explode('::', $name, 2);
 			$meta = $extractor::get($this->request->lib, $class);
 		}
-
 		return compact('name', 'library', 'object', 'meta');
 	}
 }

@@ -95,26 +95,48 @@ class Extractor extends \lithium\core\StaticObject {
 		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
 
 		if (isset($options['contents'])) {
-			$contents = array();
-			$contentPath = $path ? "{$path}/" : '';
-
-			foreach ($options['contents'] as $key => $value) {
-				$contents[isset($value['title']) ? $value['title'] : $key] = array(
-					'type' => "page", 'url' => "{$library}/{$contentPath}{$key}"
-				);
-			}
-			$object['children'] = $contents;
+			$object['children'] = static::_contents($object, $options['contents']);
 		} else {
 			$object['children'] = static::_children($library, $path);
 		}
 		$path = $config['path'] . rtrim($path, '/');
 
-		if (isset($options['language']) && is_dir("{$path}/{$options['language']}")) {
-			$path .= "/{$options['language']}";
+		if (isset($options['language']) && is_dir("{$config['path']}/{$options['language']}")) {
+			$path = str_replace($config['path'], "{$config['path']}/{$options['language']}", $path);
 		}
 		$doc = "{$path}/{$options['namespaceDoc']}";
 		$object['text'] = file_exists($doc) ? file_get_contents($doc) : null;
+
+		if (!file_exists($doc) && file_exists($path)) {
+			$object['text'] = file_get_contents($path);
+		}
 		return $object;
+	}
+
+	protected static function _contents(array $object, array $contents) {
+		$path = str_replace('\\', '/', $object['identifier']);
+		$library = $object['library'];
+		$result = array();
+		$nested = array();
+
+		foreach (explode('\\', $object['identifier']) as $i => $key) {
+			if ($i == 0 && $key == $library) {
+				continue;
+			}
+			$nested[] = $key;
+			$key = join('/', $nested);
+
+			if (isset($contents[$key]['contents'])) {
+				$contents = $contents[$key]['contents'];
+			}
+		}
+
+		foreach ($contents as $key => $value) {
+			$result[isset($value['title']) ? $value['title'] : $key] = array(
+				'type' => "page", 'url' => "{$library}/{$key}"
+			);
+		}
+		return $result;
 	}
 
 	protected static function _class(array $object, array $data, array $options = array()) {

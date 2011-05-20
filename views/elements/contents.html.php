@@ -1,7 +1,7 @@
 <div class="nav">
 	<nav>
 	<?php if ($object['children']) { ?>
-		<h2><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h2>
+		<h2><?=$t('Contents', array('scope' => 'li3_docs')); ?></h2>
 		<ul class="children">
 			<?php foreach ($object['children'] as $name => $type) { ?>
 				<?php
