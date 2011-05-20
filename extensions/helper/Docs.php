@@ -25,6 +25,13 @@ class Docs extends \lithium\template\Helper {
 		return array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view') + compact('lib', 'args');
 	}
 
+	public function pageUrl($page) {
+		$parts = explode('/', $page);
+		$lib = array_shift($parts);
+		$args = $parts;
+		return array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view') + compact('lib', 'args');
+	}
+
 	public function crumbs($object) {
 		$path = array_filter(array_merge(
 			array($object['name']), explode('\\', $object['identifier'])

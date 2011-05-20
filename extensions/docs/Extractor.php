@@ -18,7 +18,7 @@ use li3_docs\extensions\docs\Code;
 class Extractor extends \lithium\core\StaticObject {
 
 	public static function get($library, $identifier, array $options = array()) {
-		$defaults = array('namespaceDoc' => null);
+		$defaults = array('namespaceDoc' => null, 'language' => 'en');
 		$options += $defaults;
 		$path = Libraries::path($identifier);
 
@@ -93,9 +93,25 @@ class Extractor extends \lithium\core\StaticObject {
 
 		$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
-		$object['children'] = static::_children($library, $path);
 
+		if (isset($options['contents'])) {
+			$contents = array();
+			$contentPath = $path ? "{$path}/" : '';
+
+			foreach ($options['contents'] as $key => $value) {
+				$contents[isset($value['title']) ? $value['title'] : $key] = array(
+					'type' => "page", 'url' => "{$library}/{$contentPath}{$key}"
+				);
+			}
+			$object['children'] = $contents;
+		} else {
+			$object['children'] = static::_children($library, $path);
+		}
 		$path = $config['path'] . rtrim($path, '/');
+
+		if (isset($options['language']) && is_dir("{$path}/{$options['language']}")) {
+			$path .= "/{$options['language']}";
+		}
 		$doc = "{$path}/{$options['namespaceDoc']}";
 		$object['text'] = file_exists($doc) ? file_get_contents($doc) : null;
 		return $object;

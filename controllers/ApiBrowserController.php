@@ -26,8 +26,9 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 * @var array
 	 */
 	protected $_classes = array(
-		'media' => 'lithium\net\http\Media',
-		'response' => 'lithium\action\Response',
+		'media'     => 'lithium\net\http\Media',
+		'response'  => 'lithium\action\Response',
+		'indexer'   => 'li3_docs\extensions\docs\Indexer',
 		'extractor' => 'li3_docs\extensions\docs\Extractor'
 	);
 
@@ -52,13 +53,8 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 * @return array
 	 */
 	public function index() {
-		$config = Libraries::get('li3_docs');
-		$libs = isset($config['index']) ? $config['index'] : array_keys(Libraries::get());
-		$class = $this->_classes['extractor'];
-
-		return array('libraries' => array_combine($libs, array_map(
-			function($lib) use ($class) { return $class::library($lib); }, $libs)
-		));
+		$indexer = $this->_classes['indexer'];
+		return array('libraries' => $indexer::libraries());
 	}
 
 	/**
@@ -86,12 +82,12 @@ class ApiBrowserController extends \lithium\action\Controller {
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 		$options = array('namespaceDoc' => $this->docFile);
-		$object = $extractor::get($this->request->lib, $name, $options);
-
+		$object = $extractor::get($this->request->lib, $name, $options + $library);
 		$meta = array();
+
 		if (strpos($name, '::') !== false) {
 			list($class, $method) = explode('::', $name, 2);
-			$meta =  $extractor::get($this->request->lib, $class);
+			$meta = $extractor::get($this->request->lib, $class);
 		}
 
 		return compact('name', 'library', 'object', 'meta');
