@@ -79,7 +79,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 		$config = Libraries::get('li3_docs');
 
 		if (!$library = $extractor::library($this->request->lib)) {
-			return $this->render('../errors/not_found');
+			return $this->render(array('template' => '../errors/not_found'));
 		}
 		if (isset($config['index']) && !in_array($this->request->lib, $config['index'])) {
 			return $this->render(array('template' => '../errors/not_found'));
