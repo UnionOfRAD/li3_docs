@@ -34,28 +34,28 @@ class Todo extends \lithium\console\Command {
 		$libs = Libraries::find($library, array('recursive' => true));
 		$files = array();
 
-		foreach ((array)$libs as $lib) {
+		foreach ((array) $libs as $lib) {
 			$file = Libraries::path($lib);
 			$this->_display($file);
 		}
 	}
 
 	protected function _display($file) {
-		$matches = Parser::tokenize(file_get_contents($file));
-		if (empty($matches)) {
+		if (!$matches = Parser::tokenize(file_get_contents($file))) {
 			$this->stop(1, 'no matches');
 		}
 		if (!$this->show) {
 			$this->out($file.':');
 		}
 		$rows = array(array('', 'ID', 'LINE', 'TYPE', 'TEXT'));
+
 		foreach ($matches as $match) {
-			$id = substr(sha1($file . $match['line']), 0, 4);
-			if ($id == $this->show) {
+			if (($id = substr(sha1($file . $match['line']), 0, 4)) == $this->show) {
 				$this->stop(0, $file);
 			}
 			$rows[] = array('', $id, $match['line'], $match['type'], $match['text']);
 		}
+
 		if (!$this->show) {
 			$this->out($this->columns($rows));
 			$this->hr();
