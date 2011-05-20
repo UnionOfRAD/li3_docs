@@ -1,24 +1,10 @@
-<?php if ($object['children']) { ?>
-	<div class="nav">
-		<nav>
-		<h2><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h2>
-		<ul class="children">
-			<?php foreach ($object['children'] as $class => $type) { ?>
-				<?php
-					$parts = explode('\\', $class);
-					$url = $this->docs->identifierUrl($class);
-				?>
-				<li class="<?=$type; ?>">
-					<?=$this->html->link(basename(end($parts)), $url); ?>
-				</li>
-			<?php } ?>
-		</ul>
-		</nav>
-	</div>
-<?php } ?>
+<?=$this->view()->render(
+	array('element' => 'contents'),
+	compact('scope', 'object'),
+	array('library' => 'li3_docs')
+); ?>
 
-<?php foreach ($object['info'] as $info) {
- ?>
+<?php foreach ($object['info'] as $info) { ?>
 	<?php if (is_string($info)) { ?>
 <div class="section">
 	<section>
