@@ -3,12 +3,21 @@
 	<?php if ($object['children']) { ?>
 		<h2><?=$t('Package contents', array('scope' => 'li3_docs')); ?></h2>
 		<ul class="children">
-			<?php foreach ($object['children'] as $class => $type) { ?>
+			<?php foreach ($object['children'] as $name => $type) { ?>
 				<?php
-					$parts = explode('\\', $class);
-					$url = $this->docs->identifierUrl($class);
+					if (is_array($type)) {
+						extract($type, EXTR_OVERWRITE);
+					}
+					if (!isset($url)) {
+						$url = $this->docs->identifierUrl($name);
+						$parts = explode('\\', $name);
+						$name = basename(end($parts));
+					} else {
+						$url = $this->docs->pageUrl($url);
+					}
 				?>
-				<li class="<?=$type; ?>"><?=$this->html->link(basename(end($parts)), $url); ?></li>
+				<li class="<?=$type; ?>"><?=$this->html->link($name, $url); ?></li>
+				<?php unset($url); ?>
 			<?php } ?>
 		</ul>
 	<?php } ?>
