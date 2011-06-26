@@ -314,14 +314,18 @@ ul.parameters {
 	background: url("http://lithify.me/img/icons/silk/package_green.png") no-repeat center left;
 	padding: .1em 0 .1em 26px;
 }
-.children > li, .subclasses > li {
+.children ul {
+	list-style: none;
+	margin: 0 0 0 1.5em;
+}
+.children li, .subclasses > li {
 	background: url("http://lithify.me/img/icons/silk/package.png") no-repeat 0 6px;
 	padding: .1em 0 .1em 26px;
 }
-.children > li.class {
+.children li.class {
 	background-image: url("http://lithify.me/img/icons/silk/brick.png");
 }
-.children > li.file {
+.children li.file {
 	background-image: url("http://lithify.me/img/icons/silk/page_white.png");
 }
 .properties > li {
