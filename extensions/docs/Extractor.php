@@ -93,7 +93,6 @@ class Extractor extends \lithium\core\StaticObject {
 
 		$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
-
 		if (isset($options['contents'])) {
 			$object['children'] = static::_contents($object, $options['contents']);
 		} else {
@@ -119,6 +118,8 @@ class Extractor extends \lithium\core\StaticObject {
 		$result = array();
 		$nested = array();
 
+		$up = array_keys($contents);
+		$path = '';
 		foreach (explode('\\', $object['identifier']) as $i => $key) {
 			if ($i == 0 && $key == $library) {
 				continue;
@@ -127,15 +128,32 @@ class Extractor extends \lithium\core\StaticObject {
 			$key = join('/', $nested);
 
 			if (isset($contents[$key]['contents'])) {
+				$parent_path = $path;
+				$up = array_keys($contents);
 				$contents = $contents[$key]['contents'];
+				$path = $key;
 			}
 		}
 
 		foreach ($contents as $key => $value) {
-			$result[isset($value['title']) ? $value['title'] : $key] = array(
-				'type' => "page", 'url' => "{$library}/{$key}"
-			);
+			$result["{$library}/{$key}"] = 'page';
 		}
+
+		foreach ($up as &$key) {
+			$key = "{$library}/{$key}";
+		}
+		$up = array_flip($up);
+
+		foreach (array_keys($up) as $parent_type) {
+			if ($parent_type == "{$library}/{$path}") {
+				$up[$parent_type] = $result;
+			}
+			else {
+				$up[$parent_type] = 'page';
+			}
+		}
+		$result = $up;
+
 		return $result;
 	}
 
@@ -182,10 +200,16 @@ class Extractor extends \lithium\core\StaticObject {
 			)),
 		);
 		$subPath = dirname($object['path']) . $ds . basename($object['path'], '.php');
-
 		if (is_dir($subPath)) {
 			$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 			$path = '/' . str_replace('\\', '/', $path);
+			$data['children'] = static::_children($library, $path);
+		}
+		else {
+			$parts = preg_split('/\\\\/', $identifier, null, PREG_SPLIT_NO_EMPTY);
+			array_shift($parts);
+			array_pop($parts);
+			$path = '/'. join('/', $parts);
 			$data['children'] = static::_children($library, $path);
 		}
 		return $data;
@@ -201,9 +225,33 @@ class Extractor extends \lithium\core\StaticObject {
 
 		foreach ($types as $type => $options) {
 			foreach (Libraries::find($library, compact('path') + $options) as $child) {
+				if ($type == 'namespace') {
+					$type = Libraries::find($library, array('path' => $child) + $options);
+				}
 				$result += array($child => $type);
 			}
 		}
+
+		$parts = preg_split('!/!', $path, null, PREG_SPLIT_NO_EMPTY);
+		if (count($parts) >= 2) {
+			array_pop($parts);
+			$parent_path = '/'. join('/', $parts);
+		}
+		else {
+			$parent_path = '';
+		}
+
+		$up = array_flip(Libraries::find($library, array('path' => $parent_path, 'namespaces' => 1)));
+		foreach (array_keys($up) as $parent_type) {
+			if ($parent_type == $library . str_replace('/', '\\', $path)) {
+				$up[$parent_type] = $result;
+			}
+			else {
+				$up[$parent_type] = 'namespace';
+			}
+		}
+		$result = $up;
+
 		return $result;
 	}
 
