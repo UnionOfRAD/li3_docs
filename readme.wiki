@@ -1,6 +1,6 @@
 Li3_docs is a **Lithium plugin**, NOT a Lithium app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
 
-Once installed in your existing application, however, it generates documentation from your app's docblocks in real-time, which is all accessible from http://yourapp.tld/docs/. Not only that, but it will generate documentation for your plugins, too. Including itself; so it is self-replicating in a way. In this vain, it becomes part of a series of plugins required in order to obtain various documentation volumes of interest.
+Once installed in your existing application, however, it generates documentation from your app's docblocks in real-time, which is all accessible from http://yourapp.tld/docs/. Not only that, but it will generate documentation for your plugins, too. Including itself; so it is self-replicating in a way. In this vein, it becomes part of a series of plugins required in order to obtain various documentation volumes of interest.
 
 such as:
 
