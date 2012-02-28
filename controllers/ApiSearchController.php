@@ -8,6 +8,8 @@
 
 namespace li3_docs\controllers;
 
+use li3_docs\models\Symbols;
+
 /**
  * This is the Lithium API search controller. Once the symbol harvester has run,
  * this class queries that database for quick, ranked API search results.
@@ -21,6 +23,14 @@ class ApiSearchController extends \lithium\action\Controller {
 	 */
 	public function query() {
 		$this->_render['type'] = 'json';
+		$results = Symbols::find('all', array(
+			'conditions' => array(
+				'name' => array(
+					'like' => $this->request->params['query'] . '%'
+				)
+			)
+		));
+		$this->set(compact('results'));
 	}
 }
 
