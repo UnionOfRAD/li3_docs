@@ -16,6 +16,10 @@ function getResults(term, callback) {
 	$.get(
 		$('#search').data('webroot') + 'li3_docs/search/' + term.term,
 		function(data, status, xhr) {
+			if(typeof(data.results.error) != 'undefined') {
+				alert(data.results.error);
+				return;
+			}
 			for(i in data.results) {
 				options.push(createValue(
 					data.results[i]['class'],

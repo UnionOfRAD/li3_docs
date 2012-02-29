@@ -52,6 +52,15 @@ class ApiSearchController extends \lithium\action\Controller {
 			'conditions' => $conditions
 		));
 			
+		// Lack of results might be due to no data in db...
+		if(count($results) < 1) {
+			if(Symbols::find('count') == 0) {
+				$results = array(
+					'error' => 'Please run `$ li3 harvest` to enable search.'
+				);
+			}
+		}
+			
 		$this->set(compact('results'));
 	}
 }
