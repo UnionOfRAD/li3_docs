@@ -23,14 +23,35 @@ class ApiSearchController extends \lithium\action\Controller {
 	 */
 	public function query() {
 		$this->_render['type'] = 'json';
+		$query = $this->request->params['query'];
+		$conditions = array();
+		
+		// If the leading character is upper-case, only search models.
+		if(preg_match('/^[A-Z]/', $query)) {
+			$conditions['type'] = 'class';
+		}
+		
+		// If it contains a '$', only search properties.
+		if(preg_match('/\$/', $query)) {
+			$query = str_replace('$', '', $query);
+			$conditions['type'] = 'property';
+		}
+		
+		// If it contains parens, only search methods.
+		if(preg_match('/[\(\)]/', $query)) {
+			$query = str_replace('(', '', $query);
+			$query = str_replace(')', '', $query);
+			$conditions['type'] = 'method';
+		}
+		
+		$conditions['name'] = array(
+			'like' => '%' . $query . '%'
+		);
+		
 		$results = Symbols::find('all', array(
-			'conditions' => array(
-				'name' => array(
-					'like' => '%' . $this->request->params['query'] . '%'
-				)
-			),
-			'limit' => 10
+			'conditions' => $conditions
 		));
+			
 		$this->set(compact('results'));
 	}
 }
