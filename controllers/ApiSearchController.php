@@ -26,9 +26,10 @@ class ApiSearchController extends \lithium\action\Controller {
 		$results = Symbols::find('all', array(
 			'conditions' => array(
 				'name' => array(
-					'like' => $this->request->params['query'] . '%'
+					'like' => '%' . $this->request->params['query'] . '%'
 				)
-			)
+			),
+			'limit' => 10
 		));
 		$this->set(compact('results'));
 	}
