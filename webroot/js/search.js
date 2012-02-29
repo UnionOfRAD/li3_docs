@@ -1,8 +1,15 @@
 $(document).ready(function(event){
 	$('#search input').autocomplete({
-		source:getResults
+		source:getResults,
+		select:selectResult
 	});
 });
+
+function selectResult(event, ui) {
+	var destination = $('#search input').val();
+	var path = destination.replace(/\\/g, "/");
+	window.location.href = $('#search').data('webroot') + 'docs/' + path;
+}
 
 function getResults(term, callback) {
 	var options = [];
