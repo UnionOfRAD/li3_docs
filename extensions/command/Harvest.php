@@ -40,11 +40,11 @@ class Harvest extends \lithium\console\Command {
 		$libraries = Libraries::get();
 		foreach($libraries as $library => $info) {
 			$this->header($library);
-			$libFiles = Libraries::find($library, array('recursive' => true));
+			$libFiles = Libraries::find($library, array(
+				'recursive' => true,
+				'exclude' => '/mocks|tests|libraries/',
+			));
 			foreach($libFiles as $file) {
-				if(preg_match('/mocks|tests|libraries/', $file)) {
-					continue;
-				}
 				$this->out("\n" . $file);
 				$fileData = $extractor::get($library, $file);
 				$this->_harvestMethods($fileData);
