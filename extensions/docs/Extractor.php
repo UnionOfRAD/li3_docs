@@ -2,7 +2,7 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2011, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
@@ -39,7 +39,7 @@ class Extractor extends \lithium\core\StaticObject {
 			'source'      => null,
 			'subClasses'  => array(),
 			'description' => isset($data['description']) ? $data['description'] : null,
-			'text'        => isset($data['text']) ? $data['text'] : null,
+			'text'        => isset($data['text']) ? $data['text'] : null
 		);
 		$format = "_{$proto['type']}";
 		$data = static::$format($proto, (array) $data, $options);
@@ -179,7 +179,7 @@ class Extractor extends \lithium\core\StaticObject {
 			'subClasses' => array(),
 			'info' => static::_codeToDoc(file_get_contents($object['path']), array(
 				'library' => $object['library']
-			)),
+			))
 		);
 		$subPath = dirname($object['path']) . $ds . basename($object['path'], '.php');
 
@@ -196,7 +196,7 @@ class Extractor extends \lithium\core\StaticObject {
 		$types = array(
 			'namespace' => array('namespaces' => true),
 			'class' => array('namespaces' => false),
-			'file' => array('namespaces' => false, 'filter' => false, 'preFilter' => false),
+			'file' => array('namespaces' => false, 'filter' => false, 'preFilter' => false)
 		);
 
 		foreach ($types as $type => $options) {

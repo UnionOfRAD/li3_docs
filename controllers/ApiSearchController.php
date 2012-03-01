@@ -2,7 +2,7 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2011, Union of RAD (http://union-of-rad.org)
+ * @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 
@@ -25,42 +25,42 @@ class ApiSearchController extends \lithium\action\Controller {
 		$this->_render['type'] = 'json';
 		$query = $this->request->params['query'];
 		$conditions = array();
-		
+
 		// If the leading character is upper-case, only search models.
-		if(preg_match('/^[A-Z]/', $query)) {
+		if (preg_match('/^[A-Z]/', $query)) {
 			$conditions['type'] = 'class';
 		}
-		
+
 		// If it contains a '$', only search properties.
-		if(preg_match('/\$/', $query)) {
+		if (preg_match('/\$/', $query)) {
 			$query = str_replace('$', '', $query);
 			$conditions['type'] = 'property';
 		}
-		
+
 		// If it contains parens, only search methods.
-		if(preg_match('/[\(\)]/', $query)) {
+		if (preg_match('/[\(\)]/', $query)) {
 			$query = str_replace('(', '', $query);
 			$query = str_replace(')', '', $query);
 			$conditions['type'] = 'method';
 		}
-		
+
 		$conditions['name'] = array(
 			'like' => '%' . $query . '%'
 		);
-		
+
 		$results = Symbols::find('all', array(
 			'conditions' => $conditions
 		));
-			
+
 		// Lack of results might be due to no data in db...
-		if(count($results) < 1) {
-			if(Symbols::find('count') == 0) {
+		if (count($results) < 1) {
+			if (Symbols::find('count') == 0) {
 				$results = array(
 					'error' => 'Please run `$ li3 harvest` to enable search.'
 				);
 			}
 		}
-			
+
 		$this->set(compact('results'));
 	}
 }
