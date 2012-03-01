@@ -23,7 +23,13 @@ use lithium\core\Environment;
 	<?php } ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
-	<?=$this->html->script(array('/li3_docs/js/showdown.min.js', '/li3_docs/js/highlight.pack.js')); ?>
+	<?=$this->html->script(array(
+		'/li3_docs/js/showdown.min.js', 
+		'/li3_docs/js/highlight.pack.js', 
+		'/li3_docs/js/search.js', 
+		'/li3_docs/js/jquery-1.7.1.min.js',
+		'/li3_docs/js/jquery-ui-custom.min.js'
+	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
 			var converter = new Showdown.converter("/");
@@ -40,18 +46,12 @@ use lithium\core\Environment;
 <body class="docs">
 	<div id="header">
 		<header>
-			<h1>
-				<?=$this->html->link(
-					$t('<span class="triangle"></span> Lithium Docs', array('scope' => 'li3_docs')),
-					array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
-					array('escape' => false)
-				); ?>
-			</h1>
 			<?=$this->html->link(
 				$t('<span class="home"></span>', array('scope' => 'li3_docs')),
 				array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
 				array('escape' => false, 'title' => 'Return to Lithium Docs home')
 			); ?>
+			<div id="search" data-webroot="<?= $this->url('/'); ?>" ><?= $this->form->text('query') ?></div>
 		</header>
 	</div>
 
