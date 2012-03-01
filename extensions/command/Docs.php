@@ -11,7 +11,6 @@ namespace li3_docs\extensions\command;
 use lithium\core\Libraries;
 use li3_docs\extensions\docs\Code;
 use li3_docs\extensions\docs\Indexer;
-use li3_docs\extensions\docs\Extractor;
 use li3_docs\extensions\command\docs\Generator;
 use li3_docs\extensions\command\docs\Todo;
 
@@ -33,7 +32,7 @@ class Docs extends \lithium\console\Command {
 		$generator = new Generator(array('request' => $this->request));
 		return $generator->run();
 	}
-	
+
 	public function todo() {
 		$todo = new Todo(array('request' => $this->request));
 		return $todo->run();

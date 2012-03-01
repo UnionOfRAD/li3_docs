@@ -9,7 +9,6 @@
 namespace li3_docs\extensions\command\docs;
 
 use lithium\core\Libraries;
-use lithium\util\Inflector;
 use lithium\analysis\Parser;
 
 /**
@@ -17,19 +16,8 @@ use lithium\analysis\Parser;
  */
 class Todo extends \lithium\console\Command {
 
-	/**
-	 * undocumented variable
-	 *
-	 * @var id
-	 */
 	public $show = true;
 
-	/**
-	 * undocumented function
-	 *
-	 * @param string $dir
-	 * @return void
-	 */
 	public function run($library = 'lithium') {
 		$libs = Libraries::find($library, array('recursive' => true));
 		$files = array();
@@ -45,7 +33,7 @@ class Todo extends \lithium\console\Command {
 			$this->stop(1, 'no matches');
 		}
 		if (!$this->show) {
-			$this->out($file.':');
+			$this->out($file . ':');
 		}
 		$rows = array(array('', 'ID', 'LINE', 'TYPE', 'TEXT'));
 

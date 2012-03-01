@@ -7,7 +7,7 @@
  */
 
  namespace li3_docs\models;
- 
+
  /**
   * Symbols model.
   */
@@ -18,6 +18,8 @@
 	  * @var array
 	  */
 	 protected $_meta = array(
-		 'connection' => 'li3_docs',
+		 'connection' => 'li3_docs'
 	 );
  }
+
+?>

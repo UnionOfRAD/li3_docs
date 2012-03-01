@@ -8,8 +8,6 @@
 
 namespace li3_docs\extensions\command;
 
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
 use lithium\core\Libraries;
 use li3_docs\models\Symbols;
 
@@ -17,7 +15,7 @@ use li3_docs\models\Symbols;
  * Harvests local symbols for easy API searchability.
  */
 class Harvest extends \lithium\console\Command {
-	
+
 	/**
 	 * undocumented class
 	 *
@@ -28,7 +26,7 @@ class Harvest extends \lithium\console\Command {
 		'indexer'   => 'li3_docs\extensions\docs\Indexer',
 		'extractor' => 'li3_docs\extensions\docs\Extractor'
 	);
-	
+
 	/**
 	 * Main command logic.
 	 *
@@ -38,13 +36,13 @@ class Harvest extends \lithium\console\Command {
 		$this->_readyTables();
 		$extractor = $this->_classes['extractor'];
 		$libraries = Libraries::get();
-		foreach($libraries as $library => $info) {
+		foreach ($libraries as $library => $info) {
 			$this->header($library);
 			$libFiles = Libraries::find($library, array(
 				'recursive' => true,
-				'exclude' => '/mocks|tests|libraries/',
+				'exclude' => '/mocks|tests|libraries/'
 			));
-			foreach($libFiles as $file) {
+			foreach ($libFiles as $file) {
 				$this->out("\n" . $file);
 				$fileData = $extractor::get($library, $file);
 				$this->_harvestMethods($fileData);
@@ -55,7 +53,7 @@ class Harvest extends \lithium\console\Command {
 		}
 		$this->out("\n\n");
 	}
-	
+
 	/**
 	 * Clears the harvest database.
 	 *
@@ -64,15 +62,15 @@ class Harvest extends \lithium\console\Command {
 	public function clear() {
 		$this->_readyTables();
 	}
-	
+
 	/**
 	 * Harvests method meta data from the specified file.
 	 *
-	 * @param string $fileData 
+	 * @param string $fileData
 	 * @return void
 	 */
 	protected function _harvestMethods($fileData) {
-		foreach($fileData['methods'] as $method) {
+		foreach ($fileData['methods'] as $method) {
 			$symbol = Symbols::create();
 			$symbol->name = $method->name;
 			$symbol->type = 'method';
@@ -82,15 +80,15 @@ class Harvest extends \lithium\console\Command {
 			echo '.';
 		}
 	}
-	
+
 	/**
 	 * Harvests class property data from the specified file.
 	 *
-	 * @param string $fileData 
+	 * @param string $fileData
 	 * @return void
 	 */
 	protected function _harvestProperties($fileData) {
-		foreach($fileData['properties'] as $property) {
+		foreach ($fileData['properties'] as $property) {
 			$symbol = Symbols::create();
 			$symbol->name = $property['name'];
 			$symbol->type = 'property';
@@ -100,11 +98,11 @@ class Harvest extends \lithium\console\Command {
 			echo '.';
 		}
 	}
-	
+
 	/**
 	 * Harvests class information from the specified file.
 	 *
-	 * @param string $fileData 
+	 * @param string $fileData
 	 * @return void
 	 */
 	protected function _harvestClass($fileData) {
@@ -116,7 +114,7 @@ class Harvest extends \lithium\console\Command {
 		$symbol->save();
 		echo '.';
 	}
-	
+
 	/**
 	 * Drops, then re-creates the Sqlite3 tables used for searching.
 	 *
@@ -125,7 +123,7 @@ class Harvest extends \lithium\console\Command {
 	protected function _readyTables() {
 		$dropSql = 'DROP TABLE IF EXISTS `symbols`';
 		Symbols::connection()->invokeMethod('_execute', array($dropSql));
-		
+
 		$createSql = 'CREATE TABLE IF NOT EXISTS `symbols` (
 			`id` INTEGER NOT NULL PRIMARY KEY,
 			`name` VARCHAR (255) NOT NULL,

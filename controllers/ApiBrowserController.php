@@ -8,10 +8,7 @@
 
 namespace li3_docs\controllers;
 
-use Exception;
-use DirectoryIterator;
 use lithium\core\Libraries;
-use lithium\analysis\Inspector;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,

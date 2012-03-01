@@ -9,7 +9,6 @@
 namespace li3_docs\extensions\command\docs;
 
 use lithium\core\Libraries;
-use lithium\analysis\Inspector;
 
 /**
  * Adds headers and docblocks to classes and methods
@@ -23,7 +22,7 @@ class Generator extends \lithium\console\Command {
 			'recursive' => true
 		));
 
-		foreach($classes as $class) {
+		foreach ($classes as $class) {
 			$path = Libraries::path($class);
 			$contents = explode("\n", file_get_contents($path));
 			$contents = $this->_header($contents);

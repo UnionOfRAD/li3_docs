@@ -8,7 +8,6 @@
 
 namespace li3_docs\extensions\docs;
 
-use Exception;
 use lithium\core\Libraries;
 use lithium\analysis\Inspector;
 
@@ -16,7 +15,7 @@ class Code extends \lithium\core\StaticObject {
 
 	protected static $_patterns = array(
 		'class' => '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)\)',
-		'file' => '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)\)',
+		'file' => '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)\)'
 	);
 
 	protected static $_index = array();
@@ -58,7 +57,7 @@ class Code extends \lithium\core\StaticObject {
 						'file'   => isset($matches['file'][$i]) ? $matches['file'][$i] : null,
 						'class'  => isset($matches['class'][$i]) ? $matches['class'][$i] : null,
 						'method' => isset($matches['method'][$i]) ? $matches['method'][$i] : null,
-						'lines'  => $matches['lines'][$i],
+						'lines'  => $matches['lines'][$i]
 					);
 					list($ref, $code) = static::extract($ref, $options);
 
