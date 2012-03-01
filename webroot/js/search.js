@@ -3,10 +3,14 @@ $(document).ready(function(event){
 		source:getResults,
 		select:selectResult
 	});
+	$('ui.autocomplete li a').live('click', function(event){
+		event.preventDefault();
+		selectResult(event, null);
+	});
 });
 
 function selectResult(event, ui) {
-	var destination = $('#search input').val();
+	var destination = ui.item.value;
 	var path = destination.replace(/\\/g, "/");
 	window.location.href = $('#search').data('webroot') + 'docs/' + path;
 }
