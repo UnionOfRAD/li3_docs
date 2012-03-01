@@ -39,5 +39,9 @@ $filter = function($self, $params, $chain) {
 Dispatcher::applyFilter('run', $filter);
 ConsoleDispatcher::applyFilter('run', $filter);
 
+/**
+ * Set up Sqlite3 database for search functionality.
+ */
+require __DIR__ . '/bootstrap/connections.php';
 
 ?>

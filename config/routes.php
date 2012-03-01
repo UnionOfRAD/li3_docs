@@ -37,6 +37,11 @@ Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($r
 	));
 });
 
+Router::connect('/li3_docs/search/{:query}', array(
+	'controller' => 'li3_docs.ApiSearch',
+	'action' => 'query'
+));
+
 Router::connect(new Locale(array(
 	'template' => $base,
 	'params' => array('controller' => 'li3_docs.ApiBrowser')
