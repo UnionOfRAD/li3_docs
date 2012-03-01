@@ -1,3 +1,4 @@
+// Listeners
 $(document).ready(function(event){
 	$('#search input').autocomplete({
 		source:getResults,
@@ -9,12 +10,14 @@ $(document).ready(function(event){
 	});
 });
 
+// Handler on select
 function selectResult(event, ui) {
 	var destination = ui.item.value;
 	var path = destination.replace(/\\/g, "/");
 	window.location.href = $('#search').data('webroot') + 'docs/' + path;
 }
 
+// jQuery UI Autocomplete source
 function getResults(term, callback) {
 	var options = [];
 	$.get(
@@ -37,6 +40,7 @@ function getResults(term, callback) {
 	);
 }
 
+// Transforms symbol results into displayable options
 function createValue(className, type, name) {
 	var value = className;
 	switch(type) {
