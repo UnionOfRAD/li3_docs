@@ -8,6 +8,16 @@
 
  namespace li3_docs\models;
  
+ /**
+  * Symbols model.
+  */
  class Symbols extends \lithium\data\Model {
- 
+	 /**
+	  * Model metadata. Used to set alternate connection.
+	  *
+	  * @var array
+	  */
+	 protected $_meta = array(
+		 'connection' => 'li3_docs',
+	 );
  }
