@@ -1,6 +1,7 @@
 <?php
 
 use lithium\data\Connections;
+use lithium\core\Libraries;
 
 /**
  * Sets up Sqlite3 database for searching.
@@ -8,5 +9,5 @@ use lithium\data\Connections;
 Connections::add('li3_docs', array(
   'type'     => 'database',
   'adapter'  => 'Sqlite3',
-  'database' => dirname(dirname(dirname(__FILE__))) . '/resources/data/symbols.db',
+  'database' => Libraries::get('li3_docs', 'path') . '/resources/data/symbols.db',
 ));
