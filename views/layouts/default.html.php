@@ -22,7 +22,6 @@ use lithium\core\Environment;
 		<?=$this->html->style('u1m'); ?>
 	<?php } ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
-	<?=$this->html->script('http://code.jquery.com/jquery-1.4.1.min.js'); ?>
 	<?=$this->html->script(array(
 		'/li3_docs/js/showdown.min.js', 
 		'/li3_docs/js/highlight.pack.js', 
