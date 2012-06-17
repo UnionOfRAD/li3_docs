@@ -261,20 +261,20 @@ body.docs .crumbs h3 {
 	width: 1em;
 	height: 0;
 	padding: 1.25em 0 0 0;
-	background: url("http://lithify.me/img/icons/silk/package.png") no-repeat center center;
+	background: url("/img/icons/silk/package.png") no-repeat center center;
 	overflow: hidden;
 }
 .crumbs .type.class {
-	background-image: url("http://lithify.me/img/icons/silk/brick.png");
+	background-image: url("/img/icons/silk/brick.png");
 }
 .crumbs .type.method {
-	background-image: url("http://lithify.me/img/icons/silk/wrench.png");
+	background-image: url("/img/icons/silk/wrench.png");
 }
 .crumbs .type.property {
-	background-image: url("http://lithify.me/img/icons/silk/cog.png");
+	background-image: url("/img/icons/silk/cog.png");
 }
 .crumbs .type.file {
-	background-image: url("http://lithify.me/img/icons/silk/page_white.png");
+	background-image: url("/img/icons/silk/page_white.png");
 }
 .crumbs .type span::after {
 	content: ':';
@@ -311,33 +311,33 @@ ul.parameters {
 	margin: 0 0 0 1em;
 }
 .libraries > li {
-	background: url("http://lithify.me/img/icons/silk/package_green.png") no-repeat center left;
+	background: url("/img/icons/silk/package_green.png") no-repeat center left;
 	padding: .1em 0 .1em 26px;
 }
 .children > li, .subclasses > li {
-	background: url("http://lithify.me/img/icons/silk/package.png") no-repeat 0 6px;
+	background: url("/img/icons/silk/package.png") no-repeat 0 6px;
 	padding: .1em 0 .1em 26px;
 }
 .children > li.class {
-	background-image: url("http://lithify.me/img/icons/silk/brick.png");
+	background-image: url("/img/icons/silk/brick.png");
 }
 .children > li.file {
-	background-image: url("http://lithify.me/img/icons/silk/page_white.png");
+	background-image: url("/img/icons/silk/page_white.png");
 }
 .properties > li {
-	background: url("http://lithify.me/img/icons/silk/cog.png") no-repeat 0 6px;
+	background: url("/img/icons/silk/cog.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
 	font-family: Monaco, Courier, monospace !important;
 	font-size: .85em;
 }
 .methods > li {
-	background: url("http://lithify.me/img/icons/silk/wrench.png") no-repeat 0 6px;
+	background: url("/img/icons/silk/wrench.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
 	font-family: Monaco, Courier, monospace !important;
 	font-size: .85em;
 }
 .parameters > li {
-	background: url("http://lithify.me/img/icons/silk/cog_go.png") no-repeat 0 6px;
+	background: url("/img/icons/silk/cog_go.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
 }
 .parameters ul {
@@ -349,19 +349,19 @@ ul.parameters {
 .related > li {
 	font-size: 0.85em;
 	font-family: Monaco, Courier, monospace;
-	background: url("http://lithify.me/img/icons/silk/brick_add.png") no-repeat 0 6px;
+	background: url("/img/icons/silk/brick_add.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
 }
 .nav.namespace {
-	background: url("http://lithify.me/img/icons/silk/package_green.png") no-repeat center left;
+	background: url("/img/icons/silk/package_green.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
 }
 .nav.class {
-	background: url("http://lithify.me/img/icons/silk/package.png") no-repeat center left;
+	background: url("/img/icons/silk/package.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
 }
 .nav.method {
-	background: url("http://lithify.me/img/icons/silk/wrench.png") no-repeat center left;
+	background: url("/img/icons/silk/wrench.png") no-repeat center left;
 	padding: .25em 0 .25em 26px;
 }
 h2.parent, a.parent {

@@ -23,11 +23,12 @@ use lithium\core\Environment;
 	<?php } ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->script(array(
+		'/li3_docs/js/jquery-1.7.1.min.js',
+		'/li3_docs/js/jquery-ui-custom.min.js',
 		'/li3_docs/js/showdown.min.js', 
 		'/li3_docs/js/highlight.pack.js', 
-		'/li3_docs/js/search.js', 
-		'/li3_docs/js/jquery-1.7.1.min.js',
-		'/li3_docs/js/jquery-ui-custom.min.js'
+		'/li3_docs/js/search.js',
+		'/li3_docs/js/rad.cli.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
@@ -67,12 +68,6 @@ use lithium\core\Environment;
 			<?=$this->content; ?>
 		</article>
 	</div>
-
-<?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/js/rad.cli.js')) { ?>
-	<?=$this->html->script('rad.cli'); ?>
-<?php } else { ?>
-	<?=$this->html->script('http://lithify.me/js/rad.cli.js');?>
-<?php } ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
 			RadCli.setup({
