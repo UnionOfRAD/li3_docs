@@ -51,7 +51,19 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 */
 	public function index() {
 		$indexer = $this->_classes['indexer'];
-		return array('libraries' => $indexer::libraries());
+		$libraries = $indexer::libraries();
+
+		$config = Libraries::get('li3_docs');
+		$categories = '';
+		if (isset($config['categories']) && is_array($config['categories'])) {
+			$categories = array_keys($config['categories']);
+		} else {
+			$categories = array_values(array_unique(
+					array_map(function($lib) { return $lib['category']; }, $libraries)
+			));
+		}
+
+		return compact('libraries', 'categories');
 	}
 
 	/**
