@@ -68,7 +68,20 @@ class Extractor extends \lithium\core\StaticObject {
 				unset($config[$language]);
 			}
 		}
-		return $config + array('title' => Inflector::humanize($name), 'category' => 'libraries');
+		$docConfig = Libraries::get('li3_docs');
+		$category = 'libraries';
+		if (isset($docConfig['categories']) && is_array($docConfig['categories'])) {
+			if (isset($config['category'])) {
+				unset($config['category']);
+			}
+			foreach ($docConfig['categories'] as $key => $include) {
+				if ($include === true || !in_array($name, array_values((array)$include))) {
+					continue;
+				}
+				$category = $key;
+			}
+		}
+		return $config + array('title' => Inflector::humanize($name), 'category' => $category);
 	}
 
 	protected static function _method(array $object, array $data, array $options = array()) {
