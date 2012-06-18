@@ -20,8 +20,24 @@ class Indexer extends \lithium\core\StaticObject {
 	public static function libraries() {
 		$config = Libraries::get('li3_docs');
 		$libs = isset($config['index']) ? $config['index'] : array_keys(Libraries::get());
+		if (isset($config['exclude'])) {
+			$libs = array_diff($libs, $config['exclude']);
+		}
+		$libs = self::_sort($libs);
 		$configs = array_map(function($lib) { return Extractor::library($lib); }, $libs);
 		return array_combine($libs, $configs);
+	}
+
+	protected static function _sort($libs) {
+		$config = Libraries::get('li3_docs');
+		if (!(isset($config['sort']) && $config['sort'])) {
+			return $libs;
+		}
+		$start = isset($config['indexStart']) ? (array)$config['indexStart'] : array();
+		$end = isset($config['indexEnd']) ? (array)$config['indexEnd'] : array();
+		$sortable = array_diff($libs, array_merge($start, $end));
+		sort($sortable);
+		return array_merge($start, $sortable, $end);
 	}
 
 	public static function run(array $options = array()) {
@@ -36,6 +52,9 @@ class Indexer extends \lithium\core\StaticObject {
 
 		foreach (static::libraries() as $name => $config) {
 			if ($options['libraries'] && !in_array($name, $options['libraries'])) {
+				continue;
+			}
+			if ($options['exclude'] && in_array($name, $options['exclude'])) {
 				continue;
 			}
 		}
