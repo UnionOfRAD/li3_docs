@@ -18,8 +18,16 @@ use li3_docs\extensions\docs\Code;
 class Extractor extends \lithium\core\StaticObject {
 
 	public static function get($library, $identifier, array $options = array()) {
-		$defaults = array('namespaceDoc' => null, 'language' => 'en');
+		$defaults = array('namespaceDoc' => array(), 'language' => 'en');
 		$options += $defaults;
+		$options['namespaceDoc'] = (array)$options['namespaceDoc'];
+		$config = Libraries::get('li3_docs');
+		if (isset($config['namespaceDoc'])) {
+			$options['namespaceDoc'] = array_merge(
+					$options['namespaceDoc'], (array)$config['namespaceDoc']
+			);
+		}
+
 		$path = Libraries::path($identifier);
 
 		if (file_exists($path) && !static::_isClassFile($path)) {
@@ -117,10 +125,17 @@ class Extractor extends \lithium\core\StaticObject {
 		if (isset($options['language']) && is_dir("{$config['path']}/{$options['language']}")) {
 			$path = str_replace($config['path'], "{$config['path']}/{$options['language']}", $path);
 		}
-		$doc = "{$path}/{$options['namespaceDoc']}";
-		$object['text'] = file_exists($doc) ? file_get_contents($doc) : null;
 
-		if (!file_exists($doc) && file_exists($path) && !is_dir($path)) {
+		$object['text'] = null;
+		foreach((array)$options['namespaceDoc'] as $namespaceDoc) {
+			$doc = "{$path}/{$namespaceDoc}";
+			if (!file_exists($doc)) {
+				continue;
+			}
+			$object['text'] = file_get_contents($doc);
+			break;
+		}
+		if (!$object['text'] && file_exists($path) && !is_dir($path)) {
 			$object['text'] = file_get_contents($path);
 		}
 		return $object;
