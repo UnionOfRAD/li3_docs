@@ -21,12 +21,11 @@ class Extractor extends \lithium\core\StaticObject {
 		$defaults = array('namespaceDoc' => array(), 'language' => 'en');
 		$options += $defaults;
 		$options['namespaceDoc'] = (array)$options['namespaceDoc'];
-
 		$config = Libraries::get('li3_docs');
 		if (isset($config['namespaceDoc'])) {
-			foreach((array)$config['namespaceDoc'] as $namespaceDoc) {
-				$options['namespaceDoc'][] = $namespaceDoc;
-			}
+			$options['namespaceDoc'] = array_merge(
+					$options['namespaceDoc'], (array)$config['namespaceDoc']
+			);
 		}
 
 		$path = Libraries::path($identifier);
@@ -134,7 +133,7 @@ class Extractor extends \lithium\core\StaticObject {
 				continue;
 			}
 			$object['text'] = file_get_contents($doc);
-
+			break;
 		}
 		if (!$object['text'] && file_exists($path) && !is_dir($path)) {
 			$object['text'] = file_get_contents($path);
