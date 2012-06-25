@@ -34,6 +34,10 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 * from the directory being examined, and the contents of it represent the "docblock" for the
 	 * corresponding namespace.
 	 *
+	 * Additional names can be configured using the `namespaceDoc` key. Eg
+	 * 'Libraries::add('li3_docs', array('namespaceDoc' => 'documentation.md'));'
+	 * or multiple when an array is used.
+	 *
 	 * @var string
 	 */
 	public $docFile = 'readme.wiki';
