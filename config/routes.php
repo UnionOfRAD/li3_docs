@@ -3,6 +3,7 @@
 use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
+use lithium\net\http\Media;
 use li3_docs\extensions\route\Locale;
 
 $config = Libraries::get('li3_docs');
@@ -34,6 +35,24 @@ Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($r
 		'headers' => array('Content-type' => str_replace(
 			array('css', 'js'), array('text/css', 'text/javascript'), $req['type']
 		))
+	));
+});
+
+Router::connect('/li3_docs/{:path:img}/{:args}.{:type}', array(), function($request) {
+	$req = $request->params;
+	$path = implode('/', $req['args']);
+	$file = dirname(__DIR__) . "/webroot/{$req['path']}/{$path}.{$req['type']}";
+
+	if (!file_exists($file)) {
+		return;
+	}
+
+	$media = Media::type($info['extension']);
+	$content = (array) $media['content'];
+
+	return new Response(array(
+			'body' => file_get_contents($file),
+			'headers' => array('Content-type' => reset($content))
 	));
 });
 
