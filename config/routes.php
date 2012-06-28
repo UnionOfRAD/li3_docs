@@ -47,7 +47,7 @@ Router::connect('/li3_docs/{:path:img}/{:args}.{:type}', array(), function($requ
 		return;
 	}
 
-	$media = Media::type($info['extension']);
+	$media = Media::type($req['type']);
 	$content = (array) $media['content'];
 
 	return new Response(array(
