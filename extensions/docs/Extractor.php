@@ -20,11 +20,11 @@ class Extractor extends \lithium\core\StaticObject {
 	public static function get($library, $identifier, array $options = array()) {
 		$defaults = array('namespaceDoc' => array(), 'language' => 'en');
 		$options += $defaults;
-		$options['namespaceDoc'] = (array)$options['namespaceDoc'];
+		$options['namespaceDoc'] = (array) $options['namespaceDoc'];
 		$config = Libraries::get('li3_docs');
 		if (isset($config['namespaceDoc'])) {
 			$options['namespaceDoc'] = array_merge(
-					$options['namespaceDoc'], (array)$config['namespaceDoc']
+					$options['namespaceDoc'], (array) $config['namespaceDoc']
 			);
 		}
 
@@ -83,7 +83,7 @@ class Extractor extends \lithium\core\StaticObject {
 				unset($config['category']);
 			}
 			foreach ($docConfig['categories'] as $key => $include) {
-				if ($include === true || !in_array($name, array_values((array)$include))) {
+				if ($include === true || !in_array($name, array_values((array) $include))) {
 					continue;
 				}
 				$category = $key;
@@ -127,7 +127,7 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		$object['text'] = null;
-		foreach((array)$options['namespaceDoc'] as $namespaceDoc) {
+		foreach ((array) $options['namespaceDoc'] as $namespaceDoc) {
 			$doc = "{$path}/{$namespaceDoc}";
 			if (!file_exists($doc)) {
 				continue;
@@ -160,9 +160,15 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		foreach ($contents as $key => $value) {
-			$result[isset($value['title']) ? $value['title'] : $key] = array(
-				'type' => "page", 'url' => "{$library}/{$key}"
+			$section = isset($value['title']) ? $value['title'] : $key;
+			$url = "{$library}/{$key}";
+			$result[$section] = array(
+				'type' => "page", 'url' => $url
 			);
+			if (isset($value['contents'])) {
+				$object['library'] = $url;
+				$result[$section]['contents'] = static::_contents($object, $value['contents']);
+			}
 		}
 		return $result;
 	}

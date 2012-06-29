@@ -8,7 +8,7 @@
 
 namespace li3_docs\extensions\helper;
 
-class Docs extends \lithium\template\Helper {
+class Docs extends \lithium\template\helper\Html {
 
 	public function cleanup($text) {
 		return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
@@ -58,6 +58,32 @@ class Docs extends \lithium\template\Helper {
 		}
 		$crumbs[] = array('title' => $ident, 'url' => null, 'class' => $isMethod ? 'ident' : null);
 		return $crumbs;
+	}
+
+	public function contents($children) {
+		$list = '';
+		foreach ($children as $name => $type) {
+			if (is_array($type)) {
+				extract($type, EXTR_OVERWRITE);
+			}
+			if (!isset($url)) {
+				$url = $this->identifierUrl($name);
+				$parts = explode('\\', $name);
+				$name = basename(end($parts));
+			} else {
+				$url = $this->pageUrl($url);
+			}
+			if (!isset($contents)) {
+				$list .= "<li class='$type'>" . $this->link($name, $url) . '</li>';
+			} else {
+				$list .= "<li class='$type'>" . $this->link($name, $url);
+				$list .= '<ul class="children">' . $this->contents($contents) . '</ul>';
+				$list .= '</li>';
+			}
+
+			unset($url);
+		}
+		return $list;
 	}
 }
 
