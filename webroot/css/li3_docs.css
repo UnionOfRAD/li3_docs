@@ -324,6 +324,14 @@ ul.parameters {
 .children > li.file {
 	background-image: url("/li3_docs/img/icons/silk/page_white.png");
 }
+.children > li > .children {
+	margin-left: 0;
+}
+.children > li > .children > li {
+	background-image: url("/li3_docs/img/icons/silk/page_white.png");
+	border-left: none;
+	font-size: 90%;
+}
 .properties > li {
 	background: url("/li3_docs/img/icons/silk/cog.png") no-repeat 0 6px;
 	padding: .25em 0 .25em 26px;
