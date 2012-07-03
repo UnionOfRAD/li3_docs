@@ -166,7 +166,6 @@ class Extractor extends \lithium\core\StaticObject {
 				'type' => "page", 'url' => $url
 			);
 			if (isset($value['contents'])) {
-				$object['library'] = $url;
 				$result[$section]['contents'] = static::_contents($object, $value['contents']);
 			}
 		}
