@@ -8,7 +8,31 @@
 
 namespace li3_docs\extensions\helper;
 
+use lithium\core\Libraries;
+
 class Docs extends \lithium\template\helper\Html {
+
+	/**
+	 * The li3_docs library configuration.
+	 *
+	 * @see lithium\core\Libraries::add()
+	 * @var array
+	 */
+	protected $_libraryConfig;
+
+	/**
+	 * The configured base url for li3_docs.
+	 * Used to determing breadcrumb urls
+	 *
+	 * @var string
+	 */
+	protected $_baseUrl;
+
+	protected function _init() {
+		parent::_init();
+		$this->_libraryConfig = Libraries::get('li3_docs');
+		$this->_baseUrl = $this->_libraryConfig['url'];
+	}
 
 	public function cleanup($text) {
 		return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
@@ -38,20 +62,20 @@ class Docs extends \lithium\template\helper\Html {
 		));
 		$crumbs[] = array(
 			'title' => $object['type'],
-			'url' => null,
+			'url' => $this->_baseUrl,
 			'class' => 'type ' . $object['type']
 		);
 		$url = '';
 
 		foreach (array_slice($path, 0, -1) as $part) {
 			$url .= '/' . $part;
-			$crumbs[] = array('title' => $part, 'url' => 'docs' . $url, 'class' => 'namespace');
+			$crumbs[] = array('title' => $part, 'url' => "{$this->_baseUrl}{$url}", 'class' => 'namespace');
 		}
 		$ident = end($path);
 
 		if (strpos($ident, '::') !== false) {
 			list($class, $ident) = explode('::', $ident, 2);
-			$crumbs[] = array('title' => $class, 'url' => "docs{$url}/{$class}", 'class' => null);
+			$crumbs[] = array('title' => $class, 'url' => "{$this->_baseUrl}{$url}/{$class}", 'class' => null);
 			$isMethod = true;
 		} else {
 			$isMethod = false;
