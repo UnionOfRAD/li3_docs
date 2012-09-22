@@ -15,7 +15,7 @@ class Code extends \lithium\core\StaticObject {
 
 	protected static $_patterns = array(
 		'class' => '(?P<class>[A-Za-z0-9_\\\]+)::(?P<method>[A-Za-z0-9_]+)\((?P<lines>[0-9-]+)\)',
-		'file' => '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)\)'
+		'file' => '(?P<file>[A-Za-z0-9_\/.]+)::(?P<lines>[0-9-]+)'
 	);
 
 	protected static $_index = array();
@@ -59,11 +59,11 @@ class Code extends \lithium\core\StaticObject {
 						'method' => isset($matches['method'][$i]) ? $matches['method'][$i] : null,
 						'lines'  => $matches['lines'][$i]
 					);
-					list($ref, $code) = static::extract($ref, $options);
+					list($id, $code) = static::extract($ref, $options);
 
 					$replacement = $ref['class'] ? "{{{\n\n{$code}\n\n}}}" : "{{{{$code} }}}";
 					$text = str_replace($replace, $replacement, $text);
-					static::hash($ref, $code);
+					static::hash($id, $code);
 				}
 			}
 		}
@@ -97,10 +97,11 @@ class Code extends \lithium\core\StaticObject {
 
 		$markers = Inspector::methods($class, 'extents', array('methods' => array($ref['method'])));
 		$methodStart = $markers[$method][0];
-
 		list($start, $end) = array_map('intval', explode('-', $ref['lines']));
-		$code = Inspector::lines($class, range($start + $methodStart, $end + $methodStart));
 
+		if (!$code = Inspector::lines($class, range($start + $methodStart, $end + $methodStart))) {
+			$code = array("");
+		}
 		$pad = substr_count(current($code), "\t", 0);
 		$lines = array_map('substr', $code, array_fill(0, count($code), $pad));
 		return array("{$class}::{$method}({$start}-{$end})", join("\n", $lines));
@@ -114,8 +115,8 @@ class Code extends \lithium\core\StaticObject {
 			return;
 		}
 		list($start, $end) = array_map('intval', explode('-', $ref['lines']));
-		$lines = Inspector::lines(file_get_contents($path), range($start - 1, $end - 1));
-		return "\t" . join("\n\t", $lines);
+		$lines = Inspector::lines(file_get_contents($path), range($start, $end));
+		return array("{$ref['file']}::{$ref['lines']}", "\t" . join("\n\t", $lines));
 	}
 }
 
