@@ -40,7 +40,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 *
 	 * @var string
 	 */
-	public $docFile = array('readme.wiki', 'readme.md');
+	public $docFile = array('readme.md');
 
 	protected function _init() {
 		parent::_init();
