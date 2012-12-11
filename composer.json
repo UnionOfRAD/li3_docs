@@ -1,0 +1,43 @@
+{
+	"name": "unionofrad/li3_docs",
+	"type": "li3-libraries",
+	"description": "This plugin adds code quality assurance to your Lithium toolbelt.",
+	"keywords": ["docs", "docblock", "lithium", "li3", "documentation", "documented"],
+	"homepage": "https://github.com/UnionOfRAD/li3_docs",
+	"license": "MIT License",
+	"authors": [
+		{
+			"name": "Nate Abele",
+			"email": "nate.abele@gmail.com",
+			"homepage": "http://nateabele.com/"
+		},
+		{
+			"name": "David Persson",
+			"email": "nperson@gmx.de",
+			"homepage": "http://nperson.de"
+		},
+		{
+			"name": "Jon Adams",
+			"email": "pointlessjon@me.com",
+			"homepage": "http://daetal.us"
+		},
+		{
+			"name": "gwoo",
+			"homepage": "https://github.com/gwoo"
+		},
+		{
+			"name": "John Anderson",
+			"email": "anderson.johnd@gmail.com",
+			"homepage": "https://twitter.com/#!/raisinbread"
+		},
+		{
+			"name": "Hans Donner",
+			"email": "hans.donner@pobox.com",
+			"homepage": "https://github.com/hans-d"
+		}
+	],
+	"require": {
+		"php": ">=5.3",
+		"composer/installers": "*"
+	}
+}
