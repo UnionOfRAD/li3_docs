@@ -229,6 +229,11 @@ body.docs .crumbs h3 {
 	text-align: justify;
 }
 
+.markdown blockquote {
+    font-size: 1em;
+    background-color: #efefef;
+}
+
 .text.markdown li {
 	margin-bottom: 15px;
 }
