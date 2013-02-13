@@ -40,6 +40,16 @@ Dispatcher::applyFilter('run', $filter);
 ConsoleDispatcher::applyFilter('run', $filter);
 
 /**
+ * Setup default options
+ */
+$config = Libraries::get('li3_docs');
+$config += array(
+	'url' => '/docs'
+);
+$config['bootstrap'] = false;
+Libraries::add('li3_docs', $config);
+
+/**
  * Set up Sqlite3 database for search functionality.
  */
 require __DIR__ . '/bootstrap/connections.php';

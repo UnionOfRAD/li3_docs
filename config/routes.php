@@ -8,6 +8,10 @@ use li3_docs\extensions\route\Locale;
 
 $config = Libraries::get('li3_docs');
 $base = isset($config['url']) ? $config['url'] : '/docs';
+$root = $base;
+if ($base === '/') {
+	$base = '';
+}
 
 /**
  * Handles broken URL parsers by matching method URLs with no closing ) and redirecting.
@@ -16,11 +20,7 @@ Router::connect("{$base}/{:args}\(", array(), function($request) {
 	return new Response(array('location' => "{$request->url})"));
 });
 
-Router::connect($base, array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
-
-Router::connect("{$base}/{:lib}/{:args}", array(
-	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
-));
+Router::connect($root, array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
 
 Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($request) {
 	$req = $request->params;
@@ -59,6 +59,10 @@ Router::connect('/li3_docs/{:path:img}/{:args}.{:type}', array(), function($requ
 Router::connect('/li3_docs/search/{:query}', array(
 	'controller' => 'li3_docs.ApiSearch',
 	'action' => 'query'
+));
+
+Router::connect("{$base}/{:lib}/{:args}", array(
+	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
 ));
 
 Router::connect(new Locale(array(

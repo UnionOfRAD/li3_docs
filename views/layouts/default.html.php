@@ -8,6 +8,19 @@
 
 use lithium\g11n\Locale;
 use lithium\core\Environment;
+use lithium\core\Libraries;
+
+$config = Libraries::get('li3_docs');
+$searchBase = $config['url'];
+if (strpos($searchBase, '/') === 0) {
+	$searchBase = substr($searchBase, 1);
+}
+if ($searchBase === false) {
+	$searchBase = "";
+}
+if ($searchBase !== "") {
+	$searchBase .= "/";
+}
 
 ?>
 <!doctype html>
@@ -25,8 +38,8 @@ use lithium\core\Environment;
 	<?=$this->html->script(array(
 		'/li3_docs/js/jquery-1.7.1.min.js',
 		'/li3_docs/js/jquery-ui-custom.min.js',
-		'/li3_docs/js/showdown.min.js', 
-		'/li3_docs/js/highlight.pack.js', 
+		'/li3_docs/js/showdown.min.js',
+		'/li3_docs/js/highlight.pack.js',
 		'/li3_docs/js/search.js',
 		'/li3_docs/js/rad.cli.js'
 	)); ?>
@@ -51,7 +64,7 @@ use lithium\core\Environment;
 				array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
 				array('escape' => false, 'title' => 'Return to Lithium Docs home')
 			); ?>
-			<div id="search" data-webroot="<?= $this->url('/'); ?>" ><?= $this->form->text('query') ?></div>
+			<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query') ?></div>
 		</header>
 	</div>
 
