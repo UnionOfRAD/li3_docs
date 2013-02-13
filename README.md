@@ -51,15 +51,27 @@ Once loaded into your application the plugin will enable browsing for all added 
 		'index' => array('lithium', 'li3_bot')
 	));
 
+By default, the url to view the docs is `'/docs'`. This can be customized with the `'url'` option in the second paramter when adding Li3 Docs:
+
+	Libraries::add('li3_docs', array(
+		'url' => '/documentation'
+	));
+
+Or if you wanted to have an app who's sole purpose is displaying docs, you could add all of your libraries and plugins to that app with `'bootstrap' => false` in the second parameter when adding the libraries with `Libraries::add()`. Then point the Li3 Docs url to the root of the app:
+
+	Libraries::add('li3_docs', array(
+		'url' => '/'
+	));
+
+
 ### Searching
 
 The plugin now features a symbol-based live search. Search for classes, methods and properties using the search bar near the top of the page. By default, any term entered into the box will trigger a search across all symbol types. You can refine your search by entering in specially formed queries:
 
-* If the first letter in the query is upper-case, you will only get _classes_ in the results. 
+* If the first letter in the query is upper-case, you will only get _classes_ in the results.
 * If the query contains a $, only _properties_ will be shown in the results.
 * If the query ends with or contains a parenthesis, you'll only be searching _methods_.
 
 To update the search database, run the symbol harvesting task:
 
 	$ li3 harvest
-
