@@ -1,0 +1,95 @@
+/*--- The Cli ---*/
+#cli-wrapper {
+	position:relative;
+}
+#cli {
+	position: absolute;
+	left: 0;
+	z-index: 5000;
+	width: 100%;
+	min-height: 36px;
+	display: block;
+	background: #262626 url(../img/console-gradient.gif) repeat-x bottom left;
+	color: white;
+	font-family: Monaco, Courier, monospace;
+	font-size: 14px;
+
+}
+#cli a {
+	color:#00bbff;
+	border-bottom:1px dashed #ff59ff;
+}
+#cli a:hover {
+	color:black;
+	background:#00bbff;
+	border-bottom:1px solid #00bbff;
+}
+#cli-display {
+	padding: .5em 1em .5em 1em;
+}
+#cli-form {
+	background: none !important;
+	padding: 0 !important;
+	border: none;
+	margin: 0;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+#cli-input {
+	width: 50em;
+	margin: 0 0 0 1em !important;
+	padding: 9px 1em;
+	background: url(../img/console-gt.gif) no-repeat left center;
+	height: 18px;
+	border: 0;
+	color: white;
+	font-family: monospace;
+	font-size: 14px;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+#cli input:focus {
+	outline: 0;
+}
+#cli-submit {
+	display: none;
+}
+
+/*--- Git Shortcuts ---*/
+#git-shortcuts {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 6000;
+	display: block;
+	height: 18px;
+	width: auto;
+	color: white;
+	font-size: 14px;
+	padding: 9px 1em;
+}
+#git-shortcuts .clone, #git-shortcuts a {
+	display: block;
+	float: left;
+	margin: 0 4px;
+}
+#git-shortcuts a {
+	width: 18px;
+	height: 0;
+	padding: 18px 0 0 0;
+	overflow: hidden;
+	border-bottom: none;
+}
+#git-shortcuts .download {
+	background: url(../img/icons/compressed.png) no-repeat center center;
+}
+#git-shortcuts .copy {
+	z-index: 100;
+	background: url(../img/icons/clipboard.png) no-repeat center center;
+}
+#git-shortcuts .help {
+	z-index:100;
+	background: url(../img/icons/help.png) no-repeat center center;
+}

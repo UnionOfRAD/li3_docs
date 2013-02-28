@@ -8,7 +8,7 @@
 var RadCli = {
 	options: {
 		div: null,
-		assetBase: 'http://lithify.me',
+		assetBase: '/li3_docs',
 		commandBase: 'http://lithify.me/cmd'
 	},
 	html: {
