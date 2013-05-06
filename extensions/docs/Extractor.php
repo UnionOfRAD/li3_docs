@@ -182,7 +182,7 @@ class Extractor extends \lithium\core\StaticObject {
 		$classes = Libraries::find($object['library'], array('recursive' => true));
 
 		$proto['subClasses'] = array_filter($classes, function($class) use ($identifier) {
-			if (preg_match('/\\\(libraries)\\\|\\\(mocks)\\\/', $class)) {
+			if (preg_match('/\\\(libraries)\\\|\\\(mocks)\\\|\\\(tests)\\\/', $class)) {
 				return false;
 			}
 			try {
