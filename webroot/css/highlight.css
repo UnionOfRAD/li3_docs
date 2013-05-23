@@ -18,6 +18,7 @@
 
 /*--- Code: Default (Dark) Theme ---*/
 pre code, .code pre {
+	display: block;
 	font-size: 12px;
 	color: white;
 	background: #141414;
