@@ -85,7 +85,7 @@ if ($searchBase !== "") {
 		$(document).ready(function () {
 			RadCli.setup({
 				setupGitCopy: false,
-				commandBase: 'http://lithify.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
+				commandBase: 'http://li3.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
 			});
 			$('#header').css({ borderTop: '40px solid black' });
 		});

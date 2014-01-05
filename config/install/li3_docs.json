@@ -4,12 +4,12 @@
 	"summary": "the lithium docs plugin",
 	"description": "Automatically generates documentation from docblocks",
 	"maintainers":[
-		{"name": "gwoo", "website": "lithify.me"},
-		{"name": "nate", "website": "lithify.me"},
-		{"name": "nperson", "website": "lithify.me"}
+		{"name": "gwoo", "website": "li3.me"},
+		{"name": "nate", "website": "li3.me"},
+		{"name": "nperson", "website": "li3.me"}
 	],
 	"sources":[
-		"http:\/\/lab.lithify.me\/lab\/download\/li3_docs.phar.gz"
+		"http:\/\/lab.li3.me\/lab\/download\/li3_docs.phar.gz"
 	],
 	"commands":{
 		"install":[],"update":[],"remove":[]
