@@ -24,71 +24,60 @@ if ($searchBase !== "") {
 
 ?>
 <!doctype html>
-<html lang="<?= str_replace('_', '-', Environment::get('locale')); ?>">
+<html>
 <head>
 	<?=$this->html->charset(); ?>
-	<title>
-		#li3 > <?=$t('Lithium Documentation', array('scope' => 'li3_docs')) . ' > ' . $this->title(); ?>
-	</title>
+	<title><?php echo ($title = $this->title()) ? "{$title} < " : null ?> Documentation $lt; #li3</title>
 	<?=$this->html->style(array('lithified', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight')); ?>
-	<?php if (file_exists(dirname(dirname(__DIR__)) . '/webroot/css/u1m.css')) { ?>
-		<?=$this->html->style('u1m'); ?>
-	<?php } ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->script(array(
 		'/li3_docs/js/jquery-1.7.1.min.js',
 		'/li3_docs/js/jquery-ui-custom.min.js',
-		'/li3_docs/js/showdown.min.js',
+		'/li3_docs/js/showdown.js',
 		'/li3_docs/js/highlight.pack.js',
 		'/li3_docs/js/search.js',
-		'/li3_docs/js/rad.cli.js'
 	)); ?>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function () {
-			var converter = new Showdown.converter("/");
+			var converter = new Showdown.converter({ extensions: []});
 
 			$(".markdown").each(function () {
 				$(this).html(converter.makeHtml($.trim($(this).text())));
+				$(this).find('h1').addClass('h-alpha');
+				$(this).find('h2').addClass('h-beta');
+				$(this).find('h3').addClass('h-gamma');
+				$(this).find('h4').addClass('h-delta');
 			});
 
 			hljs.initHighlighting();
+			$('.aside').each(function(k, v) {
+				$('#content').css('min-height', $(v).height() + 300);
+			});
+
 		});
 	</script>
 </head>
+<body class="li3-docs">
+	<div id="container">
+		<div id="header">
+			<header>
+				<?=$this->html->link(
+					$t('<span class="home"></span>', array('scope' => 'li3_docs')),
+					array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
+					array('escape' => false, 'title' => 'Return to Lithium Docs home')
+				); ?>
+			</header>
+		</div>
+		<?php if (isset($library) && $library['category'] == 'libraries'): ?>
+			<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query', array('placeholder' => 'Type to search…')) ?></div>
+		<?php endif ?>
 
-<body class="docs">
-	<div id="header">
-		<header>
-			<?=$this->html->link(
-				$t('<span class="home"></span>', array('scope' => 'li3_docs')),
-				array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
-				array('escape' => false, 'title' => 'Return to Lithium Docs home')
-			); ?>
-			<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query') ?></div>
-		</header>
+		<?php echo $this->_view->render(
+			array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
+		); ?>
+		<div id="content">
+			<?php echo $this->content() ?>
+		</div>
 	</div>
-
-	<div class="nav">
-		<nav>
-			<?php echo $this->_view->render(
-				array('element' => 'nav'), compact('object'), array('library' => 'li3_docs')
-			); ?>
-		</nav>
-	</div>
-
-	<div class="article">
-		<article>
-			<?=$this->content; ?>
-		</article>
-	</div>
-	<script type="text/javascript" charset="utf-8">
-		$(document).ready(function () {
-			RadCli.setup({
-				setupGitCopy: false,
-				commandBase: 'http://li3.me/<?= Locale::language(Environment::get('locale')); ?>/cmd'
-			});
-			$('#header').css({ borderTop: '40px solid black' });
-		});
-	</script>
 </body>
 </html>

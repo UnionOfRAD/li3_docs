@@ -18,62 +18,75 @@ $links = $this->view()->render(
 );
 $subClasses = $object['subClasses'];
 
-$menu = array_filter(compact('params','return','filter','related','links','subClasses','source'));
+$trimSource = function($value) {
+	$lines = explode("\n", $value);
+
+	while (true) {
+		foreach ($lines as $line) {
+			if (!preg_match('/^\t/', $line) && $line !== '') {
+				return implode("\n", $lines);
+			}
+		}
+		foreach ($lines as &$line) {
+			$line = preg_replace('/^\t/', '', $line);
+		}
+		unset($line);
+	}
+};
+if ($source) {
+	$object['source'] = str_replace("\t", '    ', $trimSource($object['source']));
+}
 ?>
 
-<div class="menu">
-	<menu>
-			<?php foreach (array_keys($menu) as $item) {
-				echo $this->html->link(ucwords($item), "#{$item}");
-			} ?>
-	</menu>
-</div>
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> has-aside-right">
+	<?php if (strpos($name, '.md') === false && $object['type'] !== 'namespace'): ?>
+		<h1 class="alpha"><?= $name ?></h1>
+	<?php endif ?>
+	<?php if ($meta) { ?>
+		<?=$this->view()->render(
+			array('element' => 'meta'),
+			compact('namespace','meta'),
+			array('library' => 'li3_docs')
+		); ?>
+	<?php } ?>
 
-<?php if ($meta) { ?>
 	<?=$this->view()->render(
-		array('element' => 'meta'),
-		compact('namespace','meta'),
+		array('element' => $object['type']),
+		compact('namespace', 'object', 'scope', 'library'),
 		array('library' => 'li3_docs')
 	); ?>
-<?php } ?>
 
-<?=$this->view()->render(
-	array('element' => $object['type']),
-	compact('namespace', 'object', 'scope', 'library'),
-	array('library' => 'li3_docs')
-); ?>
+	<?php echo $related;?>
 
-<?php echo $related;?>
+	<?php echo $links;?>
 
-<?php echo $links;?>
+	<?php // Object subclasses ?>
+	<?php if ($object['subClasses']) { ?>
+	<div id="subClasses" class="section">
+		<section>
+			<h3 class="beta"><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h3>
+			<ul class="subclasses">
+				<?php foreach ($object['subClasses'] as $class) { ?>
+					<?php $url = $this->docs->identifierUrl($class); ?>
+					<li><?php echo $this->html->link($class, $url); ?></li>
+				<?php } ?>
+			</ul>
+		</section>
+	</div>
+	<?php } ?>
 
-<?php // Object subclasses ?>
-<?php if ($object['subClasses']) { ?>
-<div id="subClasses" class="section">
-	<section>
-		<h3><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h3>
-		<ul class="subclasses">
-			<?php foreach ($object['subClasses'] as $class) { ?>
-				<?php $url = $this->docs->identifierUrl($class); ?>
-				<li><?php echo $this->html->link($class, $url); ?></li>
-			<?php } ?>
-		</ul>
-	</section>
-</div>
-<?php } ?>
-
-<?php // Method source ?>
-<?php if (isset($object['source']) && !empty($object['source'])) { ?>
-<div id="source" class="section">
-	<section>
-		<h3>Source</h3>
-		<div id="source" class="source-display">
-			<div class="source-wrapper">
-				<pre class="source-code">
-					<code class="php"><?=$object['source']; ?></code>
-				</pre>
+	<?php // Method source ?>
+	<?php if (isset($object['source']) && !empty($object['source'])) { ?>
+	<div id="source" class="section">
+		<section>
+			<h3 class="beta">Source</h3>
+			<div id="source" class="source-display">
+				<div class="source-wrapper">
+					<pre class="source-code"><code class="php"><?=$object['source']; ?></code></pre>
+				</div>
 			</div>
-		</div>
-	</section>
-</div>
-<?php } ?>
+		</section>
+	</div>
+	<?php } ?>
+
+</article>
