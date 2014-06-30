@@ -1,10 +1,10 @@
 {
 	"name": "unionofrad/li3_docs",
 	"type": "lithium-library",
-	"description": "This plugin adds code quality assurance to your Lithium toolbelt.",
+	"description": "A documentation generator for Lithium projects.",
 	"keywords": ["docs", "docblock", "lithium", "li3", "documentation", "documented"],
 	"homepage": "https://github.com/UnionOfRAD/li3_docs",
-	"license": "MIT License",
+	"license": "BSD-3-clause",
 	"authors": [
 		{
 			"name": "Nate Abele",
