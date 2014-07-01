@@ -21,7 +21,7 @@ Router::connect("{$base}/{:args}\(", array(), function($request) {
 
 Router::connect($root, array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
 
-Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($request) {
+Router::connect("{$base}/{:path:js|css}/{:file}.{:type}", array(), function($request) {
 	$req = $request->params;
 	$file = dirname(__DIR__) . "/webroot/{$req['path']}/{$req['file']}.{$req['type']}";
 
@@ -37,7 +37,7 @@ Router::connect('/li3_docs/{:path:js|css}/{:file}.{:type}', array(), function($r
 	));
 });
 
-Router::connect('/li3_docs/{:path:img}/{:args}.{:type}', array(), function($request) {
+Router::connect("{$base}/{:path:img}/{:args}.{:type}", array(), function($request) {
 	$req = $request->params;
 	$path = implode('/', $req['args']);
 	$file = dirname(__DIR__) . "/webroot/{$req['path']}/{$path}.{$req['type']}";
@@ -55,7 +55,7 @@ Router::connect('/li3_docs/{:path:img}/{:args}.{:type}', array(), function($requ
 	));
 });
 
-Router::connect('/li3_docs/search/{:query}', array(
+Router::connect("{$base}/search/{:query}", array(
 	'controller' => 'li3_docs.ApiSearch',
 	'action' => 'query'
 ));
