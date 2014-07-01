@@ -1,4 +1,4 @@
-# li3 docs
+# li₃ docs
 
 Li3_docs is a **Lithium plugin**, NOT a Lithium app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
 
