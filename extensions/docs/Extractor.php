@@ -257,7 +257,7 @@ class Extractor extends \lithium\core\StaticObject {
 					$current = '';
 				}
 				if ($current) {
-					$display[] = "{{{\n{$current}}}}";
+					$display[] = "```\n{$current}```";
 					$current = '';
 				}
 				$doc = Docblock::comment($token[1]);
@@ -271,7 +271,7 @@ class Extractor extends \lithium\core\StaticObject {
 			$current .= (is_array($token) ? $token[1] : $token);
 		}
 		if ($current) {
-			$display[] = "{{{\n{$current}}}}";
+			$display[] = "```\n{$current}```";
 		}
 		return $display;
 	}
