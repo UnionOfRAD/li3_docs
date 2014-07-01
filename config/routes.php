@@ -33,24 +33,6 @@ Router::connect("{$base}/{:path:js|css}/{:file}.{:type}", array(), function($req
 	));
 });
 
-Router::connect("{$base}/{:path:img}/{:args}.{:type}", array(), function($request) {
-	$req = $request->params;
-	$path = implode('/', $req['args']);
-	$file = dirname(__DIR__) . "/webroot/{$req['path']}/{$path}.{$req['type']}";
-
-	if (!file_exists($file)) {
-		return;
-	}
-
-	$media = Media::type($req['type']);
-	$content = (array) $media['content'];
-
-	return new Response(array(
-			'body' => file_get_contents($file),
-			'headers' => array('Content-type' => reset($content))
-	));
-});
-
 Router::connect("{$base}/search/{:query}", array(
 	'controller' => 'li3_docs.ApiSearch',
 	'action' => 'query'
