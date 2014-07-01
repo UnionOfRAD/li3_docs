@@ -31,13 +31,14 @@ if ($searchBase !== "") {
 	<?=$this->html->style(array('lithified', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight')); ?>
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->script(array(
-		'/li3_docs/js/jquery-1.7.1.min.js',
-		'/li3_docs/js/jquery-ui-custom.min.js',
-		'/li3_docs/js/showdown.js',
-		'/li3_docs/js/highlight.pack.js',
+		'//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+		'//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js',
+		'//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js',
+		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js',
+		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js',
 		'/li3_docs/js/search.js',
 	)); ?>
-	<script type="text/javascript" charset="utf-8">
+	<script>
 		$(document).ready(function () {
 			var converter = new Showdown.converter({ extensions: []});
 
@@ -48,36 +49,28 @@ if ($searchBase !== "") {
 				$(this).find('h3').addClass('h-gamma');
 				$(this).find('h4').addClass('h-delta');
 			});
-
 			hljs.initHighlighting();
-			$('.aside').each(function(k, v) {
-				$('#content').css('min-height', $(v).height() + 300);
-			});
-
 		});
 	</script>
 </head>
-<body class="li3-docs">
+<body class="li3 li3-docs">
 	<div id="container">
-		<div id="header">
-			<header>
-				<?=$this->html->link(
-					$t('<span class="home"></span>', array('scope' => 'li3_docs')),
-					array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'),
-					array('escape' => false, 'title' => 'Return to Lithium Docs home')
-				); ?>
-			</header>
-		</div>
-		<?php if (isset($library) && $library['category'] == 'libraries'): ?>
-			<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query', array('placeholder' => 'Type to search…')) ?></div>
-		<?php endif ?>
+		<header class="header-main">
+			<div class="logo">&#10177;</div>
+			<?php if (isset($library) && $library['category'] == 'libraries'): ?>
+				<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query', array('placeholder' => 'Type to search…')) ?></div>
+			<?php endif ?>
+		</header>
 
-		<?php echo $this->_view->render(
-			array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
-		); ?>
 		<div id="content">
-			<?php echo $this->content() ?>
+			<?php echo $this->_view->render(
+				array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
+			); ?>
+			<?php echo $this->content(); ?>
 		</div>
+		<footer class="footer-main">
+			&copy; Union Of RAD <?php echo date('Y') ?>
+		</footer>
 	</div>
 </body>
 </html>
