@@ -51,8 +51,8 @@ class Code extends \lithium\core\StaticObject {
 		$options += $defaults;
 
 		foreach (static::$_patterns as $method => $pattern) {
-			if (preg_match_all("/\{\{\{\s*(embed:{$pattern})\s*\}\}\}/", $text, $matches)) {
-				foreach ($matches[0] as $i => $replace) {
+			if (preg_match_all("/(\{\{\{|```)\s*(embed:{$pattern})\s*(\}\}\}|```)/", $text, $matches)) {
+				foreach ($matches[1] as $i => $replace) {
 					$ref = array(
 						'file'   => isset($matches['file'][$i]) ? $matches['file'][$i] : null,
 						'class'  => isset($matches['class'][$i]) ? $matches['class'][$i] : null,
@@ -60,8 +60,14 @@ class Code extends \lithium\core\StaticObject {
 						'lines'  => $matches['lines'][$i]
 					);
 					list($id, $code) = static::extract($ref, $options);
+					$open = current($matches[1]);
+					$close = current(end($matches));
 
-					$replacement = $ref['class'] ? "{{{\n\n{$code}\n\n}}}" : "{{{{$code} }}}";
+					if ($ref['class']) {
+						$replacement = "{$open}\n\n{$code}\n\n{$close}";
+					} else {
+						$replacement = "{$open}{$code}{$close}";
+					}
 					$text = str_replace($replace, $replacement, $text);
 					static::hash($id, $code);
 				}
