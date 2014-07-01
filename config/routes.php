@@ -6,11 +6,7 @@ use lithium\net\http\Router;
 use lithium\net\http\Media;
 
 $config = Libraries::get('li3_docs');
-$base = isset($config['url']) ? $config['url'] : '/docs';
-$root = $base;
-if ($base === '/') {
-	$base = '';
-}
+$base = $config['url'] == '/' ? '' : $config['url'];
 
 /**
  * Handles broken URL parsers by matching method URLs with no closing ) and redirecting.
@@ -19,7 +15,7 @@ Router::connect("{$base}/{:args}\(", array(), function($request) {
 	return new Response(array('location' => "{$request->url})"));
 });
 
-Router::connect($root, array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
+Router::connect($base ?: '/', array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
 
 Router::connect("{$base}/{:path:js|css}/{:file}.{:type}", array(), function($request) {
 	$req = $request->params;
