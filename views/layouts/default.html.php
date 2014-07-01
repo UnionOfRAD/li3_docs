@@ -57,15 +57,16 @@ if ($searchBase !== "") {
 	<div id="container">
 		<header class="header-main">
 			<div class="logo">&#10177;</div>
+			<h1 class="title">li₃ docs</h1>
+			<?php echo $this->_view->render(
+				array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
+			); ?>
 			<?php if (isset($library) && $library['category'] == 'libraries'): ?>
 				<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query', array('placeholder' => 'Type to search…')) ?></div>
 			<?php endif ?>
 		</header>
 
 		<div id="content">
-			<?php echo $this->_view->render(
-				array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
-			); ?>
 			<?php echo $this->content(); ?>
 		</div>
 		<footer class="footer-main">

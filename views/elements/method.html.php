@@ -21,7 +21,7 @@
 <?php if (isset($object['tags']['params'])) { ?>
 <div id="params" class="section">
 	<section>
-		<h3 class="beta"><?=$t('Parameters', array('scope' => 'li3_docs')); ?></h3>
+		<h3 class="h-beta"><?=$t('Parameters', array('scope' => 'li3_docs')); ?></h3>
 		<ul class="parameters">
 			<?php foreach ((array) $object['tags']['params'] as $name => $data) { ?>
 				<li>
@@ -41,7 +41,7 @@
 <?php if (isset($object['return'])) { ?>
 <div id="return" class="section">
 	<section>
-		<h3 class="beta"><?=$t('Returns', array('scope' => 'li3_docs')); ?></h3>
+		<h3 class="h-beta"><?=$t('Returns', array('scope' => 'li3_docs')); ?></h3>
 		<span class="type"><?=$object['return']['type']; ?></span>
 		<span class="return markdown">
 			<?=$t($this->docs->cleanup($object['return']['text']), compact('scope')); ?>

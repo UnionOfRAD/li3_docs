@@ -8,7 +8,7 @@ if (!isset($object['tags']['link'])) {
 
 <div id="links" class="section">
 	<section>
-		<h3 class="beta"><?=$t('Links', array('scope' => 'li3_docs')); ?></h3>
+		<h3 class="h-beta"><?=$t('Links', array('scope' => 'li3_docs')); ?></h3>
 		<ul class="links">
 		<?php foreach ((array) $object['tags']['link'] as $url) { ?>
 			<?php

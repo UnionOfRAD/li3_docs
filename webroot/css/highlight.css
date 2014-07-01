@@ -1,64 +1,51 @@
-/*-------------------------------------------------------------------------------------------------
-   Lithium: the most rad php framework
+@charset "UTF-8";
+/*!
+  Lithium - Bright Highlighting Theme
 
-   @copyright     Copyright 2012, Union of RAD (http://union-of-rad.org)
-   @license       http://opensource.org/licenses/bsd-license.php The BSD License
--------------------------------------------------------------------------------------------------*/
+  Copyright (c) 2014 Union of RAD - All rights reserved.
 
-/*--- Markdown ---*/
-.markdown a, .event a {
-	border-bottom: 1px dotted #454545;
-}
-.markdown a:hover, .event a:hover {
-	border-color:#ff59ff;
-}
-.markdown ul p {
-	margin: .25em 0 .75em 0;
-}
+  The code is distributed under the terms of the BSD 3-clause
+  License. For the full license text see the LICENSE file.
+*/
 
-/*--- Code: Default (Dark) Theme ---*/
 pre code, .code pre {
 	display: block;
-	font-size: 12px;
-	color: white;
-	background: #141414;
-	border: 3px solid #E6E6E6;
-	padding: 1em !important; /* remove if base important is removed, too */
+	color: #111;
+	background: #fefeff;
 	overflow: auto;
 }
 .code ol, pre code .rownumber {
 	padding: 0 1em 0 2em;
-	color: white;
+	color: #111;
 }
 .annotation, .decorator, .doctype, .pi, .chunk, .shebang, .kw2 {
 	color:#d42aae;
 }
-.preprocessor {
-	color: white;
+.hljs-preprocessor {
+	color: #111;
 	font-weight: bold;
 }
-pre code .comment, .template_comment, .javadoc, .diff .header {
+.hljs-keyword {
+	font-weight: bold;
+}
+.hljs-phpdoc,
+pre code .hljs-comment, .template_comment, .javadoc, .diff .header {
 	color: #ababab;
 }
-.string, .st_h {
-	color: #4ddb4a;
+.hljs-string, .st_h {
+	color: #319931;
 }
 .me1 {
-	color: white;
+	color: #111;
 }
-.kw4, .kw1, .keyword {
-	font-weight: bold;
-	color:#d42aae;
+pre code .hljs-number, .nu0 {
+	color: #7044bb;
 }
-pre code .number, .nu0 {
-	color: #9c62ff;
+pre code .hljs-comment, .co4, .co1 {
+	color: #6c6c6d;
 }
-pre code .comment, .co4, .co1 {
-	color: #808080;
-	font-style: italic;
-}
-.variable, .envvar, .re0 {
-	color: #3c96ff;
+.hljs-variable, .envvar, .re0 {
+	color: #2060ad;
 }
 
 .diff .file .line {
@@ -66,9 +53,8 @@ pre code .comment, .co4, .co1 {
 	clear: both;
 	overflow: visible;
 	white-space: nowrap;
-	font-family: Monaco, Courier, monospace;
 	font-size: 12px;
-	color: white;
+	color: #111;
 	background: #141414;
 }
 .diff .file .removed, .re7 {

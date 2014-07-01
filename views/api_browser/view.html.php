@@ -40,7 +40,7 @@ if ($source) {
 
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> has-aside-right">
 	<?php if (strpos($name, '.md') === false && $object['type'] !== 'namespace'): ?>
-		<h1 class="alpha"><?= $name ?></h1>
+		<h1 class="h-alpha"><?= $name ?></h1>
 	<?php endif ?>
 	<?php if ($meta) { ?>
 		<?=$this->view()->render(
@@ -64,7 +64,7 @@ if ($source) {
 	<?php if ($object['subClasses']) { ?>
 	<div id="subClasses" class="section">
 		<section>
-			<h3 class="beta"><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h3>
+			<h3 class="h-beta"><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h3>
 			<ul class="subclasses">
 				<?php foreach ($object['subClasses'] as $class) { ?>
 					<?php $url = $this->docs->identifierUrl($class); ?>
@@ -79,7 +79,7 @@ if ($source) {
 	<?php if (isset($object['source']) && !empty($object['source'])) { ?>
 	<div id="source" class="section">
 		<section>
-			<h3 class="beta">Source</h3>
+			<h3 class="h-beta">Source</h3>
 			<div id="source" class="source-display">
 				<div class="source-wrapper">
 					<pre class="source-code"><code class="php"><?=$object['source']; ?></code></pre>

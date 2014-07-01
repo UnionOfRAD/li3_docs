@@ -5,7 +5,7 @@
 	<div class="contents">
 		<?php // Object properties ?>
 		<?php if ($object['properties']) { ?>
-			<h2 class="gamma"><?=$t('Class Properties', array('scope' => 'li3_docs')); ?></h2>
+			<h2 class="h-gamma"><?=$t('Class Properties', array('scope' => 'li3_docs')); ?></h2>
 			<ul class="properties">
 				<?php foreach ($object['properties'] as $property) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::\${$property['name']}"); ?>
@@ -16,7 +16,7 @@
 
 		<?php // Object methods ?>
 		<?php if ($object['methods'] && $object['methods']->count()) { ?>
-			<h2 class="gamma"><?=$t('Class Methods', array('scope' => 'li3_docs')); ?></h2>
+			<h2 class="h-gamma"><?=$t('Class Methods', array('scope' => 'li3_docs')); ?></h2>
 			<ul class="methods">
 				<?php foreach ($object['methods'] as $method) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::{$method->name}()"); ?>
