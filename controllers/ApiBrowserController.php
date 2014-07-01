@@ -63,7 +63,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 			$categories = array_keys($config['categories']);
 		} else {
 			$categories = array_values(array_unique(
-					array_map(function($lib) { return $lib['category']; }, $libraries)
+				array_map(function($lib) { return $lib['category']; }, $libraries)
 			));
 		}
 
