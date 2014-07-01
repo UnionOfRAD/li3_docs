@@ -52,7 +52,7 @@ class Code extends \lithium\core\StaticObject {
 
 		foreach (static::$_patterns as $method => $pattern) {
 			if (preg_match_all("/(\{\{\{|```)\s*(embed:{$pattern})\s*(\}\}\}|```)/", $text, $matches)) {
-				foreach ($matches[1] as $i => $replace) {
+				foreach ($matches[0] as $i => $replace) {
 					$ref = array(
 						'file'   => isset($matches['file'][$i]) ? $matches['file'][$i] : null,
 						'class'  => isset($matches['class'][$i]) ? $matches['class'][$i] : null,
