@@ -4,7 +4,6 @@ use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
 use lithium\net\http\Media;
-use li3_docs\extensions\route\Locale;
 
 $config = Libraries::get('li3_docs');
 $base = isset($config['url']) ? $config['url'] : '/docs';
@@ -64,15 +63,5 @@ Router::connect('/li3_docs/search/{:query}', array(
 Router::connect("{$base}/{:lib}/{:args}", array(
 	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
 ));
-
-Router::connect(new Locale(array(
-	'template' => $base,
-	'params' => array('controller' => 'li3_docs.ApiBrowser')
-)));
-
-Router::connect(new Locale(array(
-	'template' => "{$base}/{:lib}/{:args}",
-	'params' => array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view')
-)));
 
 ?>
