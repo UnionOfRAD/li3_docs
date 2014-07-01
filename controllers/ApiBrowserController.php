@@ -35,12 +35,12 @@ class ApiBrowserController extends \lithium\action\Controller {
 	 * corresponding namespace.
 	 *
 	 * Additional names can be configured using the `namespaceDoc` key. Eg
-	 * 'Libraries::add('li3_docs', array('namespaceDoc' => 'documentation.md'));'
+	 * 'Libraries::add('li3_docs', array('namespaceDoc' => array('documentation.md')));'
 	 * or multiple when an array is used.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	public $docFile = array('readme.md');
+	protected $_namespaceDoc = array('readme.md', 'README.md');
 
 	protected function _init() {
 		parent::_init();
@@ -94,8 +94,9 @@ class ApiBrowserController extends \lithium\action\Controller {
 			return $this->render(array('template' => '../errors/not_found'));
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
-		$options = array('namespaceDoc' => $this->docFile);
-		$object = $extractor::get($this->request->lib, $name, $options + $library);
+		$object = $extractor::get($this->request->lib, $name, array(
+			'namespaceDoc' => $this->_namespaceDoc
+		) +  $library);
 		$meta = array();
 
 		if (strpos($name, '::') !== false) {
