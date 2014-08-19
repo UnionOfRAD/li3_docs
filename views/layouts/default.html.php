@@ -42,12 +42,14 @@ if ($searchBase !== "") {
 		$(document).ready(function () {
 			var converter = new Showdown.converter({ extensions: []});
 
-			$(".markdown").each(function () {
-				$(this).html(converter.makeHtml($.trim($(this).text())));
-				$(this).find('h1').addClass('h-alpha');
-				$(this).find('h2').addClass('h-beta');
-				$(this).find('h3').addClass('h-gamma');
-				$(this).find('h4').addClass('h-delta');
+			$(".markdown").each(function() {
+				var $el = $(this);
+
+				$el.html(converter.makeHtml($.trim($el.text())));
+				$el.find('h1').addClass('h-alpha');
+				$el.find('h2').addClass('h-beta');
+				$el.find('h3').addClass('h-gamma');
+				$el.find('h4').addClass('h-delta');
 			});
 			hljs.initHighlighting();
 		});
