@@ -15,7 +15,6 @@
 	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
 	<?=$this->html->script(array(
 		'//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
-		'//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js'
 	)); ?>
