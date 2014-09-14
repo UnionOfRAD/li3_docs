@@ -21,7 +21,7 @@
 <?php if (isset($object['tags']['params'])) { ?>
 <div id="params" class="section">
 	<section>
-		<h3 class="h-beta"><Parameters</h3>
+		<h3 class="h-beta">Parameters</h3>
 		<ul class="parameters">
 			<?php foreach ((array) $object['tags']['params'] as $name => $data) { ?>
 				<li>
