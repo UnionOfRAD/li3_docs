@@ -3,7 +3,6 @@
 	compact('scope', 'object'),
 	array('library' => 'li3_docs')
 ); ?>
-
 	<section>
 <?php if ($object['description']) { ?>
 	<p class="description">

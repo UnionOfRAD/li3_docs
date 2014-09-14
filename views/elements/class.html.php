@@ -1,11 +1,27 @@
 <?php // Parent object ?>
+<?php
 
+$crumbs = $this->docs->crumbs($object);
+
+if (count($crumbs) > 2) {
+	array_pop($crumbs);
+	$up = array_pop($crumbs);
+} else {
+	$up = false;
+}
+
+?>
 <nav class="aside aside-right">
 	<?php if ($object['properties'] || ($object['methods'] && $object['methods']->count())) { ?>
-	<div class="contents">
+		<h2 class="h-gamma">Contents</h2>
+		<ul>
+		<?php if ($up): ?>
+			<li class="nav-up"><?= $this->html->link('../', $up['url'], array('rel' => 'up')) ?>
+		<?php endif ?>
+		</ul>
 		<?php // Object properties ?>
 		<?php if ($object['properties']) { ?>
-			<h2 class="h-gamma">Class Properties</h2>
+			<h2 class="h-gamma">Properties</h2>
 			<ul class="properties">
 				<?php foreach ($object['properties'] as $property) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::\${$property['name']}"); ?>
@@ -16,7 +32,7 @@
 
 		<?php // Object methods ?>
 		<?php if ($object['methods'] && $object['methods']->count()) { ?>
-			<h2 class="h-gamma">Class Methods</h2>
+			<h2 class="h-gamma">Methods</h2>
 			<ul class="methods">
 				<?php foreach ($object['methods'] as $method) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::{$method->name}()"); ?>
@@ -24,7 +40,6 @@
 				<?php } ?>
 			</ul>
 		<?php } ?>
-	</div>
 	<?php } ?>
 </nav>
 

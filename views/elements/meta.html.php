@@ -1,9 +1,20 @@
+<?php
+
+$up = array('url' => $this->docs->identifierUrl($meta['identifier']));
+
+?>
 <nav class="aside aside-right">
 	<?php if ($meta['properties'] || ($meta['methods'] && $meta['methods']->count())) { ?>
-	<div class="contents">
+		<h2 class="h-gamma">Contents</h2>
+		<ul>
+		<?php if ($up): ?>
+			<li class="nav-up"><?= $this->html->link('../', $up['url'], array('rel' => 'up')) ?>
+		<?php endif ?>
+		</ul>
+
 		<?php // Object properties ?>
 		<?php if ($meta['properties']) { ?>
-			<h2 class="h-gamma">Class Properties</h2>
+			<h2 class="h-gamma">Properties</h2>
 			<ul class="properties">
 				<?php foreach ($meta['properties'] as $property) { ?>
 					<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::\${$property['name']}"); ?>
@@ -14,7 +25,7 @@
 
 		<?php // Object methods ?>
 		<?php if ($meta['methods'] && $meta['methods']->count()) { ?>
-			<h2 class="h-gamma">Class Methods</h2>
+			<h2 class="h-gamma">Methods</h2>
 			<ul class="methods">
 				<?php foreach ($meta['methods'] as $method) { ?>
 					<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::{$method->name}()"); ?>
@@ -22,7 +33,6 @@
 				<?php } ?>
 			</ul>
 		<?php } ?>
-	</div>
 	<?php } ?>
 </nav>
 
