@@ -5,23 +5,6 @@
  * @copyright     Copyright 2012, Union of Rad, Inc. (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
-
-use lithium\g11n\Locale;
-use lithium\core\Environment;
-use lithium\core\Libraries;
-
-$config = Libraries::get('li3_docs');
-$searchBase = $config['url'];
-if (strpos($searchBase, '/') === 0) {
-	$searchBase = substr($searchBase, 1);
-}
-if ($searchBase === false) {
-	$searchBase = "";
-}
-if ($searchBase !== "") {
-	$searchBase .= "/";
-}
-
 ?>
 <!doctype html>
 <html>
@@ -34,8 +17,7 @@ if ($searchBase !== "") {
 		'//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js',
-		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js',
-		'/li3_docs/js/search.js',
+		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js'
 	)); ?>
 	<script>
 		$(document).ready(function () {
@@ -51,9 +33,6 @@ if ($searchBase !== "") {
 			<?php echo $this->_view->render(
 				array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
 			); ?>
-			<?php if (isset($library) && $library['category'] == 'libraries'): ?>
-				<div id="search" data-webroot="<?= $this->url('/'); ?>" data-base="<?= $searchBase; ?>" ><?= $this->form->text('query', array('placeholder' => 'Type to search…')) ?></div>
-			<?php endif ?>
 		</header>
 
 		<div id="content">

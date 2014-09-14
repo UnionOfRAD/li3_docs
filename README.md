@@ -79,14 +79,13 @@ Or if you wanted to have an app who's sole purpose is displaying docs, you could
 
 ### Searching
 
-The plugin now features a symbol-based live search. Search for classes, methods and properties using the search bar near the top of the page. By default, any term entered into the box will trigger a search across all symbol types. You can refine your search by entering in specially formed queries:
-
-* If the first letter in the query is upper-case, you will only get _classes_ in the results.
-* If the query contains a $, only _properties_ will be shown in the results.
-* If the query ends with or contains a parenthesis, you'll only be searching _methods_.
-
-To update the search database, run the symbol harvesting task:
+The plugin supports symbol-based search i.e. via ElasticSearch. Search for classes, methods and properties. To get all symbols available in all libraries registered with lithium execute the following method.
 
 ```
-$ li3 harvest
+use li3_docs\models\Symbols;
+
+foreach (Symbols::harvest() as $symbol) {
+	ElasticSearch::addToIndex($symbol->data());
+}
+
 ```

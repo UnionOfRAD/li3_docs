@@ -46,9 +46,4 @@ Libraries::add('li3_docs', array('bootstrap' => false) + Libraries::get('li3_doc
 	'url' => '/docs',
 ));
 
-/**
- * Set up Sqlite3 database for search functionality.
- */
-require __DIR__ . '/bootstrap/connections.php';
-
 ?>

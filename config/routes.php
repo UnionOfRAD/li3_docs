@@ -33,11 +33,6 @@ Router::connect("{$base}/{:path:js|css}/{:file}.{:type}", array(), function($req
 	));
 });
 
-Router::connect("{$base}/search/{:query}", array(
-	'controller' => 'li3_docs.ApiSearch',
-	'action' => 'query'
-));
-
 Router::connect("{$base}/{:lib}/{:args}", array(
 	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
 ));
