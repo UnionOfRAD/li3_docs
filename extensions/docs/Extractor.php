@@ -14,6 +14,7 @@ use lithium\core\Libraries;
 use lithium\util\Inflector;
 use lithium\analysis\Docblock;
 use lithium\analysis\Inspector;
+use lithium\storage\Cache;
 use li3_docs\extensions\docs\Code;
 
 class Extractor extends \lithium\core\StaticObject {
@@ -26,6 +27,13 @@ class Extractor extends \lithium\core\StaticObject {
 		$options['namespaceDoc'] = (array) $options['namespaceDoc'];
 		$config = Libraries::get('li3_docs');
 
+		$cacheKey = 'li3_docs_extractor_get_' . md5(
+			$library . $identifier . serialize($options) . serialize($config)
+		);
+		if ($config['cache'] && ($cached = Cache::read('default', $cacheKey))) {
+			return $cached;
+		}
+
 		if (isset($config['namespaceDoc'])) {
 			$options['namespaceDoc'] = array_merge(
 					$options['namespaceDoc'], (array) $config['namespaceDoc']
@@ -36,7 +44,12 @@ class Extractor extends \lithium\core\StaticObject {
 		static::_ensurePathInBase($path);
 
 		if (file_exists($path) && !static::_isClassFile($path)) {
-			return static::_file(compact('library', 'path', 'identifier'), $options);
+			$result = static::_file(compact('library', 'path', 'identifier'), $options);
+
+			if ($config['cache']) {
+				Cache::write('default', $cacheKey, $result, Cache::PERSIST);
+			}
+			return $result;
 		}
 		$data = Inspector::info($identifier);
 
@@ -59,6 +72,9 @@ class Extractor extends \lithium\core\StaticObject {
 
 		foreach (array('text', 'description') as $key) {
 			$data[$key] = Code::embed($data[$key], compact('library'));
+		}
+		if ($config['cache']) {
+			Cache::write('default', $cacheKey, $data, Cache::PERSIST);
 		}
 		return $data;
 	}
