@@ -4,7 +4,7 @@ $scope = strtok($object['identifier'], '\\') . '_docs';
 $namespace = str_replace('\\', '/', $name);
 
 $title = $namespace;
-if ($object['text'] && preg_match('/^# ([\w\s\:]+)$/mu', $object['text'], $matches)) {
+if ($object['text'] && preg_match('/^# ([\w\s\:\-\_]+)$/mu', $object['text'], $matches)) {
 	$title = $matches[1];
 } elseif (strpos($name, '.md') === false && strpos($name, '/') === false) {
 	$title = $name;
