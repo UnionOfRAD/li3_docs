@@ -2,7 +2,7 @@
 	<section>
 <?php if ($object['description']) { ?>
 	<div class="description">
-		<?php $this->markdown->parse($t($this->docs->cleanup($object['description']), compact('scope'))); ?>
+		<?php $this->markdown->parse($this->docs->cleanup($object['description'])); ?>
 	</div>
 <?php } ?>
 	</section>
@@ -11,7 +11,7 @@
 <div class="section">
 	<section>
 		<div class="text">
-			<?php echo $this->markdown->parse($t($this->docs->cleanup($object['text']), compact('scope'))); ?>
+			<?php echo $this->markdown->parse($this->docs->cleanup($object['text'])); ?>
 		</div>
 	</section>
 </div>
@@ -21,14 +21,14 @@
 <?php if (isset($object['tags']['params'])) { ?>
 <div id="params" class="section">
 	<section>
-		<h3 class="h-beta"><?=$t('Parameters', array('scope' => 'li3_docs')); ?></h3>
+		<h3 class="h-beta"><Parameters</h3>
 		<ul class="parameters">
 			<?php foreach ((array) $object['tags']['params'] as $name => $data) { ?>
 				<li>
 					<span class="type"><?=$data['type']; ?></span>
 					<code class="name"><?=$name; ?></code>
 					<span class="parameter text">
-						<?php echo $this->markdown->parse($t($this->docs->cleanup($data['text']), compact('scope'))); ?>
+						<?php echo $this->markdown->parse($this->docs->cleanup($data['text'])); ?>
 					</span>
 				</li>
 			<?php } ?>
@@ -41,10 +41,10 @@
 <?php if (isset($object['return'])) { ?>
 <div id="return" class="section">
 	<section>
-		<h3 class="h-beta"><?=$t('Returns', array('scope' => 'li3_docs')); ?></h3>
+		<h3 class="h-beta">Returns</h3>
 		<span class="type"><?=$object['return']['type']; ?></span>
 		<span class="return">
-			<?php echo $this->markdown->parse($t($this->docs->cleanup($object['return']['text']), compact('scope'))); ?>
+			<?php echo $this->markdown->parse($this->docs->cleanup($object['return']['text'])); ?>
 		</span>
 	</section>
 </div>
@@ -55,7 +55,7 @@
 <div id="filter" class="section">
 	<section>
 		<span class="flag">
-			<?php echo $this->markdown->parse($t('This method can be filtered.', array('scope' => 'li3_docs'))); ?>
+			This method can be filtered.
 		</span>
 	</section>
 </div>

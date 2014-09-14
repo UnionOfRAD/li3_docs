@@ -3,7 +3,7 @@
 	<div class="contents">
 		<?php // Object properties ?>
 		<?php if ($meta['properties']) { ?>
-			<h2 class="h-gamma"><?=$t('Class Properties', array('scope' => 'li3_docs')); ?></h2>
+			<h2 class="h-gamma">Class Properties</h2>
 			<ul class="properties">
 				<?php foreach ($meta['properties'] as $property) { ?>
 					<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::\${$property['name']}"); ?>
@@ -14,7 +14,7 @@
 
 		<?php // Object methods ?>
 		<?php if ($meta['methods'] && $meta['methods']->count()) { ?>
-			<h2 class="h-gamma"><?=$t('Class Methods', array('scope' => 'li3_docs')); ?></h2>
+			<h2 class="h-gamma">Class Methods</h2>
 			<ul class="methods">
 				<?php foreach ($meta['methods'] as $method) { ?>
 					<?php $url = $this->docs->identifierUrl("{$meta['identifier']}::{$method->name}()"); ?>
@@ -30,7 +30,7 @@
 	<section>
 		<?php if ($meta['parent']) { ?>
 			<?php $parent = $meta['parent']; ?>
-			<span class="parent"><?=$t('Extends', array('scope' => 'li3_docs')); ?></span>
+			<span class="parent">Extends</span>
 			<?=$this->html->link(
 				$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
 			); ?>

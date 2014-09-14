@@ -64,7 +64,7 @@ if ($source) {
 	<?php if ($object['subClasses']) { ?>
 	<div id="subClasses" class="section">
 		<section>
-			<h3 class="h-beta"><?=$t('Subclasses', array('scope' => 'li3_docs')); ?></h3>
+			<h3 class="h-beta">Subclasses</h3>
 			<ul class="subclasses">
 				<?php foreach ($object['subClasses'] as $class) { ?>
 					<?php $url = $this->docs->identifierUrl($class); ?>

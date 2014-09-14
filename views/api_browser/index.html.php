@@ -3,12 +3,13 @@
 use lithium\util\Inflector;
 
 $defaults = array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view');
+
 ?>
 <article>
 	<h1 class="h-alpha">Documentation</h1>
 <?php foreach ($categories as $cat): ?>
 	<section>
-		<h1 class="h-beta"><?=$this->title($t(Inflector::humanize($cat), array('scope' => 'li3_docs'))); ?></h1>
+		<h1 class="h-beta"><?=$this->title(Inflector::humanize($cat)); ?></h1>
 
 		<?php foreach ($libraries as $lib => $config) { ?>
 			<article>
