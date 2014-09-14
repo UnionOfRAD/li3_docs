@@ -2,7 +2,14 @@
 
 $scope = strtok($object['identifier'], '\\') . '_docs';
 $namespace = str_replace('\\', '/', $name);
-$this->title($namespace);
+
+$title = $namespace;
+if ($object['text'] && preg_match('/^# ([\w\s\:]+)$/m', $object['text'], $matches)) {
+	$title = $matches[1];
+} elseif (strpos($name, '.md') === false && strpos($name, '/') === false) {
+	$title = $name;
+}
+$this->title($title . ' – ' . $object['library'] . ' – ' . 'docs');
 
 $params = isset($object['tags']['params']) && !empty($object['tags']['params']);
 $return = isset($object['return']) && !empty($object['return']);
@@ -39,7 +46,7 @@ if ($source) {
 ?>
 
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> has-aside-right">
-	<?php if (strpos($name, '.md') === false && $object['type'] !== 'namespace'): ?>
+	<?php if ($title && $object['type'] !== 'namespace'): ?>
 		<h1 class="h-alpha"><?= $name ?></h1>
 	<?php endif ?>
 	<?php if ($meta) { ?>
