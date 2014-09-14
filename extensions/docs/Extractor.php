@@ -9,6 +9,7 @@
 namespace li3_docs\extensions\docs;
 
 use Exception;
+use DomainException;
 use lithium\core\Libraries;
 use lithium\util\Inflector;
 use lithium\analysis\Docblock;
@@ -18,10 +19,13 @@ use li3_docs\extensions\docs\Code;
 class Extractor extends \lithium\core\StaticObject {
 
 	public static function get($library, $identifier, array $options = array()) {
+		static::_ensureIndexedLibrary($library);
+
 		$defaults = array('namespaceDoc' => array(), 'language' => 'en');
 		$options += $defaults;
 		$options['namespaceDoc'] = (array) $options['namespaceDoc'];
 		$config = Libraries::get('li3_docs');
+
 		if (isset($config['namespaceDoc'])) {
 			$options['namespaceDoc'] = array_merge(
 					$options['namespaceDoc'], (array) $config['namespaceDoc']
@@ -29,6 +33,7 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		$path = Libraries::path($identifier);
+		static::_ensurePathInBase($path);
 
 		if (file_exists($path) && !static::_isClassFile($path)) {
 			return static::_file(compact('library', 'path', 'identifier'), $options);
@@ -59,6 +64,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	public static function library($name, array $options = array()) {
+		static::_ensureIndexedLibrary($name);
+
 		$defaults = array('docs' => 'config/docs/index.json', 'language' => 'en');
 		$options += $defaults;
 
@@ -67,6 +74,7 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		if (file_exists($file = "{$config['path']}/{$options['docs']}")) {
+			static::_ensurePathInBase($file);
 			$config += (array) json_decode(file_get_contents($file), true);
 		}
 		if (isset($config['languages']) && in_array($options['language'], $config['languages'])) {
@@ -93,6 +101,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _method(array $object, array $data, array $options = array()) {
+		static::_ensureIndexedLibrary($object['library']);
+
 		if (!$data) {
 			return array();
 		}
@@ -108,6 +118,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _namespace(array $object, array $data, array $options = array()) {
+		static::_ensureIndexedLibrary($object['library']);
+
 		$library = $object['library'];
 		$identifier = $object['identifier'];
 		$config = Libraries::get($library);
@@ -120,7 +132,8 @@ class Extractor extends \lithium\core\StaticObject {
 		} else {
 			$object['children'] = static::_children($library, $path);
 		}
-		$path = $config['path'] . rtrim($path, '/');
+		static::_ensurePathInBase($config['path']);
+		static::_ensurePathInBase($path = $config['path'] . rtrim($path, '/'));
 
 		if (isset($options['language']) && is_dir("{$config['path']}/{$options['language']}")) {
 			$path = str_replace($config['path'], "{$config['path']}/{$options['language']}", $path);
@@ -128,13 +141,15 @@ class Extractor extends \lithium\core\StaticObject {
 
 		$object['text'] = null;
 		foreach ((array) $options['namespaceDoc'] as $namespaceDoc) {
-			$doc = "{$path}/{$namespaceDoc}";
+			static::_ensurePathInBase($doc = "{$path}/{$namespaceDoc}");
+
 			if (!file_exists($doc)) {
 				continue;
 			}
 			$object['text'] = file_get_contents($doc);
 			break;
 		}
+
 		if (!$object['text'] && file_exists($path) && !is_dir($path)) {
 			$object['text'] = file_get_contents($path);
 		}
@@ -142,6 +157,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _contents(array $object, array $contents) {
+		static::_ensureIndexedLibrary($object['library']);
+
 		$path = str_replace('\\', '/', $object['identifier']);
 		$library = $object['library'];
 		$result = array();
@@ -173,6 +190,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _class(array $object, array $data, array $options = array()) {
+		static::_ensureIndexedLibrary($object['library']);
+
 		$identifier = $object['identifier'];
 		$proto = array(
 			'parent' => get_parent_class($identifier),
@@ -196,10 +215,15 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _property(array $object, array $data, array $options = array()) {
+		static::_ensureIndexedLibrary($object['library']);
+
 		return $object + $data;
 	}
 
 	protected static function _file(array $object, array $options = array()) {
+		static::_ensureIndexedLibrary($object['library']);
+		static::_ensurePathInBase($object['path']);
+
 		$identifier = $object['identifier'];
 		$library = $object['library'];
 		$config = Libraries::get($library);
@@ -215,6 +239,7 @@ class Extractor extends \lithium\core\StaticObject {
 			))
 		);
 		$subPath = dirname($object['path']) . $ds . basename($object['path'], '.php');
+		static::_ensurePathInBase($subPath);
 
 		if (is_dir($subPath)) {
 			$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
@@ -225,6 +250,9 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _children($library, $path) {
+		static::_ensureIndexedLibrary($library);
+		static::_ensurePathInBase($path);
+
 		$result = array();
 		$types = array(
 			'namespace' => array('namespaces' => true),
@@ -277,6 +305,8 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _isClassFile($path) {
+		static::_ensurePathInBase($path);
+
 		$tokens = token_get_all(file_get_contents($path));
 
 		for ($i = 2; $i < count($tokens); $i++) {
@@ -288,6 +318,30 @@ class Extractor extends \lithium\core\StaticObject {
 			}
 		}
 		return false;
+	}
+
+	protected static function _ensurePathInBase($path) {
+		$base = realpath(LITHIUM_APP_PATH);
+		$path = realpath($path);
+
+		if ($path !== false && strpos($path, $base) !== 0) {
+			throw new DomainException("Directory traversal attempted with path `{$path}`");
+		}
+		return true;
+	}
+
+	protected static function _ensureIndexedLibrary($name) {
+		static $config;
+
+		if (!$config) {
+			$config = Libraries::get('li3_docs');
+		}
+		if (!isset($config['index'])) {
+			return true;
+		}
+		if (!in_array($name, $config['index'])) {
+			throw new DomainException("Tried to index not whitelisted library `{$name}`.");
+		}
 	}
 }
 
