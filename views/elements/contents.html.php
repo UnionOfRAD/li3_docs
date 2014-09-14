@@ -11,7 +11,7 @@ if (count($crumbs) > 2) {
 
 ?>
 <nav class="aside aside-right toc">
-	<h2 class="h-gamma">Contents</h2>
+	<h3 class="h-gamma">Contents</h3>
 	<ul class="children">
 	<?php if ($up): ?>
 		<li class="nav-up"><?= $this->html->link('../', $up['url'], array('rel' => 'up')) ?>

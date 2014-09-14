@@ -13,7 +13,7 @@ if (count($crumbs) > 2) {
 ?>
 <nav class="aside aside-right">
 	<?php if ($object['properties'] || ($object['methods'] && $object['methods']->count())) { ?>
-		<h2 class="h-gamma">Contents</h2>
+		<h3 class="h-gamma">Contents</h3>
 		<ul>
 		<?php if ($up): ?>
 			<li class="nav-up"><?= $this->html->link('../', $up['url'], array('rel' => 'up')) ?>
@@ -21,7 +21,7 @@ if (count($crumbs) > 2) {
 		</ul>
 		<?php // Object properties ?>
 		<?php if ($object['properties']) { ?>
-			<h2 class="h-gamma">Properties</h2>
+			<h3 class="h-gamma">Properties</h3>
 			<ul class="properties">
 				<?php foreach ($object['properties'] as $property) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::\${$property['name']}"); ?>
@@ -32,7 +32,7 @@ if (count($crumbs) > 2) {
 
 		<?php // Object methods ?>
 		<?php if ($object['methods'] && $object['methods']->count()) { ?>
-			<h2 class="h-gamma">Methods</h2>
+			<h3 class="h-gamma">Methods</h3>
 			<ul class="methods">
 				<?php foreach ($object['methods'] as $method) { ?>
 					<?php $url = $this->docs->identifierUrl("{$namespace}::{$method->name}()"); ?>
