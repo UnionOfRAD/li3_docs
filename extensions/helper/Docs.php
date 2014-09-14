@@ -35,7 +35,15 @@ class Docs extends \lithium\template\helper\Html {
 	}
 
 	public function cleanup($text) {
-		return preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
+		$result = preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
+
+		// Fix indentation in docblock lists.
+		$result = implode("\n", array_map('trim', explode("\n", $result)));
+
+		// Allow text and fenced codeblocks without a blank line.
+		$result = preg_replace('/\w*\n(```)/msi', "\n\n```", $result);
+
+		return $result;
 	}
 
 	public function identifierUrl($class) {
