@@ -1,6 +1,5 @@
 <?php if (isset($object['tags']['see'])) { ?>
-<div id="related" class="section">
-	<section>
+	<section id="related">
 		<h3 class="h-beta">Related</h3>
 		<ul class="related">
 			<?php foreach ((array) $object['tags']['see'] as $name) { ?>
@@ -8,5 +7,4 @@
 			<?php } ?>
 		</ul>
 	</section>
-</div>
 <?php } ?>

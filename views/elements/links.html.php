@@ -6,20 +6,18 @@ if (!isset($object['tags']['link'])) {
 
 ?>
 
-<div id="links" class="section">
-	<section>
-		<h3 class="h-beta">Links</h3>
-		<ul class="links">
-		<?php foreach ((array) $object['tags']['link'] as $url) { ?>
-			<?php
-				$title = $url;
+<section id="links">
+	<h3 class="h-beta">Links</h3>
+	<ul class="links">
+	<?php foreach ((array) $object['tags']['link'] as $url) { ?>
+		<?php
+			$title = $url;
 
-				if (strpos($url, ' ')) {
-					list($url, $title) = array_map('trim', explode(' ', $url, 2));
-				}
-			?>
-			<li><?=$this->html->link($title, $url); ?></li>
-		<?php } ?>
-		</ul>
-	</section>
-</div>
+			if (strpos($url, ' ')) {
+				list($url, $title) = array_map('trim', explode(' ', $url, 2));
+			}
+		?>
+		<li><?=$this->html->link($title, $url); ?></li>
+	<?php } ?>
+	</ul>
+</section>

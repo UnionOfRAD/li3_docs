@@ -26,14 +26,12 @@
 	<?php } ?>
 </nav>
 
-<div id="parent" class="section">
-	<section>
-		<?php if ($meta['parent']) { ?>
-			<?php $parent = $meta['parent']; ?>
-			<span class="parent">Extends</span>
-			<?=$this->html->link(
-				$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
-			); ?>
-		<?php } ?>
-	</section>
-</div>
+<section id="parent">
+	<?php if ($meta['parent']) { ?>
+		<?php $parent = $meta['parent']; ?>
+		<span class="parent">Extends</span>
+		<?=$this->html->link(
+			$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
+		); ?>
+	<?php } ?>
+</section>

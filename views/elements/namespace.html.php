@@ -4,7 +4,6 @@
 	array('library' => 'li3_docs')
 ); ?>
 
-<div class="section">
 	<section>
 <?php if ($object['description']) { ?>
 	<p class="description">
@@ -18,4 +17,3 @@
 	</p>
 <?php } ?>
 	</section>
-</div>

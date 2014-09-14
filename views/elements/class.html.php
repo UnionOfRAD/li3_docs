@@ -28,29 +28,24 @@
 	<?php } ?>
 </nav>
 
-
-<div id="parent" class="section">
-	<section>
-		<?php if ($object['parent']) { ?>
-			<?php $parent = $object['parent']; ?>
-			<span class="parent">Extends</span>
-			<?=$this->html->link(
-				$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
-			); ?>
-		<?php } ?>
-	</section>
-</div>
-<div class="section">
-	<section>
-		<?php if ($object['description']) { ?>
-			<div class="description">
-				<?php echo $this->markdown->parse($this->docs->cleanup($object['description'])); ?>
-			</div>
-		<?php } ?>
-		<?php if ($object['text']) { ?>
-			<div class="text">
-				<?php echo $this->markdown->parse($this->docs->cleanup($object['text'])); ?>
-			</div>
-		<?php } ?>
-	</section>
-</div>
+<section id="parent">
+	<?php if ($object['parent']) { ?>
+		<?php $parent = $object['parent']; ?>
+		<span class="parent">Extends</span>
+		<?=$this->html->link(
+			$parent, $this->docs->identifierUrl($parent), array('class' => 'parent')
+		); ?>
+	<?php } ?>
+</section>
+<section>
+	<?php if ($object['description']) { ?>
+		<div class="description">
+			<?php echo $this->markdown->parse($this->docs->cleanup($object['description'])); ?>
+		</div>
+	<?php } ?>
+	<?php if ($object['text']) { ?>
+		<div class="text">
+			<?php echo $this->markdown->parse($this->docs->cleanup($object['text'])); ?>
+		</div>
+	<?php } ?>
+</section>
