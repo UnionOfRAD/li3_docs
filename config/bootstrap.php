@@ -25,10 +25,17 @@ Dispatcher::applyFilter('run', $filter);
 ConsoleDispatcher::applyFilter('run', $filter);
 
 /**
- * Setup default options.
+ * Setup default options:
+ *
+ * - `'index'` _array|voide_: Allows to restrict indexing to provided set of libraries.
+ *   By default all libraries registered in the application are indexed.
+ * - `'categories'` _array|voide_: Allows manually provide a set of category names. By
+ *    default categories are extracted from all indexed libraries.
  */
 Libraries::add('li3_docs', array('bootstrap' => false) + Libraries::get('li3_docs') + array(
 	'url' => '/docs',
+	'index' => null,
+	'categories' => null
 ));
 
 ?>
