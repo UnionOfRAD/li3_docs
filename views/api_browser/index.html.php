@@ -17,8 +17,8 @@ $defaults = array('controller' => 'li3_docs.ApiBrowser', 'action' => 'view');
 					<?=$this->html->link($config['title'], compact('lib') + $defaults); ?>
 				</h1>
 				<?php if (isset($config['description'])): ?>
-					<div class="library-description markdown">
-						<pre><?=$config['description']; ?></pre>
+					<div class="library-description">
+						<?php echo $this->markdown->parse($config['description']); ?>
 					</div>
 				<?php else: ?>
 					<p></p>

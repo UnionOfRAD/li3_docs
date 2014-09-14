@@ -33,24 +33,12 @@ if ($searchBase !== "") {
 	<?=$this->html->script(array(
 		'//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js',
-		'//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js',
 		'/li3_docs/js/search.js',
 	)); ?>
 	<script>
 		$(document).ready(function () {
-			var converter = new Showdown.converter({ extensions: []});
-
-			$(".markdown").each(function() {
-				var $el = $(this);
-
-				$el.html(converter.makeHtml($.trim($el.text())));
-				$el.find('h1').addClass('h-alpha');
-				$el.find('h2').addClass('h-beta');
-				$el.find('h3').addClass('h-gamma');
-				$el.find('h4').addClass('h-delta');
-			});
 			hljs.initHighlighting();
 		});
 	</script>

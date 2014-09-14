@@ -43,17 +43,13 @@
 <div class="section">
 	<section>
 		<?php if ($object['description']) { ?>
-			<div class="description markdown">
-				<pre>
-<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
-				</pre>
+			<div class="description">
+				<?php echo $this->markdown->parse($t($this->docs->cleanup($object['description']), compact('scope'))); ?>
 			</div>
 		<?php } ?>
 		<?php if ($object['text']) { ?>
-			<div class="text markdown">
-				<pre>
-<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
-				</pre>
+			<div class="text">
+				<?php echo $this->markdown->parse($t($this->docs->cleanup($object['text']), compact('scope'))); ?>
 			</div>
 		<?php } ?>
 	</section>

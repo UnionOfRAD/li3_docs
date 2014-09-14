@@ -38,6 +38,7 @@
 	],
 	"require": {
 		"php": ">=5.3",
-		"composer/installers": "*"
+		"composer/installers": "*",
+        "cebe/markdown": "0.9.*"
 	}
 }

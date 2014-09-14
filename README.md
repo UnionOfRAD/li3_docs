@@ -1,6 +1,6 @@
 # li₃ docs
 
-Li3_docs is a **Lithium plugin**, NOT a Lithium app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
+li3_docs is a **Lithium plugin**, NOT a Lithium app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
 
 Once installed in your existing application, however, it generates documentation from your app's docblocks in real-time, which is all accessible from http://yourapp.tld/docs/. Not only that, but it will generate documentation for your plugins, too. Including itself; so it is self-replicating in a way. In this vein, it becomes part of a series of plugins required in order to obtain various documentation volumes of interest.
 
@@ -10,11 +10,17 @@ such as:
  * https://github.com/UnionOfRAD/lithium
  * https://github.com/UnionOfRAD/framework
 
-So the Lithium documentation plugin (Li3 Docs) is a tool for creating automatically browse-able documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
+So the Lithium documentation plugin (li3_docs) is a tool for creating automatically browse-able documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
+
+### Installation
+
+In order to parse markdown this plugin relies on a PHP markdown parser (cebe/markdown). If you're
+using composer to install the plugin, you already have the dependency automatically installed for
+you. Otherwise install the dependency manually from: https://github.com/cebe/markdown
 
 ### Documentation structure
 
-For generating documentation, Li3 Docs relies on PHP documentation blocks, or _docblocks_. These docblocks can appear above classes, methods, properties, etc., and contain three things: a short description, a longer description (often including usage examples), and docblock _tags_, which are denoted by an `@` symbol, followed by a keyword. A typical docblock might look something like this:
+For generating documentation, li3_docs relies on PHP documentation blocks, or _docblocks_. These docblocks can appear above classes, methods, properties, etc., and contain three things: a short description, a longer description (often including usage examples), and docblock _tags_, which are denoted by an `@` symbol, followed by a keyword. A typical docblock might look something like this:
 
 ```
 	/**

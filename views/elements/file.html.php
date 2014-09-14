@@ -8,17 +8,17 @@
 	<?php if (is_string($info)) { ?>
 <div class="section">
 	<section>
-		<div class="markdown"><pre><?=$info; ?></pre></div>
+		<?php echo $this->markdown->parse($info); ?>
 	</section>
 </div>
 	<?php } else { ?>
 <div class="section">
 	<section>
 		<?php if ($info['description']): ?>
-			<div class="markdown"><pre><?=$info['description']; ?></pre></div>
+			<?php echo $this->markdown->parse($info['description']); ?>
 		<?php endif ?>
 		<?php if ($info['text']): ?>
-			<div class="markdown"><pre><?=$info['text']; ?></pre></div>
+			<?php echo $this->markdown->parse($info['text']); ?>
 		<?php endif ?>
 	</section>
 </div>

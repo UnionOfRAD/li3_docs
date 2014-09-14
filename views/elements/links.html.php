@@ -18,7 +18,7 @@ if (!isset($object['tags']['link'])) {
 					list($url, $title) = array_map('trim', explode(' ', $url, 2));
 				}
 			?>
-			<li><?=$this->html->link($title, $url, array('class' => 'markdown')); ?></li>
+			<li><?=$this->html->link($title, $url); ?></li>
 		<?php } ?>
 		</ul>
 	</section>

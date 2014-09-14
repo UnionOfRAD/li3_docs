@@ -1,8 +1,8 @@
 <?php if ($object['description']) { ?>
 	<div class="section">
 		<section>
-			<div class="description markdown">
-			<?=$t($this->docs->cleanup($object['description']), compact('scope')); ?>
+			<div class="description">
+				<?php echo $this->markdown->parse($t($this->docs->cleanup($object['description']), compact('scope'))); ?>
 			</div>
 		</section>
 	</div>
@@ -10,8 +10,8 @@
 <?php if ($object['text']) { ?>
 	<div class="section">
 		<section>
-			<p class="text markdown">
-				<?=$t($this->docs->cleanup($object['text']), compact('scope')); ?>
+			<p class="text">
+				<?php echo $this->markdown->parse($t($this->docs->cleanup($object['text']), compact('scope'))); ?>
 			</p>
 		</section>
 	</div>
