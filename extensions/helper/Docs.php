@@ -37,9 +37,6 @@ class Docs extends \lithium\template\helper\Html {
 	public function cleanup($text) {
 		$result = preg_replace('/\n\s+-\s/msi', "\n\n - ", $text);
 
-		// Allow text and fenced codeblocks without a blank line.
-		$result = preg_replace('/\w*\n(```)/msi', "\n\n```", $result);
-
 		// Fix indentation in docblock lists, but outside codeblocks.
 		$parts = explode("\n", $result);
 		$code = false;
@@ -51,9 +48,7 @@ class Docs extends \lithium\template\helper\Html {
 				$part = trim($part);
 			}
 		}
-		$result = implode("\n", $parts);
-
-		return $result;
+		return implode("\n", $parts);
 	}
 
 	public function identifierUrl($class) {

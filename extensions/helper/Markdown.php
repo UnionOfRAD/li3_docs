@@ -21,6 +21,24 @@ class Markdown extends \lithium\template\helper\Html {
 	}
 
 	public function parse($markdown) {
+		$parts = explode("\n", $markdown);
+		$clean = [];
+		$code = false;
+
+		foreach ($parts as $part) {
+			if (strpos($part, '```') !== false) {
+				if (!$code) { // we're opening
+					// Allow text and fenced codeblocks without a blank line.
+					if (end($clean) !== '') {
+						$clean[] = '';
+					}
+				}
+				$code = $code ? false : true;
+			}
+			$clean[] = $part;
+		}
+		$markdown = implode("\n", $clean);
+
 		return $this->_parser->parse($markdown);
 	}
 }
