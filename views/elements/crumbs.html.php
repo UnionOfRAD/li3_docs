@@ -21,14 +21,21 @@ $makeTitle = function($value) {
 	<?= $this->html->link('Documentation', ['library' => 'li3_docs', 'controller' => 'ApiBrowser']) ?> ＞
 	<ul>
 		<?php foreach (array_slice($this->docs->crumbs($object), 1) as $crumb): ?>
-			<li class="<?= $crumb['class']; ?>">
+			<li
+				class="<?= $crumb['class']; ?>"
+				itemscope itemtype="http://data-vocabulary.org/Breadcrumb"
+			>
 				<?php
 					if ($crumb['url']) {
-						echo $this->html->link($makeTitle($crumb['title']), $crumb['url']);
+						echo $this->html->link($makeTitle($crumb['title']), $crumb['url'], array(
+							'itemprop' => 'url title'
+						));
 						continue;
 					}
 				?>
-				<span><?= $makeTitle($crumb['title']); ?></span>
+				<span itemprop="title">
+					<?= $makeTitle($crumb['title']); ?>
+				</span>
 			</li>
 		<?php endforeach; ?>
 	</ul>
