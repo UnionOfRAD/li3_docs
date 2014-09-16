@@ -18,7 +18,8 @@ $makeTitle = function($value) {
 
 ?>
 <nav class="crumbs">
-	<?= $this->html->link('Documentation', ['library' => 'li3_docs', 'controller' => 'ApiBrowser']) ?> ＞
+	<?= $this->html->link('Documentation', ['library' => 'li3_docs', 'controller' => 'ApiBrowser']) ?>
+	>
 	<ul>
 		<?php foreach (array_slice($this->docs->crumbs($object), 1) as $crumb): ?>
 			<li
