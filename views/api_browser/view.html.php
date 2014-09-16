@@ -45,7 +45,7 @@ if ($source) {
 }
 ?>
 
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> has-aside-right">
+<article class="has-aside-right">
 	<?php if ($title && $object['type'] !== 'namespace'): ?>
 		<h1 class="h-alpha"><?= $name ?></h1>
 	<?php endif ?>
