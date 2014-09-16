@@ -1,7 +1,19 @@
 <?php
 
+use lithium\util\Inflector;
+
 if (!isset($object) || !$object) {
 	return;
+}
+
+$makeTitle = function($value) {
+	$value = str_replace('.md', '', $value);
+	$value = str_replace('-', '_', $value);
+
+	if (strlen($value) <= 3) {
+		return strtoupper($value);
+	}
+	return Inflector::humanize($value);
 }
 
 ?>
@@ -12,11 +24,11 @@ if (!isset($object) || !$object) {
 			<li class="<?= $crumb['class']; ?>">
 				<?php
 					if ($crumb['url']) {
-						echo $this->html->link($crumb['title'], $crumb['url']);
+						echo $this->html->link($makeTitle($crumb['title']), $crumb['url']);
 						continue;
 					}
 				?>
-				<span><?=$crumb['title']; ?></span>
+				<span><?= $makeTitle($crumb['title']); ?></span>
 			</li>
 		<?php endforeach; ?>
 	</ul>
