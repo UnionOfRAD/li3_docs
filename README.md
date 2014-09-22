@@ -1,6 +1,6 @@
 # li₃ docs
 
-li3_docs is a **Lithium plugin**, NOT a Lithium app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
+li3_docs is a **plugin**, NOT an app. Furthermore, by itself it is a VIEWER ONLY and contains no actual documentation other than its own.
 
 Once installed in your existing application, however, it generates documentation from your app's docblocks in real-time, which is all accessible from http://yourapp.tld/docs/. Not only that, but it will generate documentation for your plugins, too. Including itself; so it is self-replicating in a way. In this vein, it becomes part of a series of plugins required in order to obtain various documentation volumes of interest.
 
@@ -10,7 +10,7 @@ such as:
  * https://github.com/UnionOfRAD/lithium
  * https://github.com/UnionOfRAD/framework
 
-So the Lithium documentation plugin (li3_docs) is a tool for creating automatically browse-able documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
+So the li3 documentation plugin (li3_docs) is a tool for creating automatically browse-able documentation of your application's codebase. In addition to simple descriptions and tables of contents, Li3 Docs allows application and code to be embedded with metadata and testable code examples to provide richer and more comprehensive documentation.
 
 ### Installation
 
@@ -79,7 +79,7 @@ Or if you wanted to have an app who's sole purpose is displaying docs, you could
 
 ### Searching
 
-The plugin supports symbol-based search i.e. via ElasticSearch. Search for classes, methods and properties. To get all symbols available in all libraries registered with lithium execute the following method.
+The plugin supports symbol-based search i.e. via ElasticSearch. Search for classes, methods and properties. To get all symbols available in all libraries registered with li3 execute the following method.
 
 ```
 use li3_docs\models\Symbols;
