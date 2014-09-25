@@ -32,6 +32,10 @@ class Markdown extends \lithium\template\helper\Html {
 					if (end($clean) !== '') {
 						$clean[] = '';
 					}
+					// Use PHP as default language for highlighting.
+					if (!preg_match('/^```[a-z]/i', $part)) {
+						$part = '```php';
+					}
 				}
 				$code = $code ? false : true;
 			}

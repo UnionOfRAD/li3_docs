@@ -89,7 +89,7 @@ if ($source) {
 			<h3 class="h-beta">Source</h3>
 			<div id="source" class="source-display">
 				<div class="source-wrapper">
-					<pre class="source-code"><code class="php"><?=$object['source']; ?></code></pre>
+					<pre class="source-code"><code class="language-php"><?=$object['source']; ?></code></pre>
 				</div>
 			</div>
 		</section>
