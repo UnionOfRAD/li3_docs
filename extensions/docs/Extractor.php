@@ -74,6 +74,11 @@ class Extractor extends \lithium\core\StaticObject {
 			$data[$key] = Code::embed($data[$key], compact('library'));
 		}
 		if ($config['cache']) {
+			array_walk_recursive($data, function(&$v, $k) {
+				if ($v instanceof \Closure) {
+					$v = '\Closure';
+				}
+			});
 			Cache::write('default', $cacheKey, $data, Cache::PERSIST);
 		}
 		return $data;
