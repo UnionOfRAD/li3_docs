@@ -5,8 +5,10 @@ use lithium\util\Inflector;
 if (!isset($object) || !$object) {
 	return;
 }
-
 $makeTitle = function($value) {
+	if (strpos($value, '.md') === false) {
+		return $value;
+	}
 	$value = str_replace('.md', '', $value);
 	$value = str_replace('-', '_', $value);
 
