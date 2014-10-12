@@ -127,13 +127,15 @@ class Extractor extends \lithium\core\StaticObject {
 		$path = preg_replace('/^' . preg_quote($config['prefix'], '/') . '/', '', $identifier);
 		$path = rtrim('/' . str_replace('\\', '/', $path), '/');
 
+		static::_ensurePathInBase($config['path']);
+		static::_ensurePathInBase($config['path'] . $path);
+
 		if (isset($options['contents'])) {
 			$object['children'] = static::_contents($object, $options['contents']);
 		} else {
 			$object['children'] = static::_children($library, $path);
 		}
-		static::_ensurePathInBase($config['path']);
-		static::_ensurePathInBase($path = $config['path'] . rtrim($path, '/'));
+		$path = $config['path'] . rtrim($path, '/');
 
 		if (isset($options['language']) && is_dir("{$config['path']}/{$options['language']}")) {
 			$path = str_replace($config['path'], "{$config['path']}/{$options['language']}", $path);
@@ -250,9 +252,6 @@ class Extractor extends \lithium\core\StaticObject {
 	}
 
 	protected static function _children($library, $path) {
-		static::_ensureIndexedLibrary($library);
-		static::_ensurePathInBase($path);
-
 		$result = array();
 		$types = array(
 			'namespace' => array('namespaces' => true),
