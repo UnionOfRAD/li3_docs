@@ -31,13 +31,11 @@ ConsoleDispatcher::applyFilter('run', $filter);
  *   By default all libraries registered in the application are indexed.
  * - `'categories'` _array|void_: Allows manually provide a set of category names. By
  *    default categories are extracted from all indexed libraries.
- * - `'cache'` _boolean_: When `true` will cache most parsing operations. Defaults to `false`.
  */
 Libraries::add('li3_docs', array('bootstrap' => false) + Libraries::get('li3_docs') + array(
 	'url' => '/docs',
 	'index' => null,
-	'categories' => null,
-	'cache' => false
+	'categories' => null
 ));
 
 ?>
