@@ -32,9 +32,7 @@ class Extractor extends \lithium\core\StaticObject {
 			);
 		}
 
-		if (!$path = Libraries::path($identifier)) {
-			return false;
-		}
+		$path = Libraries::path($identifier);
 		static::_ensurePathInBase($path);
 
 		if (file_exists($path) && !static::_isClassFile($path)) {
@@ -58,6 +56,10 @@ class Extractor extends \lithium\core\StaticObject {
 		);
 		$format = "_{$proto['type']}";
 		$data = static::$format($proto, (array) $data, $options);
+
+		if (!$data) {
+			return false;
+		}
 
 		foreach (array('text', 'description') as $key) {
 			$data[$key] = Code::embed($data[$key], compact('library'));
