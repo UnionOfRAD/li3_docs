@@ -9,6 +9,7 @@
 namespace li3_docs\controllers;
 
 use lithium\core\Libraries;
+use Exception;
 
 /**
  * This is the Lithium API browser controller. This class introspects your application's libraries,
@@ -88,15 +89,19 @@ class ApiBrowserController extends \lithium\action\Controller {
 		$config = Libraries::get('li3_docs');
 
 		if (!$library = $extractor::library($this->request->lib)) {
-			return $this->render(array('template' => '../errors/not_found'));
+			throw new Exception('Library not found.');
 		}
 		if (isset($config['index']) && !in_array($this->request->lib, $config['index'])) {
-			return $this->render(array('template' => '../errors/not_found'));
+			throw new Exception('Library not found.');
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
 		$object = $extractor::get($this->request->lib, $name, array(
 			'namespaceDoc' => $this->_namespaceDoc
 		) +  $library);
+
+		if (!$object) {
+			throw new Exception('Object not found.');
+		}
 		$meta = array();
 
 		if (strpos($name, '::') !== false) {

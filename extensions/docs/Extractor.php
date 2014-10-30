@@ -32,7 +32,9 @@ class Extractor extends \lithium\core\StaticObject {
 			);
 		}
 
-		$path = Libraries::path($identifier);
+		if (!$path = Libraries::path($identifier)) {
+			return false;
+		}
 		static::_ensurePathInBase($path);
 
 		if (file_exists($path) && !static::_isClassFile($path)) {
