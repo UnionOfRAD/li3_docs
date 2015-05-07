@@ -12,6 +12,16 @@
 </section>
 <?php } ?>
 
+<?php if (array_key_exists('deprecated', $object['tags'])): ?>
+<section class="deprecated">
+	<?php if ($object['tags']['deprecated']): ?>
+		<?= $object['tags']['deprecated'] ?>
+	<?php else: ?>
+		This method is deprecated.
+	<?php endif ?>
+</section>
+<?php endif ?>
+
 <?php // Method parameters ?>
 <?php if (isset($object['tags']['params'])) { ?>
 <section id="params">

@@ -63,4 +63,15 @@ if (count($crumbs) > 2) {
 			<?php echo $this->markdown->parse($this->docs->cleanup($object['text'])); ?>
 		</div>
 	<?php } ?>
+
+	<?php if (array_key_exists('deprecated', $object['tags'])): ?>
+	<section class="deprecated">
+		<?php if ($object['tags']['deprecated']): ?>
+			<?= $object['tags']['deprecated'] ?>
+		<?php else: ?>
+			This class, its methods and properties are deprecated.
+		<?php endif ?>
+	</section>
+	<?php endif ?>
+
 </section>
