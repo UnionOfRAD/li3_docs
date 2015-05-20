@@ -54,6 +54,9 @@
 <?php // Method filtering info ?>
 <?php if (isset($object['tags']['filter'])) { ?>
 <section id="filter" class="flag">
-	This method can be filtered.
+	<h3 class="h-beta">Filter</h3>
+	<p>
+		<?= $object['tags']['filter'] ?: 'This method can be filtered.' ?>
+	</p>
 </section>
 <?php } ?>
