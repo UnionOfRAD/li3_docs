@@ -54,7 +54,13 @@
 <?php // Method filtering info ?>
 <?php if (isset($object['tags']['filter'])) { ?>
 <section id="filter" class="flag">
-	<h3 class="h-beta">Filter</h3>
+	<h3 class="h-beta">
+		Filter
+		<?= $this->html->link(
+			'see how to use filters',
+			'http://li3.me/docs/manual/common-tasks/basic-filters.md'
+		) ?>
+	</h3>
 	<p>
 		<?= $object['tags']['filter'] ?: 'This method can be filtered.' ?>
 	</p>
