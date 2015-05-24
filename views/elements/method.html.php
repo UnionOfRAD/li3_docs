@@ -56,10 +56,12 @@
 <section id="filter" class="flag">
 	<h3 class="h-beta">
 		Filter
-		<?= $this->html->link(
-			'see how to use filters',
-			'http://li3.me/docs/manual/common-tasks/basic-filters.md'
-		) ?>
+		<nav class="headline-nav">
+			<?= $this->html->link(
+				'see how to use filters',
+				'http://li3.me/docs/manual/common-tasks/basic-filters.md'
+			) ?>
+		</nav>
 	</h3>
 	<p>
 		<?= $object['tags']['filter'] ?: 'This method can be filtered.' ?>
