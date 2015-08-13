@@ -3,42 +3,16 @@
 	"type": "lithium-library",
 	"description": "A documentation generator for Lithium projects.",
 	"keywords": ["docs", "docblock", "lithium", "li3", "documentation", "documented"],
-	"homepage": "https://github.com/UnionOfRAD/li3_docs",
+    "homepage": "http://li3.me",
 	"license": "BSD-3-clause",
-	"authors": [
-		{
-			"name": "Nate Abele",
-			"email": "nate.abele@gmail.com",
-			"homepage": "http://nateabele.com/"
-		},
-		{
-			"name": "David Persson",
-			"email": "nperson@gmx.de",
-			"homepage": "http://nperson.de"
-		},
-		{
-			"name": "Jon Adams",
-			"email": "pointlessjon@me.com",
-			"homepage": "http://daetal.us"
-		},
-		{
-			"name": "gwoo",
-			"homepage": "https://github.com/gwoo"
-		},
-		{
-			"name": "John Anderson",
-			"email": "anderson.johnd@gmail.com",
-			"homepage": "https://twitter.com/#!/raisinbread"
-		},
-		{
-			"name": "Hans Donner",
-			"email": "hans.donner@pobox.com",
-			"homepage": "https://github.com/hans-d"
-		}
-	],
+    "authors": [
+        {"name": "Union of RAD"},
+        {"name": "The Community"}
+    ],
 	"require": {
 		"php": ">=5.3",
-		"composer/installers": "*",
-        "cebe/markdown": "1.*"
+        "composer/installers": "1.*",
+        "cebe/markdown": "1.*",
+        "unionofrad/lithium": "1.0.0@RC"
 	}
 }
