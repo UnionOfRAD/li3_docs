@@ -11,7 +11,6 @@ namespace li3_docs\extensions\command;
 use lithium\core\Libraries;
 use li3_docs\extensions\docs\Code;
 use li3_docs\extensions\docs\Indexer;
-use li3_docs\extensions\command\docs\Todo;
 
 class Docs extends \lithium\console\Command {
 
@@ -23,11 +22,6 @@ class Docs extends \lithium\console\Command {
 	public $path = '';
 
 	public $libraries = '';
-
-	public function todo() {
-		$todo = new Todo(array('request' => $this->request));
-		return $todo->run();
-	}
 
 	public function verify() {
 		$this->out("{:white}Verifying that code matches documentation signatures...{:end}");
