@@ -3,7 +3,6 @@
 use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
-use lithium\net\http\Media;
 
 $config = Libraries::get('li3_docs');
 $base = $config['url'] == '/' ? '' : $config['url'];
@@ -16,22 +15,6 @@ Router::connect("{$base}/{:args}\(", array(), function($request) {
 });
 
 Router::connect($base ?: '/', array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
-
-Router::connect("{$base}/{:path:js|css}/{:file}.{:type}", array(), function($request) {
-	$req = $request->params;
-	$file = dirname(__DIR__) . "/webroot/{$req['path']}/{$req['file']}.{$req['type']}";
-
-	if (!file_exists($file)) {
-		return;
-	}
-
-	return new Response(array(
-		'body' => file_get_contents($file),
-		'headers' => array('Content-type' => str_replace(
-			array('css', 'js'), array('text/css', 'text/javascript'), $req['type']
-		))
-	));
-});
 
 Router::connect("{$base}/{:lib}/{:args}", array(
 	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
