@@ -18,19 +18,23 @@ use li3_docs\extensions\docs\Code;
 
 class Extractor extends \lithium\core\StaticObject {
 
+	/**
+	 * The name of the file used to document (describe) namespaces. By default,
+	 * the document is read from the directory being examined, and the contents
+	 * of it represent the "docblock" for the corresponding namespace.
+	 *
+	 * @var array
+	 */
+	protected static $_namespaceIndexFiles = array('readme.md', 'README.md');
+
 	public static function get($library, $identifier, array $options = array()) {
 		static::_ensureIndexedLibrary($library);
 
-		$defaults = array('namespaceDoc' => array(), 'language' => 'en');
+		$defaults = array(
+			'language' => 'en'
+		);
 		$options += $defaults;
-		$options['namespaceDoc'] = (array) $options['namespaceDoc'];
 		$config = Libraries::get('li3_docs');
-
-		if (isset($config['namespaceDoc'])) {
-			$options['namespaceDoc'] = array_merge(
-					$options['namespaceDoc'], (array) $config['namespaceDoc']
-			);
-		}
 
 		$path = Libraries::path($identifier);
 		static::_ensurePathInBase($path);
@@ -146,8 +150,8 @@ class Extractor extends \lithium\core\StaticObject {
 		}
 
 		$object['text'] = null;
-		foreach ((array) $options['namespaceDoc'] as $namespaceDoc) {
-			static::_ensurePathInBase($doc = "{$path}/{$namespaceDoc}");
+		foreach (static::$_namespaceIndexFiles as $file) {
+			static::_ensurePathInBase($doc = "{$path}/{$file}");
 
 			if (!file_exists($doc)) {
 				continue;

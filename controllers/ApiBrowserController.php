@@ -30,19 +30,6 @@ class ApiBrowserController extends \lithium\action\Controller {
 		'extractor' => 'li3_docs\extensions\docs\Extractor'
 	);
 
-	/**
-	 * The name of the file used to document (describe) namespaces. By default, the document is read
-	 * from the directory being examined, and the contents of it represent the "docblock" for the
-	 * corresponding namespace.
-	 *
-	 * Additional names can be configured using the `namespaceDoc` key. Eg
-	 * 'Libraries::add('li3_docs', array('namespaceDoc' => array('documentation.md')));'
-	 * or multiple when an array is used.
-	 *
-	 * @var array
-	 */
-	protected $_namespaceDoc = array('readme.md', 'README.md');
-
 	protected function _init() {
 		parent::_init();
 		$this->response->encoding = 'UTF-8';
@@ -95,9 +82,7 @@ class ApiBrowserController extends \lithium\action\Controller {
 			throw new Exception('Library not found.');
 		}
 		$name = $library['prefix'] . join('\\', func_get_args());
-		$object = $extractor::get($this->request->lib, $name, array(
-			'namespaceDoc' => $this->_namespaceDoc
-		) +  $library);
+		$object = $extractor::get($this->request->lib, $name, $library);
 
 		if (!$object) {
 			throw new Exception('Object not found.');
