@@ -11,12 +11,8 @@ namespace li3_docs\extensions\command;
 use lithium\core\Libraries;
 use li3_docs\extensions\docs\Code;
 use li3_docs\extensions\docs\Indexer;
-use li3_docs\extensions\command\docs\Generator;
 use li3_docs\extensions\command\docs\Todo;
 
-/**
- * Adds headers and docblocks to classes and methods.
- */
 class Docs extends \lithium\console\Command {
 
 	/**
@@ -27,11 +23,6 @@ class Docs extends \lithium\console\Command {
 	public $path = '';
 
 	public $libraries = '';
-
-	public function generator() {
-		$generator = new Generator(array('request' => $this->request));
-		return $generator->run();
-	}
 
 	public function todo() {
 		$todo = new Todo(array('request' => $this->request));
