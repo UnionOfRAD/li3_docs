@@ -13,6 +13,6 @@
 		"php": ">=5.3",
         "composer/installers": "1.*",
         "cebe/markdown": "1.*",
-        "unionofrad/lithium": "1.0.0-rc1"
+        "unionofrad/lithium": "1.0.*@RC"
 	}
 }
