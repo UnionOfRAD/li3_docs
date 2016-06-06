@@ -1,23 +1,41 @@
 <?php
 
-use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
-
-$config = Libraries::get('li3_docs');
-$base = $config['url'] == '/' ? '' : $config['url'];
 
 /**
  * Handles broken URL parsers by matching method URLs with no closing ) and redirecting.
  */
-Router::connect("{$base}/{:args}\(", array(), function($request) {
-	return new Response(array('location' => "{$request->url})"));
+Router::connect("/docs/api/{:args}\(", [], function($request) {
+	return new Response(['location' => "{$request->url})"]);
 });
 
-Router::connect($base ?: '/', array('controller' => 'li3_docs.ApiBrowser', 'action' => 'index'));
+Router::connect('/docs', [
+	'library' => 'li3_docs',
+	'controller' => 'Docs',
+	'action' => 'index'
+]);
 
-Router::connect("{$base}/{:lib}/{:args}", array(
-	'controller' => 'li3_docs.ApiBrowser', 'action' => 'view'
-));
+Router::connect('/docs/api/{:name}/{:version}', [
+	'library' => 'li3_docs',
+	'controller' => 'Apis',
+	'action' => 'view'
+]);
+Router::connect('/docs/api/{:name}/{:version}/{:symbol:.*}', [
+	'library' => 'li3_docs',
+	'controller' => 'Apis',
+	'action' => 'view'
+]);
+
+Router::connect('/docs/book/{:name}/{:version}', [
+	'library' => 'li3_docs',
+	'controller' => 'Books',
+	'action' => 'view'
+]);
+Router::connect('/docs/book/{:name}/{:version}/{:page:[a-zA-Z\/\-_0-9]+}', [
+	'library' => 'li3_docs',
+	'controller' => 'Books',
+	'action' => 'view'
+]);
 
 ?>

@@ -1,5 +1,0 @@
-{
-	"category": "libraries",
-	"title":    "Lithium Documentation Tool",
-	"description": "The Lithium documentation tool provides automated documentation display and extraction from class API documentation and from `readme.md` files."
-}

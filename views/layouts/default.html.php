@@ -2,7 +2,7 @@
 /**
  * Lithium: the most rad php framework
  *
- * @copyright     Copyright 2014, Union of Rad, Inc. (http://union-of-rad.org)
+ * @copyright     Copyright 2016, Union of Rad, Inc. (http://union-of-rad.org)
  * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
 ?>
@@ -11,13 +11,13 @@
 <head>
 	<?=$this->html->charset(); ?>
 	<title><?php echo ($title = $this->title()) ? "{$title} < " : null ?> Documentation $lt; #li3</title>
-	<?=$this->html->style(array('lithified', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight')); ?>
-	<?=$this->html->link('Icon', null, array('type' => 'icon')); ?>
-	<?=$this->html->script(array(
+	<?=$this->html->style(['lithified', '/li3_docs/css/li3_docs', '/li3_docs/css/highlight']); ?>
+	<?=$this->html->link('Icon', null, ['type' => 'icon']); ?>
+	<?=$this->html->script([
 		'//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js',
 		'//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/languages/php.min.js'
-	)); ?>
+	]); ?>
 	<script>
 		$(document).ready(function () {
 			hljs.initHighlighting();
@@ -30,7 +30,7 @@
 			<div class="logo">&#10177;</div>
 			<h1 class="title">li₃ docs</h1>
 			<?php echo $this->_view->render(
-				array('element' => 'crumbs'), compact('object'), array('library' => 'li3_docs')
+				['element' => 'crumbs'], compact('object'), ['library' => 'li3_docs']
 			); ?>
 		</header>
 

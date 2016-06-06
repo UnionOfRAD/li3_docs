@@ -1,8 +1,8 @@
 {
 	"name": "unionofrad/li3_docs",
 	"type": "lithium-library",
-	"description": "A documentation generator for Lithium projects.",
-	"keywords": ["docs", "docblock", "lithium", "li3", "documentation", "documented"],
+	"description": "An API and wiki-like documentation generator.",
+	"keywords": ["docs", "docblock", "lithium", "li3", "documentation", "wiki", "api"],
     "homepage": "http://li3.me",
 	"license": "BSD-3-clause",
     "authors": [
@@ -10,9 +10,11 @@
         {"name": "The Community"}
     ],
 	"require": {
-		"php": ">=5.3",
+		"php": ">=5.4",
+        "nikic/php-parser": "2.1.*",
         "composer/installers": "1.*",
         "cebe/markdown": "1.*",
+        "symfony/yaml": "3.1.*,
         "unionofrad/lithium": "1.0.*"
 	}
 }
