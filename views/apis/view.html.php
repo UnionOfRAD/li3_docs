@@ -1,5 +1,7 @@
 <?php
 
+use lithium\util\Inflector;
+
 $this->title(implode(' – ', [
 	$symbol->title(),
 	$index->title() . ' v' . $index->version,
@@ -248,4 +250,32 @@ $docblock = $symbol->docblock();
 		<?php endif ?>
 	<?php endif ?>
 	</div>
+	<?php if ($symbol->isRoot()): ?>
+		<section class="ns-summary">
+		<?php foreach(['class', 'trait', 'interface'] as $type): ?>
+			<?php if (($children = $symbol->children(['type' => $type, 'recursive' => true])) && $children->count()): ?>
+			<h2 class="h-beta"><?= ucfirst(Inflector::pluralize($type)) ?></h2>
+			<ul>
+				<?php foreach ($children as $child): ?>
+				<?php
+					$classes = [$type];
+
+					if ($child->isDeprecated()) {
+						$classes[] = 'deprecated';
+					}
+				?>
+				<li class="<?= implode(' ', $classes) ?>">
+				<?= $this->html->link($child->title(), [
+					'library' => 'li3_docs',
+					'action' => 'view',
+					'name' => $index->name,
+					'version' => $index->version,
+					'symbol' => $child->name
+				]) ?>
+				<?php endforeach ?>
+			</ul>
+			<?php endif ?>
+		<?php endforeach ?>
+		</section>
+	<?php endif ?>
 </article>

@@ -507,7 +507,7 @@ class Symbols extends \lithium\data\Model {
 		if (!$entity->parent) {
 			return true;
 		}
-		if ($entity->index()->namespace === $entity->parent) {
+		if ($entity->index()->namespace === $entity->name) {
 			return true;
 		}
 		return false;
