@@ -326,15 +326,15 @@ class Symbols extends \lithium\data\Model {
 	}
 
 	public function methods($entity, array $options = []) {
-		return $entity->members(['type' => 'method']);
+		return $entity->members(['type' => 'method'] + $options);
 	}
 
 	public function properties($entity, array $options = []) {
-		return $entity->members(['type' => 'property']);
+		return $entity->members(['type' => 'property'] + $options);
 	}
 
 	public function constants($entity, array $options = []) {
-		return $entity->members(['type' => 'constant']);
+		return $entity->members(['type' => 'constant'] + $options);
 	}
 
 	public function members($entity, array $options = []) {
