@@ -1,10 +1,14 @@
 <?php
 
-$this->title(implode(' – ', [
-	$page->title(),
+$title = [];
+if (!$page->isRoot()) {
+	$title[] = $page->title();
+}
+$title = array_merge($title, [
 	$index->title() . ' v' . $index->version,
 	'Documentation'
-]));
+]);
+$this->title(implode(' – ', $title));
 
 $drawList = function($root) use ($index, $page, &$drawList) {
 	\lithium\analysis\Logger::debug($root->name);
