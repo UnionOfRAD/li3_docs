@@ -8,6 +8,7 @@
 
 namespace li3_docs\models;
 
+use Exception;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
@@ -16,9 +17,9 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use li3_docs\doc\Docblock;
 use li3_docs\doc\Visitor;
-use lithium\util\Collection;
+use li3_docs\models\Indexes;
 use lithium\analysis\Logger;
-use Exception;
+use lithium\util\Collection;
 
 class Symbols extends \lithium\data\Model {
 
@@ -134,6 +135,14 @@ class Symbols extends \lithium\data\Model {
 			}
 		);
 		return new RecursiveIteratorIterator($files);
+	}
+
+	public function index($entity) {
+		return Indexes::find('first', [
+			'conditions' => [
+				'id' => $entity->index
+			]
+		]);
 	}
 
 	protected static function _hasItem($item) {
@@ -489,6 +498,19 @@ class Symbols extends \lithium\data\Model {
 
 	public function isExternal($entity) {
 		return (boolean) $entity->is_external;
+	}
+
+	public function isRoot($entity) {
+		if ($entity->type !== 'namespace') {
+			return false;
+		}
+		if (!$entity->parent) {
+			return true;
+		}
+		if ($entity->index()->namespace === $entity->parent) {
+			return true;
+		}
+		return false;
 	}
 }
 
