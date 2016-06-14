@@ -250,91 +250,60 @@ class Symbols extends \lithium\data\Model {
 		]);
 	}
 
-	// Recursively crawls namespace.
 	public function classes($entity, array $options = []) {
-		if ($entity->type !== 'namespace') {
-			return new Collection();
-		}
-		$options += [
-			'deprecated' => true
-		];
-		$conditions = [
-			'index' => $entity->index,
-			'type' => 'class',
-			'parent' => $entity->name
-		];
-		if (!$options['deprecated']) {
-			$conditions['deprecated'] = false;
-		}
-		return static::find('all', compact('conditions') + [
-			'order' => ['name']
-		]);
+		return $entity->children(['type' => substr(__FUNCTION__, 0, -1)] + $options);
 	}
 
 	public function traits($entity, array $options = []) {
-		if ($entity->type !== 'namespace') {
-			return new Collection();
-		}
-		$options += [
-			'deprecated' => true
-		];
-		$conditions = [
-			'index' => $entity->index,
-			'type' => 'trait',
-			'parent' => $entity->name
-		];
-		if (!$options['deprecated']) {
-			$conditions['deprecated'] = false;
-		}
-		return static::find('all', compact('conditions') + [
-			'order' => ['name']
-		]);
+		return $entity->children(['type' => substr(__FUNCTION__, 0, -1)] + $options);
 	}
 
 	public function interfaces($entity, array $options = []) {
+		return $entity->children(['type' => substr(__FUNCTION__, 0, -1)] + $options);
+	}
+
+	public function namespaces($entity, array $options = []) {
+		return $entity->children(['type' => substr(__FUNCTION__, 0, -1)] + $options);
+	}
+
+	public function children($entity, array $options = []) {
 		if ($entity->type !== 'namespace') {
 			return new Collection();
 		}
 		$options += [
-			'deprecated' => true
+			'recursive' => false,
+			'deprecated' => true,
+			'type' => null
 		];
 		$conditions = [
-			'index' => $entity->index,
-			'type' => 'interface',
-			'parent' => $entity->name
+			'index' => $entity->index
 		];
+		if ($options['recursive']) {
+			$conditions['name'] = ['LIKE' => $entity->name . '/%'];
+		} else {
+			$conditions['parent'] = $entity->name;
+		}
 		if (!$options['deprecated']) {
 			$conditions['deprecated'] = false;
 		}
-		return static::find('all', compact('conditions') + [
-			'order' => ['name']
-		]);
-	}
-
-	public function namespaces($entity, array $options = []) {
-		if ($entity->type !== 'namespace') {
-			return new Collection();
+		if ($options['type']) {
+			$conditions['type'] = $options['type'];
 		}
-		$conditions = [
-			'index' => $entity->index,
-			'type' => 'namespace',
-			'parent' => $entity->name
-		];
 		return static::find('all', compact('conditions') + [
 			'order' => ['name']
 		]);
 	}
 
 	public function methods($entity, array $options = []) {
-		return $entity->members(['type' => 'method'] + $options);
+		return $entity->members(['type' => substr(__FUNCTION__, 0, -1)] + $options);
 	}
 
 	public function properties($entity, array $options = []) {
-		return $entity->members(['type' => 'property'] + $options);
+		return $entity->members(['type' => substr(__FUNCTION__, 0, -1)] + $options);
 	}
 
 	public function constants($entity, array $options = []) {
-		return $entity->members(['type' => 'constant'] + $options);
+		return $entity->members(['type' => substr(__FUNCTION__, 0, -1)] + $options);
 	}
 
 	public function members($entity, array $options = []) {
