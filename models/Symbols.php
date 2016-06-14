@@ -370,7 +370,10 @@ class Symbols extends \lithium\data\Model {
 		if (!$options['deprecated']) {
 			$conditions['deprecated'] = false;
 		}
-		$results = static::find('all', compact('conditions'));
+		$results = static::find('all', compact('conditions') + [
+			// keep order of appearance even using db indexes
+			'order' => ['id']
+		]);
 
 		if (!$options['inherited']) {
 			return $results;
