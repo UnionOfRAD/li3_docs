@@ -11,7 +11,6 @@ $title = array_merge($title, [
 $this->title(implode(' – ', $title));
 
 $drawList = function($root) use ($index, $page, &$drawList) {
-	\lithium\analysis\Logger::debug($root->name);
 	$children = $root->children();
 
 	if (!$children->count()) {
