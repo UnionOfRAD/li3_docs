@@ -358,14 +358,7 @@ class Symbols extends \lithium\data\Model {
 		}
 		$current = $entity;
 
-		$traits = static::find('all', [
-			'conditions' => [
-				'index' => $entity->index,
-				'type' => 'trait',
-				'name' => explode(',', $entity->traits)
-			]
-		]);
-		foreach ($traits as $trait) {
+		foreach ($entity->traits() as $trait) {
 			foreach ($trait->members($options) as $member) {
 				$title = $member->title(['last' => true]);
 
