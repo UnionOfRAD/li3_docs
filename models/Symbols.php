@@ -462,6 +462,33 @@ class Symbols extends \lithium\data\Model {
 		return new Collection(['data' => $results]);
 	}
 
+	public function uses_($entity) {
+		if ($entity->type !== 'class' || !$entity->traits) {
+			return new Collection();
+		}
+		$results = [];
+
+		foreach (explode(',', $entity->traits) as $symbol) {
+			$result = static::find('first', [
+				'conditions' => [
+					'index' => $entity->index,
+					'type' => 'trait',
+					'name' => $symbol
+				]
+			]);
+			if (!$result) {
+				$result = static::create([
+					'index' => $entity->index,
+					'type' => 'trait',
+					'name' => $symbol,
+					'is_external' => true
+				]);
+			}
+			$results[] = $result;
+		}
+		return new Collection(['data' => $results]);
+	}
+
 	public function overrides($entity) {
 		if ($entity->overrides) {
 			return $entity->overrides;

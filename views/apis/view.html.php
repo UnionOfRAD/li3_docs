@@ -49,23 +49,7 @@ $docblock = $symbol->docblock();
 		</h1>
 
 		<section class="under">
-			<?php if ($symbol->type === 'class' && ($extends = $symbol->extends_())): ?>
-				<div class="extends">
-					<span class="extends__title">Extends</span>
-					<?php if ($extends->isExternal()): ?>
-						<?= $extends->title() ?>
-					<?php else: ?>
-						<?= $this->html->link($extends->title(), [
-							'library' => 'li3_docs',
-							'action' => 'view',
-							'name' => $index->name,
-							'version' => $index->version,
-							'symbol' => $symbol->extends
-						], ['class' => 'extends__symbol']) ?>
-					<?php endif ?>
-				</div>
-			<?php endif ?>
-			<?php if ($symbol->type === 'class' && ($extends = $symbol->implements_()) && $extends->count()): ?>
+			<?php if (($extends = $symbol->implements_()) && $extends->count()): ?>
 				<?php foreach ($extends as $extend): ?>
 				<div class="extends">
 					<span class="extends__title">Implements</span>
@@ -83,7 +67,41 @@ $docblock = $symbol->docblock();
 				</div>
 				<?php endforeach ?>
 			<?php endif ?>
-			<?php if (in_array($symbol->type, ['method', 'property']) && ($over = $symbol->overrides())): ?>
+			<?php if (($extends = $symbol->uses_()) && $extends->count()): ?>
+				<?php foreach ($extends as $extend): ?>
+				<div class="extends">
+					<span class="extends__title">Uses</span>
+					<?php if ($extend->isExternal()): ?>
+						<?= $extend->title() ?>
+					<?php else: ?>
+						<?= $this->html->link($extend->title(), [
+							'library' => 'li3_docs',
+							'action' => 'view',
+							'name' => $index->name,
+							'version' => $index->version,
+							'symbol' => $extend->name,
+						], ['class' => 'extends__symbol']) ?>
+					<?php endif ?>
+				</div>
+				<?php endforeach ?>
+			<?php endif ?>
+			<?php if ($extends = $symbol->extends_()): ?>
+				<div class="extends">
+					<span class="extends__title">Extends</span>
+					<?php if ($extends->isExternal()): ?>
+						<?= $extends->title() ?>
+					<?php else: ?>
+						<?= $this->html->link($extends->title(), [
+							'library' => 'li3_docs',
+							'action' => 'view',
+							'name' => $index->name,
+							'version' => $index->version,
+							'symbol' => $symbol->extends
+						], ['class' => 'extends__symbol']) ?>
+					<?php endif ?>
+				</div>
+			<?php endif ?>
+			<?php if ($over = $symbol->overrides()): ?>
 				<div class="extends">
 					<span class="extends__title">
 						<?php if ($over->isAbstract()): ?>
