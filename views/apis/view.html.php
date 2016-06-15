@@ -269,6 +269,7 @@ $docblock = $symbol->docblock();
 	<?php endif ?>
 	</div>
 	<?php if ($symbol->isRoot()): ?>
+		<hr class="section-separator lightblue">
 		<section class="ns-summary">
 		<?php foreach(['class', 'trait', 'interface'] as $type): ?>
 			<?php if (($children = $symbol->children(['type' => $type, 'recursive' => true])) && $children->count()): ?>
