@@ -50,6 +50,16 @@ class ApisController extends \lithium\action\Controller {
 		if (!$index) {
 			throw new Exception('Index not found.');
 		}
+		if (!$this->request->symbol && $index->namespace) {
+			return $this->redirect([
+				'library' => 'li3_docs',
+				'controller' => 'Apis',
+				'action' => 'view',
+				'name' => $index->name,
+				'version' => $index->version,
+				'symbol' => $index->namespace
+			]);
+		}
 		if (!$symbol = $index->symbol($this->request->symbol)) {
 			// As Markdown does not allow closing () on method links or sends
 			// them out as just ) or ( we'll see if there's method symbol
