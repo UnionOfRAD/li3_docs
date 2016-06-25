@@ -23,6 +23,10 @@ use lithium\util\Collection;
 
 class Symbols extends \lithium\data\Model {
 
+	protected $_meta = [
+		'source' => 'docs_symbols'
+	];
+
 	public static function harvest($index) {
 		$parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 

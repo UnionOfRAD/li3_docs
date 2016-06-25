@@ -1,5 +1,5 @@
 -- Create syntax for TABLE 'pages'
-CREATE TABLE `pages` (
+CREATE TABLE `docs_pages` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `index` varchar(100) NOT NULL DEFAULT '',
   `parent` varchar(200) DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9483 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'symbols'
-CREATE TABLE `symbols` (
+CREATE TABLE `docs_symbols` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `index` varchar(100) NOT NULL DEFAULT '',
   `parent` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,

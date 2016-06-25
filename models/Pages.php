@@ -20,6 +20,10 @@ use lithium\util\Inflector;
 
 class Pages extends \lithium\data\Model {
 
+	protected $_meta = [
+		'source' => 'docs_pages'
+	];
+
 	public static function harvest($index) {
 		$results = [];
 
