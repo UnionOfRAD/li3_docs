@@ -28,6 +28,9 @@ class ApisController extends \lithium\action\Controller {
 	 * gathers all available data on it. Any wiki text embedded in the data is then post-processed
 	 * and prepped for display.
 	 *
+	 * Handles broken URL parsers by matching method URLs with no closing ) or no () at all
+	 * and redirecting.
+	 *
 	 * @return array Returns an array with the following keys:
 	 *               - `'name'`: A string containing the full name of the entity being displayed
 	 *               - `'library'`: An array with the details of the current class library being
@@ -48,7 +51,28 @@ class ApisController extends \lithium\action\Controller {
 			throw new Exception('Index not found.');
 		}
 		if (!$symbol = $index->symbol($this->request->symbol)) {
-			throw new Exception('Symbol not found.');
+			// As Markdown does not allow closing () on method links or sends
+			// them out as just ) or ( we'll see if there's method symbol
+			// similiar to this one and redirect to that.
+
+			// Do only try for possible class members.
+			if (strpos($this->request->symbol, '::')) {
+				// Clean whats remaining and force method.
+				$fixed = rtrim($this->request->symbol, '()') . '()';
+
+				if ($symbol = $index->symbol($fixed)) {
+					return $this->redirect([
+						'library' => 'li3_docs',
+						'controller' => 'Apis',
+						'action' => 'view',
+						'name' => $index->name,
+						'version' => $index->version,
+						'symbol' => $symbol->name
+					]);
+				}
+			} else {
+				throw new Exception('Symbol not found.');
+			}
 		}
 		$crumbs = $this->_crumbsForSymbol($index, $symbol);
 		return compact('index', 'symbol', 'crumbs');

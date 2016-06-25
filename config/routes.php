@@ -1,14 +1,12 @@
 <?php
-
-use lithium\action\Response;
-use lithium\net\http\Router;
-
 /**
- * Handles broken URL parsers by matching method URLs with no closing ) and redirecting.
+ * Lithium: the most rad php framework
+ *
+ * @copyright     Copyright 2016, Union of RAD (http://union-of-rad.org)
+ * @license       http://opensource.org/licenses/bsd-license.php The BSD License
  */
-Router::connect("/docs/api/{:args}\(", [], function($request) {
-	return new Response(['location' => "{$request->url})"]);
-});
+
+use lithium\net\http\Router;
 
 Router::connect('/docs', [
 	'library' => 'li3_docs',
