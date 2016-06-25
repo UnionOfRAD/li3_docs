@@ -26,7 +26,7 @@ class Indexes extends \lithium\data\Model {
 			$results = [];
 
 			foreach (static::$_data as $id => $item) {
-				foreach ($params['options']['conditions'] as $k => $v) {
+				foreach ((array) $params['options']['conditions'] as $k => $v) {
 					if (is_array($v)) {
 						if (!in_array($item->{$k}, $v)) {
 							continue(2);
@@ -45,7 +45,7 @@ class Indexes extends \lithium\data\Model {
 			$results = [];
 
 			foreach (static::$_data as $id => $item) {
-				foreach ($params['options']['conditions'] as $k => $v) {
+				foreach ((array) $params['options']['conditions'] as $k => $v) {
 					if (is_array($v)) {
 						if (!in_array($item->{$k}, $v)) {
 							continue(2);
@@ -77,7 +77,7 @@ class Indexes extends \lithium\data\Model {
 				return static::$_data[$conditions['id']];
 			}
 			foreach (static::$_data as $id => $item) {
-				foreach ($params['options']['conditions'] as $k => $v) {
+				foreach ((array) $params['options']['conditions'] as $k => $v) {
 					if (is_array($v)) {
 						if (!in_array($item->{$k}, $v)) {
 							continue(2);
