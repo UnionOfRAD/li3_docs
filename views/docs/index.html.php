@@ -36,5 +36,5 @@ $this->title('Documentation');
 			<div class="jumpbox__description"><?= $indexes[0]->description ?></div>
 		</div>
 	<?php endforeach ?>
-		</div>
+	</div>
 </article>
