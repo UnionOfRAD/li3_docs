@@ -23,15 +23,15 @@ class Indexes extends \lithium\data\Model {
 	public static function init() {
 		static::finder('all', function($self, $params, $chain) {
 			$params['options'] += ['conditions' => []];
-			$conditions = $params['options']['conditions'];
-
-			if (!$conditions) {
-				return new Collection(['data' => static::$_data]);
-			}
 			$results = [];
+
 			foreach (static::$_data as $id => $item) {
-				foreach ($conditions as $k => $v) {
-					if ($item->{$k} !== $v) {
+				foreach ($params['options']['conditions'] as $k => $v) {
+					if (is_array($v)) {
+						if (!in_array($item->{$k}, $v)) {
+							continue(2);
+						}
+					} elseif ($item->{$k} !== $v) {
 						continue(2);
 					}
 				}
@@ -41,8 +41,19 @@ class Indexes extends \lithium\data\Model {
 		});
 		// Group by name
 		static::finder('grouped', function($self, $params, $chain) {
+			$params['options'] += ['conditions' => []];
 			$results = [];
+
 			foreach (static::$_data as $id => $item) {
+				foreach ($params['options']['conditions'] as $k => $v) {
+					if (is_array($v)) {
+						if (!in_array($item->{$k}, $v)) {
+							continue(2);
+						}
+					} elseif ($item->{$k} !== $v) {
+						continue(2);
+					}
+				}
 				if (!isset($results[$item->name])) {
 					$results[$item->name] = [];
 				}
@@ -65,9 +76,13 @@ class Indexes extends \lithium\data\Model {
 			if (isset($conditions['id'])) {
 				return static::$_data[$conditions['id']];
 			}
-			foreach (static::$_data as $item) {
-				foreach ($conditions as $k => $v) {
-					if ($item->{$k} !== $v) {
+			foreach (static::$_data as $id => $item) {
+				foreach ($params['options']['conditions'] as $k => $v) {
+					if (is_array($v)) {
+						if (!in_array($item->{$k}, $v)) {
+							continue(2);
+						}
+					} elseif ($item->{$k} !== $v) {
 						continue(2);
 					}
 				}
