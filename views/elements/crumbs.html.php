@@ -6,16 +6,15 @@ if (!isset($crumbs) || !$crumbs) {
 
 ?>
 <nav class="crumbs">
-	<ul>
-	<?php foreach ($crumbs as $crumb): ?>
-		<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+	<ul itemscope itemtype="http://schema.org/BreadcrumbList">
+	<?php foreach (array_values($crumbs) as $pos => $crumb): ?>
+		<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<meta itemprop="position" content="<?= $pos + 1 ?>" />
 			<?php if ($crumb['url']): ?>
-				<?= $this->html->link($crumb['title'], $crumb['url'], [
-					'itemprop' => 'url title'
-				]) ?>
+				<a href="<?= $this->url($crumb['url']) ?>" itemscope itemprop="item" itemtype="http://schema.org/Thing"><span itemprop="name"><?= $crumb['title'] ?></span></a>
 			<?php else: ?>
-				<span itemprop="title">
-					<?= $crumb['title'] ?>
+				<span itemscope itemprop="item" itemtype="http://schema.org/Thing">
+					<span itemprop="name"><?= $crumb['title'] ?></span>
 				</span>
 			<?php endif ?>
 		</li>
