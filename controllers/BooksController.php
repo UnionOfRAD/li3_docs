@@ -28,6 +28,21 @@ class BooksController extends \lithium\action\Controller {
 		if (!$page = $index->page($this->request->page ?: '.')) {
 			throw new Exception('Page not found.');
 		}
+
+		// Add trailing slash to directory like pages, remove them from leaf nodes.
+		// This unbreakes relative page links.
+		$url = $this->request->env('REQUEST_URI');
+
+		if ($url[strlen($url) - 1] === '/') {
+			if (!$page->hasChildren()) {
+				return $this->redirect(null, ['location' => rtrim($url, '/')]);
+			}
+		} else {
+			if ($page->hasChildren()) {
+				return $this->redirect(null, ['location' => $url . '/']);
+			}
+		}
+
 		$root = $index->page('.');
 		$crumbs = $this->_crumbsForPage($index, $page);
 

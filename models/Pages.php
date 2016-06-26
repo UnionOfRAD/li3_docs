@@ -189,6 +189,15 @@ class Pages extends \lithium\data\Model {
 		return Inflector::humanize($name);
 	}
 
+	public function hasChildren($entity) {
+		return (boolean) Pages::find('count', [
+			'conditions' => [
+				'index' => $entity->index,
+				'parent' => $entity->name
+			]
+		]);
+	}
+
 	public function children($entity) {
 		return Pages::find('all', [
 			'conditions' => [
