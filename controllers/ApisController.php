@@ -61,28 +61,55 @@ class ApisController extends \lithium\action\Controller {
 			]);
 		}
 		if (!$symbol = $index->symbol($this->request->symbol)) {
+			// Just class members are handled below.
+			if (strpos($this->request->symbol, '::') === false) {
+				throw new Exception('Symbol not found.');
+			}
 			// As Markdown does not allow closing () on method links or sends
 			// them out as just ) or ( we'll see if there's method symbol
 			// similiar to this one and redirect to that.
+			$fixed = rtrim($this->request->symbol, '()') . '()';
 
-			// Do only try for possible class members.
-			if (strpos($this->request->symbol, '::')) {
-				// Clean whats remaining and force method.
-				$fixed = rtrim($this->request->symbol, '()') . '()';
+			if ($symbol = $index->symbol($fixed)) {
+				return $this->redirect([
+					'library' => 'li3_docs',
+					'controller' => 'Apis',
+					'action' => 'view',
+					'name' => $index->name,
+					'version' => $index->version,
+					'symbol' => $symbol->name
+				]);
+			}
 
-				if ($symbol = $index->symbol($fixed)) {
-					return $this->redirect([
-						'library' => 'li3_docs',
-						'controller' => 'Apis',
-						'action' => 'view',
-						'name' => $index->name,
-						'version' => $index->version,
-						'symbol' => $symbol->name
-					]);
-				}
-			} else {
+			// From documentation links may be generated to inherited
+			// members of a class. We redirect to the class where they
+			// were defined. Document::$_parent -> Entity::$_parent
+			list($class, $member) = explode('::', $this->request->symbol, 2) + [null, null];
+
+			if (!$symbol = $index->symbol($class)) {
 				throw new Exception('Symbol not found.');
 			}
+			if ($member[0] === '$') {
+				$type = 'property';
+			} elseif (strtoupper($member[0]) === $member[0]) {
+				$type = 'constant';
+			} else {
+				$type = 'method';
+			}
+			$symbol = $symbol->members(compact('type'))->first(function($item) use ($member) {
+				return $item->title(['last' => true]) === $member;
+			});
+			if (!$symbol) {
+				throw new Exception('Symbol not found.');
+			}
+			return $this->redirect([
+				'library' => 'li3_docs',
+				'controller' => 'Apis',
+				'action' => 'view',
+				'name' => $index->name,
+				'version' => $index->version,
+				'symbol' => $symbol->name
+			]);
 		}
 		$crumbs = $this->_crumbsForSymbol($index, $symbol);
 		return compact('index', 'symbol', 'crumbs');
