@@ -21,7 +21,7 @@ class Indexes extends \lithium\data\Model {
 	protected static $_data = [];
 
 	public static function init() {
-		static::finder('all', function($self, $params, $chain) {
+		static::finder('all', function($params, $next) {
 			$params['options'] += ['conditions' => []];
 			$results = [];
 
@@ -40,7 +40,7 @@ class Indexes extends \lithium\data\Model {
 			return new Collection(['data' => $results]);
 		});
 		// Group by name
-		static::finder('grouped', function($self, $params, $chain) {
+		static::finder('grouped', function($params, $next) {
 			$params['options'] += ['conditions' => []];
 			$results = [];
 
@@ -61,7 +61,7 @@ class Indexes extends \lithium\data\Model {
 			}
 			return new Collection(['data' => $results]);
 		});
-		static::finder('list', function($self, $params, $chain) {
+		static::finder('list', function($params, $next) {
 			$results = [];
 
 			foreach (static::$_data as $id => $item) {
@@ -69,7 +69,7 @@ class Indexes extends \lithium\data\Model {
 			}
 			return $results;
 		});
-		static::finder('first', function($self, $params, $chain) {
+		static::finder('first', function($params, $next) {
 			$params['options'] += ['conditions' => []];
 			$conditions = $params['options']['conditions'];
 
