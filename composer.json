@@ -15,6 +15,6 @@
         "composer/installers": "1.*",
         "cebe/markdown": "1.*",
         "symfony/yaml": "3.1.*",
-        "unionofrad/lithium": "1.0.*"
+        "unionofrad/lithium": ">=1.1.0"
 	}
 }
