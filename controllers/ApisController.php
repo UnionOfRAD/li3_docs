@@ -63,7 +63,7 @@ class ApisController extends \lithium\action\Controller {
 		if (!$symbol = $index->symbol($this->request->symbol)) {
 			// Just class members are handled below.
 			if (strpos($this->request->symbol, '::') === false) {
-				throw new Exception('Symbol not found.');
+				throw new Exception("Symbol `{$this->request->symbol}` not found.");
 			}
 			// As Markdown does not allow closing () on method links or sends
 			// them out as just ) or ( we'll see if there's method symbol
@@ -87,7 +87,7 @@ class ApisController extends \lithium\action\Controller {
 			list($class, $member) = explode('::', $this->request->symbol, 2) + [null, null];
 
 			if (!$symbol = $index->symbol($class)) {
-				throw new Exception('Symbol not found.');
+				throw new Exception("Symbol `{$this->request->symbol}` not found.");
 			}
 			if ($member[0] === '$') {
 				$type = 'property';
@@ -100,7 +100,7 @@ class ApisController extends \lithium\action\Controller {
 				return $item->title(['last' => true]) === $member;
 			});
 			if (!$symbol) {
-				throw new Exception('Symbol not found.');
+				throw new Exception("Symbol `{$this->request->symbol}` not found.");
 			}
 			return $this->redirect([
 				'library' => 'li3_docs',
