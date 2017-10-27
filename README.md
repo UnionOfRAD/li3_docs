@@ -19,9 +19,21 @@ contains no actual documentation other than its own.
 
 ### Installation
 
-1. To install run `composer require unionofrad/li3_docs`.
-2. The plugin needs a configured `default` connection.
-3. 2 tables need to be created using `schema.sql` file.
+First add the plugin via `composer require unionofrad/li3_docs`. Please ensure
+you have a configured `default` connection and initialized the tables from the
+schema file at `data/schema.sql`. 
+
+The plugin route definition are loaded automatically when using the standard
+distro. If this is not the case, ensure you `require` the plugin routes in your
+`config/routes.php` file. The route definitions must now be mounted manually using
+the following snippet which mounts the routes below `/docs`:
+
+```
+Router::attach('li3_docs', [
+	'prefix' => 'docs',
+	'library' => 'li3_docs'
+]); 
+```
 
 ### Documentation structure
 
